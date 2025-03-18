@@ -3,7 +3,9 @@
 import Footer from '../Footer.svelte'
 import Navbar from '../Navbar.svelte'
 import { pb } from '$lib/pocketbase/client'
-import { Mail, Phone, MapPin } from 'lucide-svelte'
+import MailIcon from 'lucide-svelte/icons/mail'
+import PhoneIcon from 'lucide-svelte/icons/phone'
+import MapPinIcon from 'lucide-svelte/icons/map-pin'
 
 let formData = {
 	name: '',
@@ -75,7 +77,7 @@ const handleSubmit = async (e: Event) => {
       <!-- Email Card -->
       <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col items-center p-8">
         <div class="bg-blue-700 p-4 rounded-full mb-6">
-          <Mail class="h-8 w-8 text-white" />
+          <MailIcon class="h-8 w-8 text-white" />
         </div>
         <h3 class="text-xl font-semibold text-gray-800 mb-2">Email Us</h3>
         <p class="text-gray-600 mb-4 text-center">Our team usually responds within 24 hours</p>
@@ -85,7 +87,7 @@ const handleSubmit = async (e: Event) => {
       <!-- Call Card -->
       <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col items-center p-8">
         <div class="bg-blue-700 p-4 rounded-full mb-6">
-          <Phone class="h-8 w-8 text-white" />
+          <PhoneIcon class="h-8 w-8 text-white" />
         </div>
         <h3 class="text-xl font-semibold text-gray-800 mb-2">Call Us</h3>
         <p class="text-gray-600 mb-4 text-center">Mon-Fri from 9am to 6pm IST</p>
@@ -95,7 +97,7 @@ const handleSubmit = async (e: Event) => {
       <!-- Visit Card -->
       <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col items-center p-8">
         <div class="bg-blue-700 p-4 rounded-full mb-6">
-          <MapPin class="h-8 w-8 text-white" />
+          <MapPinIcon class="h-8 w-8 text-white" />
         </div>
         <h3 class="text-xl font-semibold text-gray-800 mb-2">Visit Us</h3>
         <p class="text-gray-600 mb-4 text-center">Our office is centrally located</p>
