@@ -1,11 +1,11 @@
 <!-- biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> -->
 <script lang="ts">
-import Footer from '../Footer.svelte'
-import Navbar from '../Navbar.svelte'
 import { pb } from '$lib/pocketbase/client'
 import MailIcon from 'lucide-svelte/icons/mail'
-import PhoneIcon from 'lucide-svelte/icons/phone'
 import MapPinIcon from 'lucide-svelte/icons/map-pin'
+import PhoneIcon from 'lucide-svelte/icons/phone'
+import Footer from '../Footer.svelte'
+import Navbar from '../Navbar.svelte'
 
 let formData = {
 	name: '',
