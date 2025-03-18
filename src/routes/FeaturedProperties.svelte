@@ -1,6 +1,7 @@
 <script lang="ts">
 import ArrowRightIcon from 'lucide-svelte/icons/arrow-right'
 import MapPinIcon from 'lucide-svelte/icons/map-pin'
+import { pb } from '$lib/pocketbase'
 
 interface Property {
 	id: string
@@ -12,50 +13,36 @@ interface Property {
 	size: number
 	address: string
 	image: string
+	status: string
+	description: string
+	created: string
+	updated: string
 }
 
-const properties: Property[] = [
-	{
-		id: '1',
-		type: 'Warehouse',
-		featured: true,
-		location: 'Bengaluru',
-		name: 'Dekapere',
-		price: 20,
-		size: 1000,
-		address: 'ID: #ABF7449-efgh-i3fk4-fgh21-12366fgh21k4',
-		image: '/images/warehouse-placeholder.jpg'
-	},
-	{
-		id: '2',
-		type: 'Manufacturing Facility',
-		featured: false,
-		location: 'Electronics City',
-		name: 'TechSpace',
-		price: 35,
-		size: 1800,
-		address: 'ID: #BDF8329-ijkl-m5op6-qrs32-45678tuv32w5',
-		image: '/images/warehouse-placeholder.jpg'
-	},
-	{
-		id: '3',
-		type: 'Industrial Land',
-		featured: true,
-		location: 'Whitefield',
-		name: 'Eastgate Industrial',
-		price: 42,
-		size: 2500,
-		address: 'ID: #CGH9450-xyz1-a2bc3-def43-67890ghi43j6',
-		image: '/images/warehouse-placeholder.jpg'
-	}
-]
-
-// biome-ignore lint/style/useConst: <explanation>
+let properties: Property[] = []
 let filter = 'all'
+
+async function loadProperties() {
+	try {
+		const records = await pb.collection('properties').getList(1, 50, {
+			filter: 'status = "active"',
+			sort: '-created'
+		})
+		properties = records.items.map((item) => ({
+			...item,
+			image: pb.files.getUrl(item, item.image)
+		}))
+	} catch (error) {
+		console.error('Error loading properties:', error)
+	}
+}
+
 $: filteredProperties =
 	filter === 'all'
 		? properties
 		: properties.filter((p) => p.type.toLowerCase() === filter.toLowerCase())
+
+loadProperties()
 </script>
 
 <section class="py-24 px-6 md:px-16 bg-gray-50">
