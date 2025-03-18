@@ -22,13 +22,17 @@
 	--color-card-bg: rgba(255, 255, 255, 0.1);
 	--color-text: #ffffff;
 	--color-text-dark: #1a202c;
-	
+
 	/* Define custom gradient */
-	--gradient-industrial: linear-gradient(to right, var(--color-primary-dark), var(--color-primary));
-	
+	--gradient-industrial: linear-gradient(
+		to right,
+		var(--color-primary-dark),
+		var(--color-primary)
+	);
+
 	/* Border radius */
 	--radius-card: 0.75rem;
-	
+
 	/* Box shadows */
 	--shadow-card: 0 4px 6px rgba(0, 0, 0, 0.1);
 	--shadow-hover: 0 10px 15px rgba(0, 0, 0, 0.2);

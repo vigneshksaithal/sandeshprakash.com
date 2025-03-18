@@ -1,6 +1,6 @@
 <script lang="ts">
-import MapPinIcon from 'lucide-svelte/icons/map-pin'
 import ArrowRightIcon from 'lucide-svelte/icons/arrow-right'
+import MapPinIcon from 'lucide-svelte/icons/map-pin'
 
 interface Property {
 	id: string
@@ -50,6 +50,7 @@ const properties: Property[] = [
 	}
 ]
 
+// biome-ignore lint/style/useConst: <explanation>
 let filter = 'all'
 $: filteredProperties =
 	filter === 'all'

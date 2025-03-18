@@ -1,8 +1,8 @@
 <!-- Create the about page -->
 <script lang="ts">
 import { onMount } from 'svelte'
-import Navbar from '../Navbar.svelte'
 import Footer from '../Footer.svelte'
+import Navbar from '../Navbar.svelte'
 
 let isVisible = false
 let imgSrc = '/industrial-building.jpg'
