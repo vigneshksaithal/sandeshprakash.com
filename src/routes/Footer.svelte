@@ -1,27 +1,30 @@
 <script lang="ts">
-import { Facebook, Instagram, Linkedin, Twitter } from 'lucide-svelte'
-import Mail from 'lucide-svelte/icons/mail'
-import MapPin from 'lucide-svelte/icons/map-pin'
-import Phone from 'lucide-svelte/icons/phone'
+    import FacebookIcon from "lucide-svelte/icons/facebook";
+    import InstagramIcon from "lucide-svelte/icons/instagram";
+    import LinkedinIcon from "lucide-svelte/icons/linkedin";
+    import TwitterIcon from "lucide-svelte/icons/twitter";
+    import MailIcon from "lucide-svelte/icons/mail";
+    import MapPinIcon from "lucide-svelte/icons/map-pin";
+    import PhoneIcon from "lucide-svelte/icons/phone";
 
-const quickLinks = [
-	{ label: 'Home', href: '/' },
-	{ label: 'About Us', href: '/about' },
-	{ label: 'Properties', href: '/properties' },
-	{ label: 'Contact', href: '/contact' }
-]
+    const quickLinks = [
+        { label: "Home", href: "/" },
+        { label: "About Us", href: "/about" },
+        { label: "Properties", href: "/properties" },
+        { label: "Contact", href: "/contact" },
+    ];
 
-const propertyTypes = [
-	{ label: 'Warehouses', href: '/properties/warehouses' },
-	{
-		label: 'Manufacturing Facilities',
-		href: '/properties/manufacturing'
-	},
-	{ label: 'Industrial Land', href: '/properties/land' },
-	{ label: 'Office Spaces', href: '/properties/office' }
-]
+    const propertyTypes = [
+        { label: "Warehouses", href: "/properties/warehouses" },
+        {
+            label: "Manufacturing Facilities",
+            href: "/properties/manufacturing",
+        },
+        { label: "Industrial Land", href: "/properties/land" },
+        { label: "Office Spaces", href: "/properties/office" },
+    ];
 
-const currentYear = new Date().getFullYear()
+    const currentYear = new Date().getFullYear();
 </script>
 
 <footer class="relative">
@@ -79,28 +82,28 @@ const currentYear = new Date().getFullYear()
                             aria-label="Facebook"
                             class="bg-white/10 hover:bg-blue-600 h-10 w-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
                         >
-                            <Facebook class="h-5 w-5" />
+                            <FacebookIcon class="h-5 w-5" />
                         </a>
                         <a
                             href="#"
                             aria-label="Twitter"
                             class="bg-white/10 hover:bg-blue-600 h-10 w-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
                         >
-                            <Twitter class="h-5 w-5" />
+                            <TwitterIcon class="h-5 w-5" />
                         </a>
                         <a
                             href="#"
                             aria-label="Instagram"
                             class="bg-white/10 hover:bg-blue-600 h-10 w-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
                         >
-                            <Instagram class="h-5 w-5" />
+                            <InstagramIcon class="h-5 w-5" />
                         </a>
                         <a
                             href="#"
                             aria-label="LinkedIn"
                             class="bg-white/10 hover:bg-blue-600 h-10 w-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
                         >
-                            <Linkedin class="h-5 w-5" />
+                            <LinkedinIcon class="h-5 w-5" />
                         </a>
                     </div>
                 </div>
@@ -164,7 +167,7 @@ const currentYear = new Date().getFullYear()
                             <div
                                 class="mt-0.5 mr-3 bg-white/10 group-hover:bg-blue-600/20 h-8 w-8 rounded-full flex items-center justify-center transition-colors duration-300"
                             >
-                                <Phone class="h-4 w-4 text-blue-400" />
+                                <PhoneIcon class="h-4 w-4 text-blue-400" />
                             </div>
                             <span>+91 98765 43210</span>
                         </li>
@@ -174,7 +177,7 @@ const currentYear = new Date().getFullYear()
                             <div
                                 class="mt-0.5 mr-3 bg-white/10 group-hover:bg-blue-600/20 h-8 w-8 rounded-full flex items-center justify-center transition-colors duration-300"
                             >
-                                <Mail class="h-4 w-4 text-blue-400" />
+                                <MailIcon class="h-4 w-4 text-blue-400" />
                             </div>
                             <span>info@sandeshprakash.com</span>
                         </li>
@@ -184,7 +187,7 @@ const currentYear = new Date().getFullYear()
                             <div
                                 class="mt-0.5 mr-3 bg-white/10 group-hover:bg-blue-600/20 h-8 w-8 rounded-full flex items-center justify-center transition-colors duration-300"
                             >
-                                <MapPin class="h-4 w-4 text-blue-400" />
+                                <MapPinIcon class="h-4 w-4 text-blue-400" />
                             </div>
                             <span
                                 >123 Tech Park, Koramangala,<br />Bengaluru,
