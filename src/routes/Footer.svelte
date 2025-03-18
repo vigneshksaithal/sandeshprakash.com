@@ -1,30 +1,30 @@
 <script lang="ts">
-    import FacebookIcon from "lucide-svelte/icons/facebook";
-    import InstagramIcon from "lucide-svelte/icons/instagram";
-    import LinkedinIcon from "lucide-svelte/icons/linkedin";
-    import TwitterIcon from "lucide-svelte/icons/twitter";
-    import MailIcon from "lucide-svelte/icons/mail";
-    import MapPinIcon from "lucide-svelte/icons/map-pin";
-    import PhoneIcon from "lucide-svelte/icons/phone";
+import FacebookIcon from 'lucide-svelte/icons/facebook'
+import InstagramIcon from 'lucide-svelte/icons/instagram'
+import LinkedinIcon from 'lucide-svelte/icons/linkedin'
+import MailIcon from 'lucide-svelte/icons/mail'
+import MapPinIcon from 'lucide-svelte/icons/map-pin'
+import PhoneIcon from 'lucide-svelte/icons/phone'
+import TwitterIcon from 'lucide-svelte/icons/twitter'
 
-    const quickLinks = [
-        { label: "Home", href: "/" },
-        { label: "About Us", href: "/about" },
-        { label: "Properties", href: "/properties" },
-        { label: "Contact", href: "/contact" },
-    ];
+const quickLinks = [
+	{ label: 'Home', href: '/' },
+	{ label: 'About Us', href: '/about' },
+	{ label: 'Properties', href: '/properties' },
+	{ label: 'Contact', href: '/contact' }
+]
 
-    const propertyTypes = [
-        { label: "Warehouses", href: "/properties/warehouses" },
-        {
-            label: "Manufacturing Facilities",
-            href: "/properties/manufacturing",
-        },
-        { label: "Industrial Land", href: "/properties/land" },
-        { label: "Office Spaces", href: "/properties/office" },
-    ];
+const propertyTypes = [
+	{ label: 'Warehouses', href: '/properties/warehouses' },
+	{
+		label: 'Manufacturing Facilities',
+		href: '/properties/manufacturing'
+	},
+	{ label: 'Industrial Land', href: '/properties/land' },
+	{ label: 'Office Spaces', href: '/properties/office' }
+]
 
-    const currentYear = new Date().getFullYear();
+const currentYear = new Date().getFullYear()
 </script>
 
 <footer class="relative">
