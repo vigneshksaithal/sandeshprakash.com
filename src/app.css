@@ -1,7 +1,5 @@
 @import "tailwindcss";
 
-@config "./tailwind.config.js";
-
 :root {
 	--color-primary: #2a4e94;
 	--color-primary-dark: #1c3a7a;
@@ -12,4 +10,30 @@
 	--color-card-bg: rgba(255, 255, 255, 0.1);
 	--color-text: #ffffff;
 	--color-text-dark: #1a202c;
+}
+
+@theme {
+	--color-primary: #2a4e94;
+	--color-primary-dark: #1c3a7a;
+	--color-primary-light: #3a5fa5;
+	--color-secondary: #4169e1;
+	--color-accent: #6495ed;
+	--color-background: #f8fafc;
+	--color-card-bg: rgba(255, 255, 255, 0.1);
+	--color-text: #ffffff;
+	--color-text-dark: #1a202c;
+
+	/* Define custom gradient */
+	--gradient-industrial: linear-gradient(
+		to right,
+		var(--color-primary-dark),
+		var(--color-primary)
+	);
+
+	/* Border radius */
+	--radius-card: 0.75rem;
+
+	/* Box shadows */
+	--shadow-card: 0 4px 6px rgba(0, 0, 0, 0.1);
+	--shadow-hover: 0 10px 15px rgba(0, 0, 0, 0.2);
 }
