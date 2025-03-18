@@ -14,10 +14,10 @@ interface Property {
 	featured: boolean
 	location: string
 	name: string
-	price: number
+	price: string
 	size: number
 	address: string
-	image: string
+	images: string[]
 	status: string
 	description: string
 	created: string
@@ -35,11 +35,11 @@ let formData = {
 	type: 'Warehouse',
 	featured: false,
 	location: '',
-	price: 0,
+	price: '',
 	size: 0,
 	address: '',
 	description: '',
-	image: null as File | null,
+	images: [] as File[],
 	status: 'active'
 }
 
@@ -61,7 +61,7 @@ async function loadProperties() {
 		})
 		properties = records.items.map((item) => ({
 			...item,
-			image: pb.files.getUrl(item, item.image)
+			images: item.images.map((img) => pb.files.getUrl(item, img))
 		}))
 	} catch (err) {
 		error = 'Failed to load properties'
@@ -76,13 +76,16 @@ async function handleSubmit() {
 		loading = true
 		const formDataObj = new FormData()
 
-		// Add all form fields
+		// Add all form fields except images
 		for (const [key, value] of Object.entries(formData)) {
-			if (key === 'image' && value instanceof File) {
-				formDataObj.append('image', value)
-			} else if (key !== 'image') {
+			if (key !== 'images') {
 				formDataObj.append(key, String(value))
 			}
+		}
+
+		// Add multiple images
+		for (const image of formData.images) {
+			formDataObj.append('images', image)
 		}
 
 		await pb.collection('properties').create(formDataObj)
@@ -93,11 +96,11 @@ async function handleSubmit() {
 			type: 'Warehouse',
 			featured: false,
 			location: '',
-			price: 0,
+			price: '',
 			size: 0,
 			address: '',
 			description: '',
-			image: null,
+			images: [],
 			status: 'active'
 		}
 
@@ -145,7 +148,9 @@ async function deleteProperty(id: string) {
 
 function handleImageChange(event: Event) {
 	const input = event.target as HTMLInputElement
-	formData.image = input.files?.[0] ?? null
+	if (input.files) {
+		formData.images = Array.from(input.files)
+	}
 }
 </script>
 
@@ -197,13 +202,12 @@ function handleImageChange(event: Event) {
 				</div>
 
 				<div class="space-y-1">
-					<label class="block text-sm font-medium text-gray-700">Price (Cr)</label>
+					<label class="block text-sm font-medium text-gray-700">Price</label>
 					<input
-						type="number"
+						type="text"
 						bind:value={formData.price}
 						required
-						min="0"
-						step="0.01"
+						placeholder="e.g. ₹20 Cr, Price on Request"
 						class="w-full px-3 py-2 border border-gray-300 rounded-md text-base"
 					/>
 				</div>
@@ -240,14 +244,18 @@ function handleImageChange(event: Event) {
 				</div>
 
 				<div class="space-y-1">
-					<label class="block text-sm font-medium text-gray-700">Image</label>
+					<label class="block text-sm font-medium text-gray-700">Images</label>
 					<input
 						type="file"
 						accept="image/*"
 						on:change={handleImageChange}
 						required
+						multiple
 						class="w-full text-base file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
 					/>
+					{#if formData.images.length > 0}
+						<p class="text-sm text-gray-500 mt-2">{formData.images.length} images selected</p>
+					{/if}
 				</div>
 
 				<div class="flex items-center space-x-4">
@@ -281,12 +289,21 @@ function handleImageChange(event: Event) {
 				{#each properties as property}
 					<div class="p-4 border-b border-gray-200 last:border-b-0">
 						<div class="flex items-start space-x-4">
-							<img src={property.image} alt={property.name} class="h-24 w-24 object-cover rounded" />
+							<div class="flex-shrink-0 w-24">
+								<img 
+									src={property.images[0]} 
+									alt={property.name} 
+									class="h-24 w-24 object-cover rounded"
+								/>
+								{#if property.images.length > 1}
+									<p class="text-xs text-gray-500 mt-1 text-center">+{property.images.length - 1} more</p>
+								{/if}
+							</div>
 							<div class="flex-1 min-w-0">
 								<h3 class="text-base font-medium text-gray-900 truncate">{property.name}</h3>
 								<p class="text-sm text-gray-500">{property.type}</p>
 								<div class="mt-2 space-y-1">
-									<p class="text-sm text-gray-900">₹{property.price} Cr</p>
+									<p class="text-sm text-gray-900">{property.price}</p>
 									<p class="text-sm text-gray-500">{property.size} sqft</p>
 									<p class="text-sm text-gray-500">{property.location}</p>
 								</div>
@@ -350,8 +367,17 @@ function handleImageChange(event: Event) {
 							<tr class="hover:bg-gray-50">
 								<td class="px-6 py-4">
 									<div class="flex items-center">
-										<div class="h-20 w-20 flex-shrink-0">
-											<img src={property.image} alt={property.name} class="h-20 w-20 object-cover rounded" />
+										<div class="h-20 w-20 flex-shrink-0 relative group">
+											<img 
+												src={property.images[0]} 
+												alt={property.name} 
+												class="h-20 w-20 object-cover rounded"
+											/>
+											{#if property.images.length > 1}
+												<div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity rounded">
+													<span class="text-white text-sm">+{property.images.length - 1} more</span>
+												</div>
+											{/if}
 										</div>
 										<div class="ml-4">
 											<div class="text-sm font-medium text-gray-900">{property.name}</div>
@@ -360,7 +386,7 @@ function handleImageChange(event: Event) {
 									</div>
 								</td>
 								<td class="px-6 py-4">
-									<div class="text-sm text-gray-900">₹{property.price} Cr</div>
+									<div class="text-sm text-gray-900">{property.price}</div>
 									<div class="text-sm text-gray-500">{property.size} sqft</div>
 									<div class="text-sm text-gray-500">{property.location}</div>
 								</td>
