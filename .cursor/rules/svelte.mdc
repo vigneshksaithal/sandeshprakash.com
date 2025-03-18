@@ -21,6 +21,7 @@ alwaysApply: false
 10. Use TypeScript for enhanced type safety.
 11. Add logs for better visibility of errors.
 12. While coding HTML components, ONLY use Tailwind CSS classes for styling. Don't use style tags.
+13. Use responsive design i.e. it should look good on mobile screens.
 
 # General Preferences
 1. Follow the user's requirements carefully & to the letter.
