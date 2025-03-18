@@ -30,8 +30,6 @@ interface Property {
 }
 
 let properties: Property[] = []
-// biome-ignore lint/style/useConst: <explanation>
-let filter = 'all'
 
 function handleImageError(event: Event) {
 	const img = event.target as HTMLImageElement
@@ -64,44 +62,19 @@ async function loadProperties() {
 	}
 }
 
-$: filteredProperties =
-	filter === 'all' ? properties : properties.filter((p) => p.type === filter)
-
-$: {
-	console.log('Filtered properties:', filteredProperties)
-}
-
 loadProperties()
 </script>
 
 <section class="py-24 px-6 md:px-16 bg-gray-50">
     <div class="container mx-auto">
-        <header class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16">
-            <div class="mb-8 md:mb-0">
-                <span class="bg-blue-50 text-blue-600 px-4 py-1.5 rounded-full text-sm font-semibold tracking-wider inline-block mb-4">OUR PROPERTIES</span>
-                <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#001233] to-[#003366] mb-4">Featured Industrial Spaces</h2>
-                <p class="text-gray-600 mt-4 max-w-2xl text-lg">Discover premium warehouses, manufacturing facilities, and industrial lands available for purchase or lease in Bengaluru and surrounding areas.</p>
-            </div>
-            
-            <nav class="flex items-center space-x-3 bg-white rounded-full shadow-sm p-1.5 border border-gray-100">
-                {#each [
-                    {id: 'all', label: 'All'}, 
-                    {id: 'Warehouse', label: 'Warehouses'}, 
-                    {id: 'Manufacturing Facility', label: 'Manufacturing'}, 
-                    {id: 'Industrial Land', label: 'Land'}
-                ] as {id, label}}
-                    <button 
-                        class="px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 {filter === id ? 'bg-blue-600 text-white shadow-md' : 'text-gray-500 hover:text-gray-800'}"
-                        on:click={() => filter = id}
-                    >
-                        {label}
-                    </button>
-                {/each}
-            </nav>
+        <header class="mb-16">
+            <span class="bg-blue-50 text-blue-600 px-4 py-1.5 rounded-full text-sm font-semibold tracking-wider inline-block mb-4">OUR PROPERTIES</span>
+            <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#001233] to-[#003366] mb-4">Featured Industrial Spaces</h2>
+            <p class="text-gray-600 mt-4 max-w-2xl text-lg">Discover premium warehouses, manufacturing facilities, and industrial lands available for purchase or lease in Bengaluru and surrounding areas.</p>
         </header>
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {#each filteredProperties as property}
+            {#each properties as property}
                 <article class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 group">
                     <div class="relative h-60 overflow-hidden bg-gray-100">
                         {#if property.images?.length > 0}

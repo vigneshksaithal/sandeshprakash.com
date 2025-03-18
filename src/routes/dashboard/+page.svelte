@@ -13,9 +13,9 @@ interface Property {
 	type: string
 	featured: boolean
 	location: string
-	name: string
-	price: string
-	size: number
+	title: string
+	price: string | number
+	area: number
 	address: string
 	images: string[]
 	status: string
@@ -31,12 +31,12 @@ let isAuthenticated = false
 
 // Form data
 let formData = {
-	name: '',
+	title: '',
 	type: 'Warehouse',
 	featured: false,
 	location: '',
 	price: '',
-	size: 0,
+	area: 0,
 	address: '',
 	description: '',
 	images: [] as File[],
@@ -92,12 +92,12 @@ async function handleSubmit() {
 
 		// Reset form
 		formData = {
-			name: '',
+			title: '',
 			type: 'Warehouse',
 			featured: false,
 			location: '',
 			price: '',
-			size: 0,
+			area: 0,
 			address: '',
 			description: '',
 			images: [],
@@ -169,10 +169,10 @@ function handleImageChange(event: Event) {
 			<h2 class="text-lg sm:text-xl font-semibold mb-4">Add New Property</h2>
 			<form on:submit|preventDefault={handleSubmit} class="grid grid-cols-1 sm:grid-cols-2 gap-4">
 				<div class="space-y-1">
-					<label class="block text-sm font-medium text-gray-700">Name</label>
+					<label class="block text-sm font-medium text-gray-700">Title</label>
 					<input
 						type="text"
-						bind:value={formData.name}
+						bind:value={formData.title}
 						required
 						class="w-full px-3 py-2 border border-gray-300 rounded-md text-base"
 					/>
@@ -213,10 +213,10 @@ function handleImageChange(event: Event) {
 				</div>
 
 				<div class="space-y-1">
-					<label class="block text-sm font-medium text-gray-700">Size (sqft)</label>
+					<label class="block text-sm font-medium text-gray-700">Area (sqft)</label>
 					<input
 						type="number"
-						bind:value={formData.size}
+						bind:value={formData.area}
 						required
 						min="0"
 						class="w-full px-3 py-2 border border-gray-300 rounded-md text-base"
@@ -292,7 +292,7 @@ function handleImageChange(event: Event) {
 							<div class="flex-shrink-0 w-24">
 								<img 
 									src={property.images[0]} 
-									alt={property.name} 
+									alt={property.title} 
 									class="h-24 w-24 object-cover rounded"
 								/>
 								{#if property.images.length > 1}
@@ -300,11 +300,11 @@ function handleImageChange(event: Event) {
 								{/if}
 							</div>
 							<div class="flex-1 min-w-0">
-								<h3 class="text-base font-medium text-gray-900 truncate">{property.name}</h3>
+								<h3 class="text-base font-medium text-gray-900 truncate">{property.title}</h3>
 								<p class="text-sm text-gray-500">{property.type}</p>
 								<div class="mt-2 space-y-1">
 									<p class="text-sm text-gray-900">{property.price}</p>
-									<p class="text-sm text-gray-500">{property.size} sqft</p>
+									<p class="text-sm text-gray-500">{property.area} sqft</p>
 									<p class="text-sm text-gray-500">{property.location}</p>
 								</div>
 								<div class="mt-3 flex flex-wrap gap-2">
@@ -370,7 +370,7 @@ function handleImageChange(event: Event) {
 										<div class="h-20 w-20 flex-shrink-0 relative group">
 											<img 
 												src={property.images[0]} 
-												alt={property.name} 
+												alt={property.title} 
 												class="h-20 w-20 object-cover rounded"
 											/>
 											{#if property.images.length > 1}
@@ -380,14 +380,14 @@ function handleImageChange(event: Event) {
 											{/if}
 										</div>
 										<div class="ml-4">
-											<div class="text-sm font-medium text-gray-900">{property.name}</div>
+											<div class="text-sm font-medium text-gray-900">{property.title}</div>
 											<div class="text-sm text-gray-500">{property.type}</div>
 										</div>
 									</div>
 								</td>
 								<td class="px-6 py-4">
 									<div class="text-sm text-gray-900">{property.price}</div>
-									<div class="text-sm text-gray-500">{property.size} sqft</div>
+									<div class="text-sm text-gray-500">{property.area} sqft</div>
 									<div class="text-sm text-gray-500">{property.location}</div>
 								</td>
 								<td class="px-6 py-4">
