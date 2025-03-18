@@ -24,10 +24,22 @@ interface Property {
 	updated: string
 }
 
+interface Lead {
+	id: string
+	name: string
+	email: string
+	phone: string
+	message: string
+	created: string
+	status: 'new' | 'contacted' | 'closed'
+}
+
 let properties: Property[] = []
+let leads: Lead[] = []
 let loading = false
 let error = ''
-let isAuthenticated = false
+$: isAuthenticated = pb.authStore.isValid
+$: activeTab = 'properties'
 
 // Form data
 let formData = {
@@ -50,7 +62,7 @@ onMount(async () => {
 		return
 	}
 	isAuthenticated = true
-	await loadProperties()
+	await Promise.all([loadProperties(), loadLeads()])
 })
 
 async function loadProperties() {
@@ -68,6 +80,20 @@ async function loadProperties() {
 		console.error(err)
 	} finally {
 		loading = false
+	}
+}
+
+async function loadLeads() {
+	try {
+		const records = await pb
+			.collection('contact_submissions')
+			.getList<Lead>(1, 50, {
+				sort: '-created'
+			})
+		leads = records.items
+	} catch (err) {
+		error = 'Failed to load leads'
+		console.error(err)
 	}
 }
 
@@ -146,6 +172,28 @@ async function deleteProperty(id: string) {
 	}
 }
 
+async function updateLeadStatus(id: string, status: Lead['status']) {
+	try {
+		await pb.collection('contact_submissions').update(id, { status })
+		await loadLeads()
+	} catch (err) {
+		error = 'Failed to update lead status'
+		console.error(err)
+	}
+}
+
+async function deleteLead(id: string) {
+	if (!confirm('Are you sure you want to delete this lead?')) return
+
+	try {
+		await pb.collection('contact_submissions').delete(id)
+		await loadLeads()
+	} catch (err) {
+		error = 'Failed to delete lead'
+		console.error(err)
+	}
+}
+
 function handleImageChange(event: Event) {
 	const input = event.target as HTMLInputElement
 	if (input.files) {
@@ -164,275 +212,356 @@ function handleImageChange(event: Event) {
 			</div>
 		{/if}
 
-		<!-- Add Property Form -->
-		<div class="bg-white rounded-lg shadow-sm p-4 sm:p-6 mb-8">
-			<h2 class="text-lg sm:text-xl font-semibold mb-4">Add New Property</h2>
-			<form on:submit|preventDefault={handleSubmit} class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-				<div class="space-y-1">
-					<label class="block text-sm font-medium text-gray-700">Title</label>
-					<input
-						type="text"
-						bind:value={formData.title}
-						required
-						class="w-full px-3 py-2 border border-gray-300 rounded-md text-base"
-					/>
-				</div>
-
-				<div class="space-y-1">
-					<label class="block text-sm font-medium text-gray-700">Type</label>
-					<select
-						bind:value={formData.type}
-						required
-						class="w-full px-3 py-2 border border-gray-300 rounded-md text-base"
-					>
-						<option value="Warehouse">Warehouse</option>
-						<option value="Manufacturing Facility">Manufacturing Facility</option>
-						<option value="Industrial Land">Industrial Land</option>
-					</select>
-				</div>
-
-				<div class="space-y-1">
-					<label class="block text-sm font-medium text-gray-700">Location</label>
-					<input
-						type="text"
-						bind:value={formData.location}
-						required
-						class="w-full px-3 py-2 border border-gray-300 rounded-md text-base"
-					/>
-				</div>
-
-				<div class="space-y-1">
-					<label class="block text-sm font-medium text-gray-700">Price</label>
-					<input
-						type="text"
-						bind:value={formData.price}
-						required
-						placeholder="e.g. ₹20 Cr, Price on Request"
-						class="w-full px-3 py-2 border border-gray-300 rounded-md text-base"
-					/>
-				</div>
-
-				<div class="space-y-1">
-					<label class="block text-sm font-medium text-gray-700">Area (sqft)</label>
-					<input
-						type="number"
-						bind:value={formData.area}
-						required
-						min="0"
-						class="w-full px-3 py-2 border border-gray-300 rounded-md text-base"
-					/>
-				</div>
-
-				<div class="space-y-1">
-					<label class="block text-sm font-medium text-gray-700">Address</label>
-					<input
-						type="text"
-						bind:value={formData.address}
-						required
-						class="w-full px-3 py-2 border border-gray-300 rounded-md text-base"
-					/>
-				</div>
-
-				<div class="sm:col-span-2 space-y-1">
-					<label class="block text-sm font-medium text-gray-700">Description</label>
-					<textarea
-						bind:value={formData.description}
-						required
-						rows="3"
-						class="w-full px-3 py-2 border border-gray-300 rounded-md text-base"
-					></textarea>
-				</div>
-
-				<div class="space-y-1">
-					<label class="block text-sm font-medium text-gray-700">Images</label>
-					<input
-						type="file"
-						accept="image/*"
-						on:change={handleImageChange}
-						required
-						multiple
-						class="w-full text-base file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-					/>
-					{#if formData.images.length > 0}
-						<p class="text-sm text-gray-500 mt-2">{formData.images.length} images selected</p>
-					{/if}
-				</div>
-
-				<div class="flex items-center space-x-4">
-					<label class="flex items-center cursor-pointer">
-						<input
-							type="checkbox"
-							bind:checked={formData.featured}
-							class="form-checkbox h-5 w-5 text-blue-600 rounded"
-						/>
-						<span class="ml-2 text-sm text-gray-700">Featured Property</span>
-					</label>
-				</div>
-
-				<div class="sm:col-span-2">
-					<button
-						type="submit"
-						disabled={loading}
-						class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 text-base font-medium transition-colors duration-200"
-					>
-						<PlusIcon class="w-5 h-5 mr-2" />
-						Add Property
-					</button>
-				</div>
-			</form>
+		<!-- Tab Navigation -->
+		<div class="flex space-x-4 mb-8">
+			<button
+				class="px-6 py-2 rounded-lg font-medium transition-colors duration-200 {activeTab === 'properties' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}"
+				on:click={() => activeTab = 'properties'}
+			>
+				Properties
+			</button>
+			<button
+				class="px-6 py-2 rounded-lg font-medium transition-colors duration-200 {activeTab === 'leads' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}"
+				on:click={() => activeTab = 'leads'}
+			>
+				Leads
+			</button>
 		</div>
 
-		<!-- Properties List -->
-		<div class="bg-white rounded-lg shadow-sm overflow-hidden">
-			<!-- Mobile View -->
-			<div class="block sm:hidden">
-				{#each properties as property}
-					<div class="p-4 border-b border-gray-200 last:border-b-0">
-						<div class="flex items-start space-x-4">
-							<div class="flex-shrink-0 w-24">
-								<img 
-									src={property.images[0]} 
-									alt={property.title} 
-									class="h-24 w-24 object-cover rounded"
-								/>
-								{#if property.images.length > 1}
-									<p class="text-xs text-gray-500 mt-1 text-center">+{property.images.length - 1} more</p>
-								{/if}
-							</div>
-							<div class="flex-1 min-w-0">
-								<h3 class="text-base font-medium text-gray-900 truncate">{property.title}</h3>
-								<p class="text-sm text-gray-500">{property.type}</p>
-								<div class="mt-2 space-y-1">
-									<p class="text-sm text-gray-900">{property.price}</p>
-									<p class="text-sm text-gray-500">{property.area} sqft</p>
-									<p class="text-sm text-gray-500">{property.location}</p>
-								</div>
-								<div class="mt-3 flex flex-wrap gap-2">
-									<span class="px-2 py-1 text-xs font-semibold rounded-full 
-										{property.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}">
-										{property.status}
-									</span>
-									{#if property.featured}
-										<span class="px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
-											Featured
-										</span>
+		{#if activeTab === 'properties'}
+			<!-- Add Property Form -->
+			<div class="bg-white rounded-lg shadow-sm p-4 sm:p-6 mb-8">
+				<h2 class="text-lg sm:text-xl font-semibold mb-4">Add New Property</h2>
+				<form on:submit|preventDefault={handleSubmit} class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+					<div class="space-y-1">
+						<label class="block text-sm font-medium text-gray-700">Title</label>
+						<input
+							type="text"
+							bind:value={formData.title}
+							required
+							class="w-full px-3 py-2 border border-gray-300 rounded-md text-base"
+						/>
+					</div>
+
+					<div class="space-y-1">
+						<label class="block text-sm font-medium text-gray-700">Type</label>
+						<select
+							bind:value={formData.type}
+							required
+							class="w-full px-3 py-2 border border-gray-300 rounded-md text-base"
+						>
+							<option value="Warehouse">Warehouse</option>
+							<option value="Manufacturing Facility">Manufacturing Facility</option>
+							<option value="Industrial Land">Industrial Land</option>
+						</select>
+					</div>
+
+					<div class="space-y-1">
+						<label class="block text-sm font-medium text-gray-700">Location</label>
+						<input
+							type="text"
+							bind:value={formData.location}
+							required
+							class="w-full px-3 py-2 border border-gray-300 rounded-md text-base"
+						/>
+					</div>
+
+					<div class="space-y-1">
+						<label class="block text-sm font-medium text-gray-700">Price</label>
+						<input
+							type="text"
+							bind:value={formData.price}
+							required
+							placeholder="e.g. ₹20 Cr, Price on Request"
+							class="w-full px-3 py-2 border border-gray-300 rounded-md text-base"
+						/>
+					</div>
+
+					<div class="space-y-1">
+						<label class="block text-sm font-medium text-gray-700">Area (sqft)</label>
+						<input
+							type="number"
+							bind:value={formData.area}
+							required
+							min="0"
+							class="w-full px-3 py-2 border border-gray-300 rounded-md text-base"
+						/>
+					</div>
+
+					<div class="space-y-1">
+						<label class="block text-sm font-medium text-gray-700">Address</label>
+						<input
+							type="text"
+							bind:value={formData.address}
+							required
+							class="w-full px-3 py-2 border border-gray-300 rounded-md text-base"
+						/>
+					</div>
+
+					<div class="sm:col-span-2 space-y-1">
+						<label class="block text-sm font-medium text-gray-700">Description</label>
+						<textarea
+							bind:value={formData.description}
+							required
+							rows="3"
+							class="w-full px-3 py-2 border border-gray-300 rounded-md text-base"
+						></textarea>
+					</div>
+
+					<div class="space-y-1">
+						<label class="block text-sm font-medium text-gray-700">Images</label>
+						<input
+							type="file"
+							accept="image/*"
+							on:change={handleImageChange}
+							required
+							multiple
+							class="w-full text-base file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+						/>
+						{#if formData.images.length > 0}
+							<p class="text-sm text-gray-500 mt-2">{formData.images.length} images selected</p>
+						{/if}
+					</div>
+
+					<div class="flex items-center space-x-4">
+						<label class="flex items-center cursor-pointer">
+							<input
+								type="checkbox"
+								bind:checked={formData.featured}
+								class="form-checkbox h-5 w-5 text-blue-600 rounded"
+							/>
+							<span class="ml-2 text-sm text-gray-700">Featured Property</span>
+						</label>
+					</div>
+
+					<div class="sm:col-span-2">
+						<button
+							type="submit"
+							disabled={loading}
+							class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 text-base font-medium transition-colors duration-200"
+						>
+							<PlusIcon class="w-5 h-5 mr-2" />
+							Add Property
+						</button>
+					</div>
+				</form>
+			</div>
+
+			<!-- Properties List -->
+			<div class="bg-white rounded-lg shadow-sm overflow-hidden">
+				<!-- Mobile View -->
+				<div class="block sm:hidden">
+					{#each properties as property}
+						<div class="p-4 border-b border-gray-200 last:border-b-0">
+							<div class="flex items-start space-x-4">
+								<div class="flex-shrink-0 w-24">
+									<img 
+										src={property.images[0]} 
+										alt={property.title} 
+										class="h-24 w-24 object-cover rounded"
+									/>
+									{#if property.images.length > 1}
+										<p class="text-xs text-gray-500 mt-1 text-center">+{property.images.length - 1} more</p>
 									{/if}
 								</div>
-								<div class="mt-4 flex space-x-4">
-									<button
-										on:click={() => toggleFeatured(property.id, property.featured)}
-										class="text-blue-600 hover:text-blue-900"
-										title={property.featured ? 'Remove from featured' : 'Add to featured'}
-									>
+								<div class="flex-1 min-w-0">
+									<h3 class="text-base font-medium text-gray-900 truncate">{property.title}</h3>
+									<p class="text-sm text-gray-500">{property.type}</p>
+									<div class="mt-2 space-y-1">
+										<p class="text-sm text-gray-900">{property.price}</p>
+										<p class="text-sm text-gray-500">{property.area} sqft</p>
+										<p class="text-sm text-gray-500">{property.location}</p>
+									</div>
+									<div class="mt-3 flex flex-wrap gap-2">
+										<span class="px-2 py-1 text-xs font-semibold rounded-full 
+											{property.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}">
+											{property.status}
+										</span>
 										{#if property.featured}
-											<EyeOffIcon class="h-6 w-6" />
-										{:else}
-											<EyeIcon class="h-6 w-6" />
+											<span class="px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
+												Featured
+											</span>
 										{/if}
-									</button>
-									<button
-										on:click={() => toggleStatus(property.id, property.status)}
-										class="text-yellow-600 hover:text-yellow-900"
-										title={property.status === 'active' ? 'Archive property' : 'Activate property'}
-									>
-										<ArchiveIcon class="h-6 w-6" />
-									</button>
-									<button
-										on:click={() => deleteProperty(property.id)}
-										class="text-red-600 hover:text-red-900"
-										title="Delete property"
-									>
-										<TrashIcon class="h-6 w-6" />
-									</button>
+									</div>
+									<div class="mt-4 flex space-x-4">
+										<button
+											on:click={() => toggleFeatured(property.id, property.featured)}
+											class="text-blue-600 hover:text-blue-900"
+											title={property.featured ? 'Remove from featured' : 'Add to featured'}
+										>
+											{#if property.featured}
+												<EyeOffIcon class="h-6 w-6" />
+											{:else}
+												<EyeIcon class="h-6 w-6" />
+											{/if}
+										</button>
+										<button
+											on:click={() => toggleStatus(property.id, property.status)}
+											class="text-yellow-600 hover:text-yellow-900"
+											title={property.status === 'active' ? 'Archive property' : 'Activate property'}
+										>
+											<ArchiveIcon class="h-6 w-6" />
+										</button>
+										<button
+											on:click={() => deleteProperty(property.id)}
+											class="text-red-600 hover:text-red-900"
+											title="Delete property"
+										>
+											<TrashIcon class="h-6 w-6" />
+										</button>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-				{/each}
-			</div>
+					{/each}
+				</div>
 
-			<!-- Desktop View -->
-			<div class="hidden sm:block overflow-x-auto">
-				<table class="min-w-full divide-y divide-gray-200">
-					<thead class="bg-gray-50">
-						<tr>
-							<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Property</th>
-							<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Details</th>
-							<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-							<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-						</tr>
-					</thead>
-					<tbody class="bg-white divide-y divide-gray-200">
-						{#each properties as property}
-							<tr class="hover:bg-gray-50">
-								<td class="px-6 py-4">
-									<div class="flex items-center">
-										<div class="h-20 w-20 flex-shrink-0 relative group">
-											<img 
-												src={property.images[0]} 
-												alt={property.title} 
-												class="h-20 w-20 object-cover rounded"
-											/>
-											{#if property.images.length > 1}
-												<div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity rounded">
-													<span class="text-white text-sm">+{property.images.length - 1} more</span>
-												</div>
-											{/if}
-										</div>
-										<div class="ml-4">
-											<div class="text-sm font-medium text-gray-900">{property.title}</div>
-											<div class="text-sm text-gray-500">{property.type}</div>
-										</div>
-									</div>
-								</td>
-								<td class="px-6 py-4">
-									<div class="text-sm text-gray-900">{property.price}</div>
-									<div class="text-sm text-gray-500">{property.area} sqft</div>
-									<div class="text-sm text-gray-500">{property.location}</div>
-								</td>
-								<td class="px-6 py-4">
-									<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-										{property.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}">
-										{property.status}
-									</span>
-									{#if property.featured}
-										<span class="ml-2 px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
-											Featured
-										</span>
-									{/if}
-								</td>
-								<td class="px-6 py-4 space-x-2">
-									<button
-										on:click={() => toggleFeatured(property.id, property.featured)}
-										class="text-blue-600 hover:text-blue-900"
-										title={property.featured ? 'Remove from featured' : 'Add to featured'}
-									>
-										{#if property.featured}
-											<EyeOffIcon class="h-5 w-5" />
-										{:else}
-											<EyeIcon class="h-5 w-5" />
-										{/if}
-									</button>
-									<button
-										on:click={() => toggleStatus(property.id, property.status)}
-										class="text-yellow-600 hover:text-yellow-900"
-										title={property.status === 'active' ? 'Archive property' : 'Activate property'}
-									>
-										<ArchiveIcon class="h-5 w-5" />
-									</button>
-									<button
-										on:click={() => deleteProperty(property.id)}
-										class="text-red-600 hover:text-red-900"
-										title="Delete property"
-									>
-										<TrashIcon class="h-5 w-5" />
-									</button>
-								</td>
+				<!-- Desktop View -->
+				<div class="hidden sm:block overflow-x-auto">
+					<table class="min-w-full divide-y divide-gray-200">
+						<thead class="bg-gray-50">
+							<tr>
+								<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Property</th>
+								<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Details</th>
+								<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+								<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
 							</tr>
-						{/each}
-					</tbody>
-				</table>
+						</thead>
+						<tbody class="bg-white divide-y divide-gray-200">
+							{#each properties as property}
+								<tr class="hover:bg-gray-50">
+									<td class="px-6 py-4">
+										<div class="flex items-center">
+											<div class="h-20 w-20 flex-shrink-0 relative group">
+												<img 
+													src={property.images[0]} 
+													alt={property.title} 
+													class="h-20 w-20 object-cover rounded"
+												/>
+												{#if property.images.length > 1}
+													<div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity rounded">
+														<span class="text-white text-sm">+{property.images.length - 1} more</span>
+													</div>
+												{/if}
+											</div>
+											<div class="ml-4">
+												<div class="text-sm font-medium text-gray-900">{property.title}</div>
+												<div class="text-sm text-gray-500">{property.type}</div>
+											</div>
+										</div>
+									</td>
+									<td class="px-6 py-4">
+										<div class="text-sm text-gray-900">{property.price}</div>
+										<div class="text-sm text-gray-500">{property.area} sqft</div>
+										<div class="text-sm text-gray-500">{property.location}</div>
+									</td>
+									<td class="px-6 py-4">
+										<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+											{property.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}">
+											{property.status}
+										</span>
+										{#if property.featured}
+											<span class="ml-2 px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+												Featured
+											</span>
+										{/if}
+									</td>
+									<td class="px-6 py-4 space-x-2">
+										<button
+											on:click={() => toggleFeatured(property.id, property.featured)}
+											class="text-blue-600 hover:text-blue-900"
+											title={property.featured ? 'Remove from featured' : 'Add to featured'}
+										>
+											{#if property.featured}
+												<EyeOffIcon class="h-5 w-5" />
+											{:else}
+												<EyeIcon class="h-5 w-5" />
+											{/if}
+										</button>
+										<button
+											on:click={() => toggleStatus(property.id, property.status)}
+											class="text-yellow-600 hover:text-yellow-900"
+											title={property.status === 'active' ? 'Archive property' : 'Activate property'}
+										>
+											<ArchiveIcon class="h-5 w-5" />
+										</button>
+										<button
+											on:click={() => deleteProperty(property.id)}
+											class="text-red-600 hover:text-red-900"
+											title="Delete property"
+										>
+											<TrashIcon class="h-5 w-5" />
+										</button>
+									</td>
+								</tr>
+							{/each}
+						</tbody>
+					</table>
+				</div>
 			</div>
-		</div>
+		{:else}
+			<!-- Leads Section -->
+			<div class="bg-white rounded-lg shadow-sm overflow-hidden">
+				<div class="overflow-x-auto">
+					<table class="min-w-full divide-y divide-gray-200">
+						<thead class="bg-gray-50">
+							<tr>
+								<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contact</th>
+								<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Message</th>
+								<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+								<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+								<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+							</tr>
+						</thead>
+						<tbody class="bg-white divide-y divide-gray-200">
+							{#each leads as lead}
+								<tr class="hover:bg-gray-50">
+									<td class="px-6 py-4">
+										<div class="text-sm font-medium text-gray-900">{lead.name}</div>
+										<div class="text-sm text-gray-500">{lead.email}</div>
+										<div class="text-sm text-gray-500">{lead.phone}</div>
+									</td>
+									<td class="px-6 py-4">
+										<div class="text-sm text-gray-900 max-w-md whitespace-pre-wrap">{lead.message}</div>
+									</td>
+									<td class="px-6 py-4">
+										<select
+											value={lead.status}
+											on:change={(e) => updateLeadStatus(lead.id, e.currentTarget.value as Lead['status'])}
+											class="text-sm rounded-full px-3 py-1 font-semibold
+												{lead.status === 'new' ? 'bg-blue-100 text-blue-800' : 
+												lead.status === 'contacted' ? 'bg-yellow-100 text-yellow-800' : 
+												'bg-green-100 text-green-800'}"
+										>
+											<option value="new">New</option>
+											<option value="contacted">Contacted</option>
+											<option value="closed">Closed</option>
+										</select>
+									</td>
+									<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+										{new Date(lead.created).toLocaleDateString()}
+									</td>
+									<td class="px-6 py-4">
+										<button
+											on:click={() => deleteLead(lead.id)}
+											class="text-red-600 hover:text-red-900"
+											title="Delete lead"
+										>
+											<TrashIcon class="h-5 w-5" />
+										</button>
+									</td>
+								</tr>
+							{:else}
+								<tr>
+									<td colspan="5" class="px-6 py-4 text-center text-gray-500">
+										No leads found
+									</td>
+								</tr>
+							{/each}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		{/if}
 	</div>
 {/if} 
