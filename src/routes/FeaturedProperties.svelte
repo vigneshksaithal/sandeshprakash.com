@@ -1,7 +1,7 @@
 <script lang="ts">
+import { pb } from '$lib/pocketbase'
 import ArrowRightIcon from 'lucide-svelte/icons/arrow-right'
 import MapPinIcon from 'lucide-svelte/icons/map-pin'
-import { pb } from '$lib/pocketbase'
 
 interface Property {
 	id: string
@@ -20,6 +20,7 @@ interface Property {
 }
 
 let properties: Property[] = []
+// biome-ignore lint/style/useConst: <explanation>
 let filter = 'all'
 
 async function loadProperties() {

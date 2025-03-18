@@ -1,12 +1,12 @@
 <script lang="ts">
-import { pb } from '$lib/pocketbase'
-import { onMount } from 'svelte'
 import { goto } from '$app/navigation'
-import PlusIcon from 'lucide-svelte/icons/plus'
-import TrashIcon from 'lucide-svelte/icons/trash'
+import { pb } from '$lib/pocketbase'
 import ArchiveIcon from 'lucide-svelte/icons/archive'
 import EyeIcon from 'lucide-svelte/icons/eye'
 import EyeOffIcon from 'lucide-svelte/icons/eye-off'
+import PlusIcon from 'lucide-svelte/icons/plus'
+import TrashIcon from 'lucide-svelte/icons/trash'
+import { onMount } from 'svelte'
 
 interface Property {
 	id: string
