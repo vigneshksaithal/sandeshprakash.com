@@ -1,11 +1,11 @@
 <script lang="ts">
-    import Navbar from "./Navbar.svelte";
-    import Hero from "./Hero.svelte";
-    import ExcellenceSection from "./ExcellenceSection.svelte";
-    import FeaturedProperties from "./FeaturedProperties.svelte";
-    import CallToAction from "./CallToAction.svelte";
-    import Testimonials from "./Testimonials.svelte";
-    import Footer from "./Footer.svelte";
+import CallToAction from './CallToAction.svelte'
+import ExcellenceSection from './ExcellenceSection.svelte'
+import FeaturedProperties from './FeaturedProperties.svelte'
+import Footer from './Footer.svelte'
+import Hero from './Hero.svelte'
+import Navbar from './Navbar.svelte'
+import Testimonials from './Testimonials.svelte'
 </script>
 
 <Navbar />

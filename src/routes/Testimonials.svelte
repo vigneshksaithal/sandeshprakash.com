@@ -1,47 +1,49 @@
 <script lang="ts">
-    interface Testimonial {
-        id: string
-        name: string
-        company: string
-        position: string
-        quote: string
-        image: string
-    }
-    
-    const testimonials: Testimonial[] = [
-        {
-            id: '1',
-            name: 'Rahul Sharma',
-            company: 'ABC Manufacturing',
-            position: 'CEO',
-            quote: 'Sandesh helped us find the perfect manufacturing space in record time. Their knowledge of the local market is exceptional and their guidance throughout the process was invaluable.',
-            image: '/images/testimonial-1.jpg'
-        },
-        {
-            id: '2',
-            name: 'Priya Mehta',
-            company: 'XYZ Logistics',
-            position: 'Operations Director',
-            quote: 'The team at Sandesh Prakash Real Estate provided invaluable guidance throughout our warehouse search process. Their attention to detail and understanding of our specific needs made all the difference.',
-            image: '/images/testimonial-2.jpg'
-        }
-    ]
+interface Testimonial {
+	id: string
+	name: string
+	company: string
+	position: string
+	quote: string
+	image: string
+}
 
-    function handleImageError(event: Event) {
-        const img = event.target as HTMLImageElement
-        img.src = '/images/default-avatar.jpg'
-    }
-    
-    // For testimonial rotation
-    let activeIndex = 0;
-    
-    function nextTestimonial() {
-        activeIndex = (activeIndex + 1) % testimonials.length;
-    }
-    
-    function prevTestimonial() {
-        activeIndex = (activeIndex - 1 + testimonials.length) % testimonials.length;
-    }
+const testimonials: Testimonial[] = [
+	{
+		id: '1',
+		name: 'Rahul Sharma',
+		company: 'ABC Manufacturing',
+		position: 'CEO',
+		quote:
+			'Sandesh helped us find the perfect manufacturing space in record time. Their knowledge of the local market is exceptional and their guidance throughout the process was invaluable.',
+		image: '/images/testimonial-1.jpg'
+	},
+	{
+		id: '2',
+		name: 'Priya Mehta',
+		company: 'XYZ Logistics',
+		position: 'Operations Director',
+		quote:
+			'The team at Sandesh Prakash Real Estate provided invaluable guidance throughout our warehouse search process. Their attention to detail and understanding of our specific needs made all the difference.',
+		image: '/images/testimonial-2.jpg'
+	}
+]
+
+function handleImageError(event: Event) {
+	const img = event.target as HTMLImageElement
+	img.src = '/images/default-avatar.jpg'
+}
+
+// For testimonial rotation
+let activeIndex = 0
+
+function nextTestimonial() {
+	activeIndex = (activeIndex + 1) % testimonials.length
+}
+
+function prevTestimonial() {
+	activeIndex = (activeIndex - 1 + testimonials.length) % testimonials.length
+}
 </script>
 
 <div class="py-24 px-6 md:px-16 bg-white relative overflow-hidden">

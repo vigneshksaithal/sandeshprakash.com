@@ -1,15 +1,15 @@
 <script lang="ts">
-    // Animation values
-    let isLoaded = false;
-    
-    // Set isLoaded to true after component is mounted for animations
-    import { onMount } from 'svelte';
-    
-    onMount(() => {
-        setTimeout(() => {
-            isLoaded = true;
-        }, 100);
-    });
+// Animation values
+let isLoaded = false
+
+// Set isLoaded to true after component is mounted for animations
+import { onMount } from 'svelte'
+
+onMount(() => {
+	setTimeout(() => {
+		isLoaded = true
+	}, 100)
+})
 </script>
 
 <div class="relative h-[85vh] w-full overflow-hidden">

@@ -1,9 +1,9 @@
 <script lang="ts">
-    const navLinks = [
-        { label: 'Home', href: '/' },
-        { label: 'About', href: '/about' },
-        { label: 'Contact', href: '/contact' }
-    ]
+const navLinks = [
+	{ label: 'Home', href: '/' },
+	{ label: 'About', href: '/about' },
+	{ label: 'Contact', href: '/contact' }
+]
 </script>
 
 <nav class="bg-gradient-to-r from-[#001233] to-[#062a4f] text-white py-5 px-6 md:px-16 fixed w-full z-50 shadow-lg backdrop-blur-sm bg-opacity-95">

@@ -1,19 +1,19 @@
 <script lang="ts">
-    const quickLinks = [
-        { label: 'Home', href: '/' },
-        { label: 'About Us', href: '/about' },
-        { label: 'Properties', href: '/properties' },
-        { label: 'Contact', href: '/contact' }
-    ]
-    
-    const propertyTypes = [
-        { label: 'Warehouses', href: '/properties/warehouses' },
-        { label: 'Manufacturing Facilities', href: '/properties/manufacturing' },
-        { label: 'Industrial Land', href: '/properties/land' },
-        { label: 'Office Spaces', href: '/properties/office' }
-    ]
-    
-    const currentYear = new Date().getFullYear();
+const quickLinks = [
+	{ label: 'Home', href: '/' },
+	{ label: 'About Us', href: '/about' },
+	{ label: 'Properties', href: '/properties' },
+	{ label: 'Contact', href: '/contact' }
+]
+
+const propertyTypes = [
+	{ label: 'Warehouses', href: '/properties/warehouses' },
+	{ label: 'Manufacturing Facilities', href: '/properties/manufacturing' },
+	{ label: 'Industrial Land', href: '/properties/land' },
+	{ label: 'Office Spaces', href: '/properties/office' }
+]
+
+const currentYear = new Date().getFullYear()
 </script>
 
 <footer class="relative">

@@ -1,61 +1,62 @@
 <script lang="ts">
-    interface Property {
-        id: string
-        type: string
-        featured: boolean
-        location: string
-        name: string
-        price: number
-        size: number
-        address: string
-        image: string
-    }
+interface Property {
+	id: string
+	type: string
+	featured: boolean
+	location: string
+	name: string
+	price: number
+	size: number
+	address: string
+	image: string
+}
 
-    const properties: Property[] = [
-        {
-            id: '1',
-            type: 'Warehouse',
-            featured: true,
-            location: 'Bengaluru',
-            name: 'Dekapere',
-            price: 20,
-            size: 1000,
-            address: 'ID: #ABF7449-efgh-i3fk4-fgh21-12366fgh21k4',
-            image: '/images/warehouse-placeholder.jpg'
-        },
-        {
-            id: '2',
-            type: 'Manufacturing Facility',
-            featured: false,
-            location: 'Electronics City',
-            name: 'TechSpace',
-            price: 35,
-            size: 1800,
-            address: 'ID: #BDF8329-ijkl-m5op6-qrs32-45678tuv32w5',
-            image: '/images/warehouse-placeholder.jpg'
-        },
-        {
-            id: '3',
-            type: 'Industrial Land',
-            featured: true,
-            location: 'Whitefield',
-            name: 'Eastgate Industrial',
-            price: 42,
-            size: 2500,
-            address: 'ID: #CGH9450-xyz1-a2bc3-def43-67890ghi43j6',
-            image: '/images/warehouse-placeholder.jpg'
-        }
-    ]
-    
-    // For property filtering functionality
-    let filter = 'all';
-    $: filteredProperties = filter === 'all' 
-        ? properties 
-        : properties.filter(p => p.type.toLowerCase() === filter.toLowerCase());
-        
-    const changeFilter = (newFilter: string) => {
-        filter = newFilter;
-    }
+const properties: Property[] = [
+	{
+		id: '1',
+		type: 'Warehouse',
+		featured: true,
+		location: 'Bengaluru',
+		name: 'Dekapere',
+		price: 20,
+		size: 1000,
+		address: 'ID: #ABF7449-efgh-i3fk4-fgh21-12366fgh21k4',
+		image: '/images/warehouse-placeholder.jpg'
+	},
+	{
+		id: '2',
+		type: 'Manufacturing Facility',
+		featured: false,
+		location: 'Electronics City',
+		name: 'TechSpace',
+		price: 35,
+		size: 1800,
+		address: 'ID: #BDF8329-ijkl-m5op6-qrs32-45678tuv32w5',
+		image: '/images/warehouse-placeholder.jpg'
+	},
+	{
+		id: '3',
+		type: 'Industrial Land',
+		featured: true,
+		location: 'Whitefield',
+		name: 'Eastgate Industrial',
+		price: 42,
+		size: 2500,
+		address: 'ID: #CGH9450-xyz1-a2bc3-def43-67890ghi43j6',
+		image: '/images/warehouse-placeholder.jpg'
+	}
+]
+
+// For property filtering functionality
+let filter = 'all'
+$: filteredProperties =
+	filter === 'all'
+		? properties
+		: properties.filter((p) => p.type.toLowerCase() === filter.toLowerCase())
+
+const changeFilter = (newFilter: string) => {
+	filter = newFilter
+}
 </script>
 
 <div class="py-24 px-6 md:px-16 bg-gray-50">
