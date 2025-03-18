@@ -137,18 +137,6 @@ const currentYear = new Date().getFullYear()
                             <span>123 Tech Park, Koramangala,<br />Bengaluru, Karnataka 560034</span>
                         </li>
                     </ul>
-                    
-                    <!-- Newsletter sign-up -->
-                    <div class="mt-8 pt-8 border-t border-gray-800">
-                        <h4 class="text-lg font-medium mb-4">Newsletter</h4>
-                        <p class="text-gray-400 mb-4">Subscribe to get updates on our latest properties</p>
-                        <div class="flex">
-                            <input type="email" placeholder="Your email" class="bg-white/10 border border-gray-700 rounded-l-lg px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 flex-grow" />
-                            <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-r-lg transition-colors">
-                                Subscribe
-                            </button>
-                        </div>
-                    </div>
                 </div>
             </div>
             
@@ -167,4 +155,4 @@ const currentYear = new Date().getFullYear()
             </div>
         </div>
     </div>
-</footer> 
+</footer>
