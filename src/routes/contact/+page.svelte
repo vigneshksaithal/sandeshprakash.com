@@ -1,6 +1,51 @@
+<!-- biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> -->
 <script lang="ts">
 import Footer from '../Footer.svelte'
 import Navbar from '../Navbar.svelte'
+import { pb } from '$lib/pocketbase/client'
+import { Mail, Phone, MapPin } from 'lucide-svelte'
+
+let formData = {
+	name: '',
+	email: '',
+	phone: '',
+	subject: '',
+	message: ''
+}
+
+let loading = false
+let success = false
+let error = ''
+
+const handleSubmit = async (e: Event) => {
+	e.preventDefault()
+	loading = true
+	error = ''
+	success = false
+
+	try {
+		await pb.collection('contact_submissions').create({
+			name: formData.name,
+			email: formData.email,
+			phone: formData.phone,
+			message: `${formData.subject}\n\n${formData.message}`
+		})
+
+		success = true
+		formData = {
+			name: '',
+			email: '',
+			phone: '',
+			subject: '',
+			message: ''
+		}
+	} catch (err) {
+		console.error('Failed to submit form:', err)
+		error = 'Failed to submit form. Please try again.'
+	}
+
+	loading = false
+}
 </script>
 
 <Navbar />
@@ -30,9 +75,7 @@ import Navbar from '../Navbar.svelte'
       <!-- Email Card -->
       <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col items-center p-8">
         <div class="bg-blue-700 p-4 rounded-full mb-6">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-          </svg>
+          <Mail class="h-8 w-8 text-white" />
         </div>
         <h3 class="text-xl font-semibold text-gray-800 mb-2">Email Us</h3>
         <p class="text-gray-600 mb-4 text-center">Our team usually responds within 24 hours</p>
@@ -42,9 +85,7 @@ import Navbar from '../Navbar.svelte'
       <!-- Call Card -->
       <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col items-center p-8">
         <div class="bg-blue-700 p-4 rounded-full mb-6">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-          </svg>
+          <Phone class="h-8 w-8 text-white" />
         </div>
         <h3 class="text-xl font-semibold text-gray-800 mb-2">Call Us</h3>
         <p class="text-gray-600 mb-4 text-center">Mon-Fri from 9am to 6pm IST</p>
@@ -54,10 +95,7 @@ import Navbar from '../Navbar.svelte'
       <!-- Visit Card -->
       <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col items-center p-8">
         <div class="bg-blue-700 p-4 rounded-full mb-6">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-          </svg>
+          <MapPin class="h-8 w-8 text-white" />
         </div>
         <h3 class="text-xl font-semibold text-gray-800 mb-2">Visit Us</h3>
         <p class="text-gray-600 mb-4 text-center">Our office is centrally located</p>
@@ -79,13 +117,29 @@ import Navbar from '../Navbar.svelte'
           questions about industrial real estate in Bengaluru, we're here to help.
         </p>
         
-        <form class="space-y-6">
+        {#if success}
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-6" role="alert">
+                <strong class="font-bold">Success!</strong>
+                <span class="block sm:inline"> Thank you for your message. We'll get back to you soon.</span>
+            </div>
+        {/if}
+
+        {#if error}
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-6" role="alert">
+                <strong class="font-bold">Error!</strong>
+                <span class="block sm:inline"> {error}</span>
+            </div>
+        {/if}
+
+        <form class="space-y-6" on:submit={handleSubmit}>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label for="fullName" class="block text-sm font-medium text-blue-100 mb-2">Full Name</label>
               <input 
                 type="text" 
                 id="fullName" 
+                bind:value={formData.name}
+                required
                 class="w-full px-4 py-3 bg-white/5 border border-blue-300/30 rounded-lg text-white placeholder-blue-200/70 focus:outline-none focus:ring-2 focus:ring-blue-300/50"
                 placeholder="Your full name"
               />
@@ -95,6 +149,8 @@ import Navbar from '../Navbar.svelte'
               <input 
                 type="email" 
                 id="email" 
+                bind:value={formData.email}
+                required
                 class="w-full px-4 py-3 bg-white/5 border border-blue-300/30 rounded-lg text-white placeholder-blue-200/70 focus:outline-none focus:ring-2 focus:ring-blue-300/50"
                 placeholder="your.email@example.com" 
               />
@@ -107,6 +163,8 @@ import Navbar from '../Navbar.svelte'
               <input 
                 type="tel" 
                 id="phone" 
+                bind:value={formData.phone}
+                required
                 class="w-full px-4 py-3 bg-white/5 border border-blue-300/30 rounded-lg text-white placeholder-blue-200/70 focus:outline-none focus:ring-2 focus:ring-blue-300/50"
                 placeholder="Your phone number" 
               />
@@ -116,6 +174,8 @@ import Navbar from '../Navbar.svelte'
               <input 
                 type="text" 
                 id="subject" 
+                bind:value={formData.subject}
+                required
                 class="w-full px-4 py-3 bg-white/5 border border-blue-300/30 rounded-lg text-white placeholder-blue-200/70 focus:outline-none focus:ring-2 focus:ring-blue-300/50"
                 placeholder="What is this regarding?" 
               />
@@ -127,6 +187,8 @@ import Navbar from '../Navbar.svelte'
             <textarea 
               id="message" 
               rows="6" 
+              bind:value={formData.message}
+              required
               class="w-full px-4 py-3 bg-white/5 border border-blue-300/30 rounded-lg text-white placeholder-blue-200/70 focus:outline-none focus:ring-2 focus:ring-blue-300/50 resize-none"
               placeholder="Tell us about your requirements..."
             ></textarea>
@@ -134,9 +196,10 @@ import Navbar from '../Navbar.svelte'
           
           <button 
             type="submit"
-            class="px-6 py-3 bg-white text-blue-900 font-semibold rounded-lg hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-white/50 transition-colors duration-300"
+            disabled={loading}
+            class="px-6 py-3 bg-white text-blue-900 font-semibold rounded-lg hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-white/50 transition-colors duration-300 disabled:bg-gray-300 disabled:cursor-not-allowed"
           >
-            Send Message
+            {loading ? 'Sending...' : 'Send Message'}
           </button>
         </form>
       </div>
