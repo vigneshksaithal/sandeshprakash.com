@@ -118,12 +118,18 @@ function handleMouseMove(event: MouseEvent) {
                         © {currentYear} Sandesh Prakash. All rights reserved.
                     </p>
                     <div class="flex gap-8">
-                        {#each ['Privacy Policy', 'Terms of Service', 'Sitemap'] as link}
-                            <a href={`/${link.toLowerCase().replace(/\s+/g, '-')}`} 
-                               class="text-white hover:text-[var(--color-accent)] text-sm transition-colors duration-300">
-                                {link}
-                            </a>
-                        {/each}
+                        <a href="/privacy-policy.txt" 
+                           class="text-white hover:text-[var(--color-accent)] text-sm transition-colors duration-300">
+                            Privacy Policy
+                        </a>
+                        <a href="/terms.txt" 
+                           class="text-white hover:text-[var(--color-accent)] text-sm transition-colors duration-300">
+                            Terms of Service
+                        </a>
+                        <a href="/sitemap.xml" 
+                           class="text-white hover:text-[var(--color-accent)] text-sm transition-colors duration-300">
+                            Sitemap
+                        </a>
                     </div>
                 </div>
             </div>
