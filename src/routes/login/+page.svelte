@@ -1,6 +1,7 @@
 <script lang="ts">
 import { goto } from '$app/navigation'
 import { pb } from '$lib/pocketbase'
+import { onMount } from 'svelte'
 
 // biome-ignore lint/style/useConst: <explanation>
 let email = ''
@@ -8,6 +9,12 @@ let email = ''
 let password = ''
 let error = ''
 let isLoading = false
+
+onMount(() => {
+	if (pb.authStore.isValid) {
+		goto('/dashboard')
+	}
+})
 
 async function handleLogin() {
 	try {
