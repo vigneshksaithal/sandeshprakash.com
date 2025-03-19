@@ -25,7 +25,7 @@ onMount(() => {
         <div class="flex items-center justify-between h-16">
             <!-- Logo -->
             <a href="/" class="flex items-center">
-                <span class="text-lg font-bold text-[var(--color-primary)]">Sandesh Prakash</span>
+                <span class="text-xl font-bold text-[var(--color-primary)]">Sandesh Prakash</span>
             </a>
 
             <!-- Desktop Navigation -->
@@ -44,7 +44,7 @@ onMount(() => {
                 </a>
                 <a 
                     href="/contact" 
-                    class="text-[var(--color-text-dark)] hover:text-[var(--color-primary)] transition-colors font-medium"
+                    class="px-4 py-2 bg-[var(--color-primary)] text-white rounded-md hover:bg-[var(--color-primary-dark)] transition-colors font-medium"
                 >
                     Contact
                 </a>
@@ -101,7 +101,7 @@ onMount(() => {
                     </a>
                     <a 
                         href="/contact" 
-                        class="px-4 py-2 text-[var(--color-text-dark)] hover:text-[var(--color-primary)] transition-colors font-medium"
+                        class="px-4 py-2 bg-[var(--color-primary)] text-white rounded-md hover:bg-[var(--color-primary-dark)] transition-colors font-medium"
                         on:click={() => isMenuOpen = false}
                     >
                         Contact
