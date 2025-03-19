@@ -1,5 +1,5 @@
 <script lang="ts">
-import { pb } from '$lib/pocketbase/client'
+import { pb } from '$lib/pocketbase'
 import MailIcon from 'lucide-svelte/icons/mail'
 import MapPinIcon from 'lucide-svelte/icons/map-pin'
 import PhoneIcon from 'lucide-svelte/icons/phone'

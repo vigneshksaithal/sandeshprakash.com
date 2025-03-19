@@ -1,6 +1,6 @@
 <script lang="ts">
 import { goto } from '$app/navigation'
-import { pb } from '$lib/pocketbase/client'
+import { pb } from '$lib/pocketbase'
 
 // biome-ignore lint/style/useConst: <explanation>
 let email = ''
