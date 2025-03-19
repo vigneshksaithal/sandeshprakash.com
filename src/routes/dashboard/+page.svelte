@@ -5,6 +5,7 @@ import EyeIcon from 'lucide-svelte/icons/eye'
 import EyeOffIcon from 'lucide-svelte/icons/eye-off'
 import PlusIcon from 'lucide-svelte/icons/plus'
 import TrashIcon from 'lucide-svelte/icons/trash'
+import LogOutIcon from 'lucide-svelte/icons/log-out'
 import { onMount } from 'svelte'
 import { fade, scale } from 'svelte/transition'
 
@@ -193,11 +194,25 @@ function handleImageChange(event: Event) {
 		formData.images = Array.from(input.files)
 	}
 }
+
+function handleLogout() {
+	pb.authStore.clear()
+	goto('/login')
+}
 </script>
 
 {#if isAuthenticated}
 	<div class="container mx-auto px-4 py-8 max-w-7xl">
-		<h1 class="text-2xl sm:text-3xl font-bold mb-8">Property Dashboard</h1>
+		<div class="flex justify-between items-center mb-8">
+			<h1 class="text-2xl sm:text-3xl font-bold">Property Dashboard</h1>
+			<button
+				on:click={handleLogout}
+				class="inline-flex items-center px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors duration-200"
+			>
+				<LogOutIcon class="w-5 h-5 mr-2" />
+				Logout
+			</button>
+		</div>
 
 		{#if error}
 			<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
