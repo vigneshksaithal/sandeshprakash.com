@@ -3,20 +3,43 @@ import { pb } from '$lib/pocketbase/client'
 import MailIcon from 'lucide-svelte/icons/mail'
 import MapPinIcon from 'lucide-svelte/icons/map-pin'
 import PhoneIcon from 'lucide-svelte/icons/phone'
+import { onMount } from 'svelte'
 import Footer from '../Footer.svelte'
 import Navbar from '../Navbar.svelte'
 
+interface Property {
+	id: string
+	title: string
+}
+
+let properties: Property[] = []
 let formData = {
 	name: '',
 	email: '',
 	phone: '',
 	subject: '',
-	message: ''
+	message: '',
+	property: ''
 }
 
 let loading = false
 let success = false
 let error = ''
+
+onMount(async () => {
+	try {
+		const records = await pb
+			.collection('properties')
+			.getList<Property>(1, 100, {
+				fields: 'id,title',
+				filter: 'status = "active"'
+			})
+		properties = records.items
+	} catch (err) {
+		console.error('Failed to load properties:', err)
+		error = 'Failed to load properties'
+	}
+})
 
 const handleSubmit = async (e: Event) => {
 	e.preventDefault()
@@ -29,7 +52,8 @@ const handleSubmit = async (e: Event) => {
 			name: formData.name,
 			email: formData.email,
 			phone: formData.phone,
-			message: `${formData.subject}\n\n${formData.message}`
+			message: `${formData.subject}\n\n${formData.message}`,
+			property: formData.property || null
 		})
 
 		success = true
@@ -38,7 +62,8 @@ const handleSubmit = async (e: Event) => {
 			email: '',
 			phone: '',
 			subject: '',
-			message: ''
+			message: '',
+			property: ''
 		}
 	} catch (err) {
 		console.error('Failed to submit form:', err)
@@ -165,6 +190,20 @@ const handleSubmit = async (e: Event) => {
                   placeholder="What is this about?"
                 />
               </div>
+            </div>
+
+            <div>
+              <label for="property" class="block text-[var(--color-text-dark)] mb-2">Select Property (Optional)</label>
+              <select
+                id="property"
+                bind:value={formData.property}
+                class="w-full px-4 py-2 border border-[var(--color-gray-medium)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
+              >
+                <option value="">Select a property</option>
+                {#each properties as property}
+                  <option value={property.id}>{property.title}</option>
+                {/each}
+              </select>
             </div>
 
             <div>
