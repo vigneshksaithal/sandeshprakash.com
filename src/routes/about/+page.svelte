@@ -78,7 +78,7 @@ onMount(() => {
     <div class="grid md:grid-cols-2 gap-12 items-center">
       <div class="space-y-6">
         <span class="text-[var(--color-primary)] font-medium">Our Story</span>
-        <h2 class="text-4xl font-bold text-[var(--color-text-dark)]">Leading Industrial and Commercial Real Estate Experts</h2>
+        <h2 class="text-4xl font-bold text-[var(--color-text-dark)] leading-12">Leading Industrial and Commercial Real Estate Experts</h2>
         <p class="text-[var(--color-gray-medium)] leading-relaxed">
           Sandesh Prakash is a specialized real estate firm focusing exclusively on industrial and commercial properties, including warehouses, manufacturing facilities, office spaces, and commercial land in Bengaluru.
         </p>
