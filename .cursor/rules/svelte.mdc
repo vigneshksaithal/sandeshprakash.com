@@ -23,6 +23,7 @@ alwaysApply: false
 12. While coding HTML components, ONLY use Tailwind CSS classes for styling. Don't use style tags.
 13. Use responsive design i.e. it should look good on mobile screens.
 14. Use Svelte 5 - Runes syntax like using onclick instead of on:click.
+15. Use arrow functions while declaring functions.
 
 # General Preferences
 1. Follow the user's requirements carefully & to the letter.

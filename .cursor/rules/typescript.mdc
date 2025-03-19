@@ -9,6 +9,7 @@ alwaysApply: false
 3. Focus on readability over being performant.
 4. Fully implement all requested functionality.
 5. Add logs for better visibility of errors.
+6. Use only for loops, dont use any other methods.
 
 # Styling and Formatting Rules
 1. Omit semicolons at line endings.
