@@ -1,4 +1,6 @@
 <script lang="ts">
+import EyeIcon from 'lucide-svelte/icons/eye'
+import TargetIcon from 'lucide-svelte/icons/target'
 import { onMount } from 'svelte'
 import CallToAction from '../CallToAction.svelte'
 import Footer from '../Footer.svelte'
@@ -9,11 +11,11 @@ let imgSrc = '/industrial-building.jpg'
 let mouseX = 0
 let mouseY = 0
 
-function handleImageError() {
+const handleImageError = () => {
 	imgSrc = '/building.jpg'
 }
 
-function handleMouseMove(event: MouseEvent) {
+const handleMouseMove = (event: MouseEvent) => {
 	const target = event.currentTarget as HTMLElement
 	const rect = target.getBoundingClientRect()
 	mouseX = ((event.clientX - rect.left) / rect.width - 0.5) * 20
@@ -29,7 +31,7 @@ onMount(() => {
 
 <main class="min-h-screen">
   <!-- Hero Section with Blue Background -->
-  <div class="relative bg-[var(--color-primary)] text-[var(--color-text)] py-24 overflow-hidden" on:mousemove={handleMouseMove}>
+  <div class="relative bg-[var(--color-primary)] text-[var(--color-text)] py-24 overflow-hidden" onmousemove={handleMouseMove}>
     <!-- Animated shapes -->
     <div class="absolute inset-0">
       <!-- Large circle -->
@@ -76,7 +78,7 @@ onMount(() => {
     <div class="grid md:grid-cols-2 gap-12 items-center">
       <div class="space-y-6">
         <span class="text-[var(--color-primary)] font-medium">Our Story</span>
-        <h2 class="text-3xl font-bold text-[var(--color-text-dark)]">Leading Industrial and Commercial Real Estate Experts in Bengaluru</h2>
+        <h2 class="text-4xl font-bold text-[var(--color-text-dark)]">Leading Industrial and Commercial Real Estate Experts</h2>
         <p class="text-[var(--color-gray-medium)] leading-relaxed">
           Sandesh Prakash is a specialized real estate firm focusing exclusively on industrial and commercial properties, including warehouses, manufacturing facilities, office spaces, and commercial land in Bengaluru.
         </p>
@@ -89,25 +91,35 @@ onMount(() => {
           src={imgSrc}
           alt="Industrial Building" 
           class="w-full h-full object-cover"
-          on:error={handleImageError}
+          onerror={handleImageError}
         />
       </div>
     </div>
   </div>
 
   <!-- Mission and Vision Section -->
-  <div class="bg-[var(--color-gray-light)] py-24">
+  <div class="bg-white py-24">
     <div class="container mx-auto px-6 md:px-16">
       <div class="grid md:grid-cols-2 gap-12">
-        <div class="bg-[var(--color-card-bg)] p-8 rounded-2xl shadow-[var(--shadow-md)]">
-          <h3 class="text-2xl font-bold text-[var(--color-text-dark)] mb-4">Our Mission</h3>
-          <p class="text-[var(--color-gray-medium)]">
+        <div class="group bg-white p-8 rounded-2xl shadow-[var(--shadow-lg)] border border-[var(--color-primary-light)]/20 transition-all duration-500 hover:shadow-[var(--shadow-xl)]">
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-primary-light)] flex items-center justify-center">
+              <TargetIcon class="w-6 h-6 text-white" />
+            </div>
+            <h3 class="text-2xl font-bold text-[var(--color-text-dark)]">Our Mission</h3>
+          </div>
+          <p class="text-[var(--color-gray-medium)] leading-relaxed">
             To deliver exceptional industrial and commercial real estate solutions through market expertise, transparency, and personalized service that exceeds client expectations.
           </p>
         </div>
-        <div class="bg-[var(--color-card-bg)] p-8 rounded-2xl shadow-[var(--shadow-md)]">
-          <h3 class="text-2xl font-bold text-[var(--color-text-dark)] mb-4">Our Vision</h3>
-          <p class="text-[var(--color-gray-medium)]">
+        <div class="group bg-white p-8 rounded-2xl shadow-[var(--shadow-lg)] border border-[var(--color-primary-light)]/20 transition-all duration-500 hover:shadow-[var(--shadow-xl)]">
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-primary-light)] flex items-center justify-center">
+              <EyeIcon class="w-6 h-6 text-white" />
+            </div>
+            <h3 class="text-2xl font-bold text-[var(--color-text-dark)]">Our Vision</h3>
+          </div>
+          <p class="text-[var(--color-gray-medium)] leading-relaxed">
             To be Bengaluru's most trusted advisor in industrial and commercial real estate, recognized for our deep market knowledge and unwavering commitment to client success.
           </p>
         </div>
