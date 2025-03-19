@@ -2,6 +2,7 @@
 import { onMount } from 'svelte'
 
 let isScrolled = false
+// biome-ignore lint/style/useConst: <explanation>
 let isMenuOpen = false
 
 function handleScroll() {
@@ -46,12 +47,6 @@ onMount(() => {
                     class="text-[var(--color-text-dark)] hover:text-[var(--color-primary)] transition-colors font-medium"
                 >
                     Contact
-                </a>
-                <a 
-                    href="/dashboard" 
-                    class="px-4 py-2 bg-[var(--color-primary)] text-white rounded-md hover:bg-[var(--color-primary-dark)] transition-colors"
-                >
-                    Dashboard
                 </a>
             </div>
 
@@ -110,13 +105,6 @@ onMount(() => {
                         on:click={() => isMenuOpen = false}
                     >
                         Contact
-                    </a>
-                    <a 
-                        href="/dashboard" 
-                        class="mx-4 py-2 bg-[var(--color-primary)] text-white text-center rounded-md hover:bg-[var(--color-primary-dark)] transition-colors"
-                        on:click={() => isMenuOpen = false}
-                    >
-                        Dashboard
                     </a>
                 </div>
             </div>

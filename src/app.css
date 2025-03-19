@@ -1,17 +1,17 @@
 @import "tailwindcss";
 
 :root {
-	--color-primary: #0062FF;
-	--color-primary-dark: #004ECC;
-	--color-primary-light: #3B82F6;
-	--color-secondary: #0080FF;
-	--color-accent: #60A5FA;
-	--color-background: #FFFFFF;
-	--color-card-bg: #FFFFFF;
-	--color-text: #FFFFFF;
-	--color-text-dark: #1E3A8A;
-	--color-gray-light: #F0F9FF;
-	--color-gray-medium: #64748B;
+	--color-primary: #0062ff;
+	--color-primary-dark: #004ecc;
+	--color-primary-light: #3b82f6;
+	--color-secondary: #0080ff;
+	--color-accent: #60a5fa;
+	--color-background: #ffffff;
+	--color-card-bg: #ffffff;
+	--color-text: #ffffff;
+	--color-text-dark: #1e3a8a;
+	--color-gray-light: #f0f9ff;
+	--color-gray-medium: #64748b;
 	--color-gray-dark: #334155;
 
 	/* Shadows */
@@ -22,21 +22,9 @@
 	--shadow-hover: 0 12px 16px rgba(0, 98, 255, 0.15);
 
 	/* Gradients */
-	--gradient-primary: linear-gradient(
-		135deg,
-		#0062FF 0%,
-		#3B82F6 100%
-	);
-	--gradient-accent: linear-gradient(
-		135deg,
-		#0080FF 0%,
-		#60A5FA 100%
-	);
-	--gradient-dark: linear-gradient(
-		135deg,
-		#004ECC 0%,
-		#0062FF 100%
-	);
+	--gradient-primary: linear-gradient(135deg, #0062ff 0%, #3b82f6 100%);
+	--gradient-accent: linear-gradient(135deg, #0080ff 0%, #60a5fa 100%);
+	--gradient-dark: linear-gradient(135deg, #004ecc 0%, #0062ff 100%);
 
 	/* Transitions */
 	--transition-fast: 150ms ease-in-out;
