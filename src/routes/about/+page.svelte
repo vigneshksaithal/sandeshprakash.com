@@ -100,7 +100,3 @@ onMount(() => {
 </main>
 
 <Footer />
-
-<style>
-  /* Add any component-specific styles here */
-</style>
