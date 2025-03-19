@@ -6,9 +6,18 @@ import Navbar from '../Navbar.svelte'
 
 let isVisible = false
 let imgSrc = '/industrial-building.jpg'
+let mouseX = 0
+let mouseY = 0
 
 function handleImageError() {
 	imgSrc = '/building.jpg'
+}
+
+function handleMouseMove(event: MouseEvent) {
+	const target = event.currentTarget as HTMLElement
+	const rect = target.getBoundingClientRect()
+	mouseX = ((event.clientX - rect.left) / rect.width - 0.5) * 20
+	mouseY = ((event.clientY - rect.top) / rect.height - 0.5) * 20
 }
 
 onMount(() => {
@@ -20,8 +29,42 @@ onMount(() => {
 
 <main class="min-h-screen">
   <!-- Hero Section with Blue Background -->
-  <div class="bg-[var(--color-primary)] text-[var(--color-text)] py-24">
-    <div class="container mx-auto px-6 md:px-16 text-center">
+  <div class="relative bg-[var(--color-primary)] text-[var(--color-text)] py-24 overflow-hidden" on:mousemove={handleMouseMove}>
+    <!-- Animated shapes -->
+    <div class="absolute inset-0">
+      <!-- Large circle -->
+      <div 
+        class="absolute -top-1/4 -right-1/4 w-[40rem] h-[40rem] rounded-full border border-white/10"
+        style="transform: translate3d({mouseX * 0.8}px, {mouseY * 0.8}px, 0) rotate(15deg)"
+      ></div>
+      
+      <!-- Medium circle -->
+      <div 
+        class="absolute -bottom-1/4 -left-1/4 w-[30rem] h-[30rem] rounded-full border border-white/10"
+        style="transform: translate3d({mouseX * 0.6}px, {mouseY * 0.6}px, 0) rotate(-15deg)"
+      ></div>
+      
+      <!-- Small circle -->
+      <div 
+        class="absolute top-1/3 left-1/4 w-[20rem] h-[20rem] rounded-full bg-white/5"
+        style="transform: translate3d({mouseX * 0.4}px, {mouseY * 0.4}px, 0)"
+      ></div>
+
+      <!-- Square -->
+      <div 
+        class="absolute bottom-1/3 right-1/4 w-[25rem] h-[25rem] rotate-45 border border-white/10"
+        style="transform: translate3d({mouseX * 0.7}px, {mouseY * 0.7}px, 0)"
+      ></div>
+
+      <!-- Floating dots -->
+      <div class="absolute inset-0 opacity-10"
+           style="background-image: radial-gradient(circle at 1rem 1rem, var(--color-text) 0.15rem, transparent 0.15rem);
+                  background-size: 4rem 4rem;
+                  transform: translate3d({mouseX * 0.3}px, {mouseY * 0.3}px, 0)">
+      </div>
+    </div>
+
+    <div class="container mx-auto px-6 md:px-16 text-center relative">
       <span class="inline-block px-4 py-1.5 bg-white/10 rounded-full text-sm mb-6">About Us</span>
       <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">We're Sandesh Prakash</h1>
       <p class="text-xl opacity-90">Specialized Industrial and Commercial Real Estate Solutions</p>
