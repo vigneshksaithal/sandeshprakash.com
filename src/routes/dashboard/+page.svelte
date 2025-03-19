@@ -31,6 +31,10 @@ interface Lead {
 	message: string
 	created: string
 	status: 'new' | 'contacted' | 'closed'
+	property: string
+	expand?: {
+		property: Property
+	}
 }
 
 let properties: Property[] = []
@@ -87,7 +91,8 @@ async function loadLeads() {
 		const records = await pb
 			.collection('contact_submissions')
 			.getList<Lead>(1, 50, {
-				sort: '-created'
+				sort: '-created',
+				expand: 'property'
 			})
 		leads = records.items
 	} catch (err) {
@@ -519,6 +524,11 @@ function handleImageChange(event: Event) {
 									</td>
 									<td class="px-6 py-4">
 										<div class="text-sm text-gray-900 max-w-md whitespace-pre-wrap">{lead.message}</div>
+										{#if lead.expand?.property}
+											<div class="mt-2 inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-[var(--color-primary)]/5 text-[var(--color-primary)]">
+												Property: {lead.expand.property.title}
+											</div>
+										{/if}
 									</td>
 									<td class="px-6 py-4">
 										<select
