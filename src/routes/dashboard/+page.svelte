@@ -287,16 +287,6 @@ function handleLogout() {
 							</div>
 
 							<div class="space-y-1">
-								<label class="block text-sm font-medium text-gray-700">Location</label>
-								<input
-									type="text"
-									bind:value={formData.location}
-									required
-									class="w-full px-3 py-2 border border-gray-300 rounded-md text-base"
-								/>
-							</div>
-
-							<div class="space-y-1">
 								<label class="block text-sm font-medium text-gray-700">Price</label>
 								<input
 									type="text"
