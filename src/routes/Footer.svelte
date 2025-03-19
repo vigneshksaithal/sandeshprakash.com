@@ -148,12 +148,12 @@ const currentYear = new Date().getFullYear()
                     </p>
                     <div class="flex space-x-6">
                         <a
-                            href="/privacy-policy"
+                            href="/privacy-policy.txt"
                             class="text-gray-500 hover:text-white text-sm"
                             >Privacy Policy</a
                         >
                         <a
-                            href="/terms"
+                            href="/terms.txt"
                             class="text-gray-500 hover:text-white text-sm"
                             >Terms of Service</a
                         >
