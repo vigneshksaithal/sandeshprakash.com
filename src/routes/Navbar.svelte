@@ -25,7 +25,7 @@ onMount(() => {
         <div class="flex items-center justify-between h-16">
             <!-- Logo -->
             <a href="/" class="flex items-center">
-                <span class="text-xl font-bold text-[var(--color-primary)]">Sandesh Prakash</span>
+                <span class="text-2xl font-bold text-[var(--color-primary)]">Sandesh Prakash</span>
             </a>
 
             <!-- Desktop Navigation -->
