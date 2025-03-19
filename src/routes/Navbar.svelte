@@ -15,7 +15,7 @@ onMount(() => {
 })
 </script>
 
-<svelte:window on:scroll={handleScroll} />
+<svelte:window onscroll={handleScroll} />
 
 <header 
     class="fixed top-0 left-0 right-0 z-50 bg-white"
@@ -53,7 +53,7 @@ onMount(() => {
             <!-- Mobile Menu Button -->
             <button 
                 class="md:hidden p-2"
-                on:click={() => isMenuOpen = !isMenuOpen}
+                onclick={() => isMenuOpen = !isMenuOpen}
                 aria-label="Toggle menu"
             >
                 <svg 
@@ -88,21 +88,21 @@ onMount(() => {
                     <a 
                         href="/properties" 
                         class="px-4 py-2 text-[var(--color-text-dark)] hover:text-[var(--color-primary)] transition-colors font-medium"
-                        on:click={() => isMenuOpen = false}
+                        onclick={() => isMenuOpen = false}
                     >
                         Properties
                     </a>
                     <a 
                         href="/about" 
                         class="px-4 py-2 text-[var(--color-text-dark)] hover:text-[var(--color-primary)] transition-colors font-medium"
-                        on:click={() => isMenuOpen = false}
+                        onclick={() => isMenuOpen = false}
                     >
                         About
                     </a>
                     <a 
                         href="/contact" 
                         class="px-4 py-2 bg-[var(--color-primary)] text-white rounded-md hover:bg-[var(--color-primary-dark)] transition-colors font-medium"
-                        on:click={() => isMenuOpen = false}
+                        onclick={() => isMenuOpen = false}
                     >
                         Contact
                     </a>
