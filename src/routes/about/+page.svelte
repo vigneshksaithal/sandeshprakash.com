@@ -7,7 +7,7 @@ import Footer from '../Footer.svelte'
 import Navbar from '../Navbar.svelte'
 
 let isVisible = false
-let imgSrc = '/industrial-building.jpg'
+let imgSrc = '/building.jpg'
 let mouseX = 0
 let mouseY = 0
 
