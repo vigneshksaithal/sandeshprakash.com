@@ -10,7 +10,6 @@ const navLinks = [
     <div class="container mx-auto flex justify-between items-center">
         <a href="/" class="text-white font-bold text-xl relative group">
             <span class="inline-block transition-transform group-hover:translate-x-1 duration-300">Sandesh Prakash</span>
-            <span class="text-blue-400 ml-1">Real Estate</span>
             <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-400 transition-all duration-300 group-hover:w-full"></span>
         </a>
         
