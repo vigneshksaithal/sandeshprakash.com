@@ -10,7 +10,7 @@ function handleMouseMove(event: MouseEvent) {
 }
 </script>
 
-<div class="relative py-32 overflow-hidden bg-[var(--color-primary-dark)]" on:mousemove={handleMouseMove}>
+<div class="relative py-32 overflow-hidden bg-[var(--color-primary-dark)]" onmousemove={handleMouseMove}>
     <!-- Animated gradient background -->
     <div class="absolute inset-0 bg-gradient-to-br from-[var(--color-primary-dark)] via-[var(--color-primary)] to-[var(--color-secondary)] opacity-90 animate-gradient"></div>
     
