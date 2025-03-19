@@ -8,8 +8,7 @@ let isVisible = false
 let imgSrc = '/industrial-building.jpg'
 
 function handleImageError() {
-	imgSrc =
-		'https://images.unsplash.com/photo-1565976469782-17b9b75a5f3f?q=80&w=2574&auto=format&fit=crop'
+	imgSrc = '/building.jpg'
 }
 
 onMount(() => {
