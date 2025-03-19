@@ -7,12 +7,6 @@ import MapPinIcon from 'lucide-svelte/icons/map-pin'
 import PhoneIcon from 'lucide-svelte/icons/phone'
 import TwitterIcon from 'lucide-svelte/icons/twitter'
 
-const quickLinks = [
-	{ label: 'Home', href: '/' },
-	{ label: 'About Us', href: '/about' },
-	{ label: 'Contact', href: '/contact' }
-]
-
 const currentYear = new Date().getFullYear()
 </script>
 
@@ -24,17 +18,16 @@ const currentYear = new Date().getFullYear()
         <div class="container mx-auto px-6 md:px-16">
             <div class="grid grid-cols-1 md:grid-cols-12 gap-10 mb-16">
                 <!-- Company info -->
-                <div class="md:col-span-4">
+                <div class="md:col-span-6">
                     <a href="/" class="inline-block mb-6">
                         <h3 class="text-2xl font-bold">
                             <span class="text-white">Sandesh Prakash</span>
-                            <span class="text-blue-400">Real Estate</span>
                         </h3>
                     </a>
                     <p class="text-gray-400 mb-8 leading-relaxed">
-                        Bengaluru's premier industrial real estate firm
-                        specializing in warehouses, manufacturing facilities,
-                        and industrial land.
+                        Bengaluru's premier industrial and commercial real estate agency,
+                        specializing in buying, selling and renting of warehouses,
+                        manufacturing facilities, commercial spaces and industrial land.
                     </p>
 
                     <!-- Social media -->
@@ -70,31 +63,8 @@ const currentYear = new Date().getFullYear()
                     </div>
                 </div>
 
-                <!-- Quick Links -->
-                <div class="md:col-span-4">
-                    <h4 class="text-lg font-medium mb-6 flex items-center">
-                        <span class="w-6 h-[2px] bg-blue-400 mr-2"></span>
-                        Quick Links
-                    </h4>
-                    <ul class="space-y-3">
-                        {#each quickLinks as link}
-                            <li>
-                                <a
-                                    href={link.href}
-                                    class="text-gray-400 hover:text-white transition-colors duration-300 flex items-center group"
-                                >
-                                    <span
-                                        class="w-0 h-[1px] bg-blue-400 mr-0 transition-all duration-300 group-hover:w-3 group-hover:mr-2"
-                                    ></span>
-                                    {link.label}
-                                </a>
-                            </li>
-                        {/each}
-                    </ul>
-                </div>
-
                 <!-- Contact Info -->
-                <div class="md:col-span-4">
+                <div class="md:col-span-6">
                     <h4 class="text-lg font-medium mb-6 flex items-center">
                         <span class="w-6 h-[2px] bg-blue-400 mr-2"></span>
                         Contact Us
@@ -143,7 +113,7 @@ const currentYear = new Date().getFullYear()
                     class="flex flex-col md:flex-row justify-between items-center"
                 >
                     <p class="text-gray-500 text-sm mb-4 md:mb-0">
-                        © {currentYear} Sandesh Prakash Real Estate. All rights
+                        © {currentYear} Sandesh Prakash. All rights
                         reserved.
                     </p>
                     <div class="flex space-x-6">
