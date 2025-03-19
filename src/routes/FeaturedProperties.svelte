@@ -3,7 +3,7 @@ import { pb } from '$lib/pocketbase'
 import ArrowRightIcon from 'lucide-svelte/icons/arrow-right'
 import MapPinIcon from 'lucide-svelte/icons/map-pin'
 import { onMount } from 'svelte'
-import { fade, fly } from 'svelte/transition'
+import { fly } from 'svelte/transition'
 
 // Define features type
 interface PropertyFeatures {
