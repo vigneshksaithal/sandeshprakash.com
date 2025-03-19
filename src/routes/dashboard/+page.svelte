@@ -215,13 +215,13 @@ function handleImageChange(event: Event) {
 		<!-- Tab Navigation -->
 		<div class="flex space-x-4 mb-8">
 			<button
-				class="px-6 py-2 rounded-lg font-medium transition-colors duration-200 {activeTab === 'properties' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}"
+				class="px-6 py-2 rounded-lg font-medium transition-colors duration-200 {activeTab === 'properties' ? 'bg-[var(--color-primary)] text-white' : 'bg-[var(--color-gray-light)] text-[var(--color-gray-dark)] hover:bg-[var(--color-gray-medium)]'}"
 				on:click={() => activeTab = 'properties'}
 			>
 				Properties
 			</button>
 			<button
-				class="px-6 py-2 rounded-lg font-medium transition-colors duration-200 {activeTab === 'leads' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}"
+				class="px-6 py-2 rounded-lg font-medium transition-colors duration-200 {activeTab === 'leads' ? 'bg-[var(--color-primary)] text-white' : 'bg-[var(--color-gray-light)] text-[var(--color-gray-dark)] hover:bg-[var(--color-gray-medium)]'}"
 				on:click={() => activeTab = 'leads'}
 			>
 				Leads
@@ -316,7 +316,7 @@ function handleImageChange(event: Event) {
 							on:change={handleImageChange}
 							required
 							multiple
-							class="w-full text-base file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+							class="w-full text-base file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-[var(--color-primary)]/5 file:text-[var(--color-primary)] hover:file:bg-[var(--color-primary)]/10"
 						/>
 						{#if formData.images.length > 0}
 							<p class="text-sm text-gray-500 mt-2">{formData.images.length} images selected</p>
@@ -328,7 +328,7 @@ function handleImageChange(event: Event) {
 							<input
 								type="checkbox"
 								bind:checked={formData.featured}
-								class="form-checkbox h-5 w-5 text-blue-600 rounded"
+								class="form-checkbox h-5 w-5 text-[var(--color-primary)] rounded"
 							/>
 							<span class="ml-2 text-sm text-gray-700">Featured Property</span>
 						</label>
@@ -338,7 +338,7 @@ function handleImageChange(event: Event) {
 						<button
 							type="submit"
 							disabled={loading}
-							class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 text-base font-medium transition-colors duration-200"
+							class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 bg-[var(--color-primary)] text-white rounded-md hover:bg-[var(--color-primary-light)] disabled:opacity-50 text-base font-medium transition-colors duration-200"
 						>
 							<PlusIcon class="w-5 h-5 mr-2" />
 							Add Property
@@ -378,7 +378,7 @@ function handleImageChange(event: Event) {
 											{property.status}
 										</span>
 										{#if property.featured}
-											<span class="px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
+											<span class="px-2 py-1 text-xs font-semibold rounded-full bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
 												Featured
 											</span>
 										{/if}
@@ -386,7 +386,7 @@ function handleImageChange(event: Event) {
 									<div class="mt-4 flex space-x-4">
 										<button
 											on:click={() => toggleFeatured(property.id, property.featured)}
-											class="text-blue-600 hover:text-blue-900"
+											class="text-[var(--color-primary)] hover:text-[var(--color-primary-dark)]"
 											title={property.featured ? 'Remove from featured' : 'Add to featured'}
 										>
 											{#if property.featured}
@@ -461,7 +461,7 @@ function handleImageChange(event: Event) {
 											{property.status}
 										</span>
 										{#if property.featured}
-											<span class="ml-2 px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+											<span class="ml-2 px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
 												Featured
 											</span>
 										{/if}
@@ -469,7 +469,7 @@ function handleImageChange(event: Event) {
 									<td class="px-6 py-4 space-x-2">
 										<button
 											on:click={() => toggleFeatured(property.id, property.featured)}
-											class="text-blue-600 hover:text-blue-900"
+											class="text-[var(--color-primary)] hover:text-[var(--color-primary-dark)]"
 											title={property.featured ? 'Remove from featured' : 'Add to featured'}
 										>
 											{#if property.featured}
@@ -529,7 +529,7 @@ function handleImageChange(event: Event) {
 											value={lead.status}
 											on:change={(e) => updateLeadStatus(lead.id, e.currentTarget.value as Lead['status'])}
 											class="text-sm rounded-full px-3 py-1 font-semibold
-												{lead.status === 'new' ? 'bg-blue-100 text-blue-800' : 
+												{lead.status === 'new' ? 'bg-[var(--color-primary)]/10 text-[var(--color-primary)]' : 
 												lead.status === 'contacted' ? 'bg-yellow-100 text-yellow-800' : 
 												'bg-green-100 text-green-800'}"
 										>

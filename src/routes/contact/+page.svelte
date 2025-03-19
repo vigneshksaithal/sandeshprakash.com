@@ -53,17 +53,17 @@ const handleSubmit = async (e: Event) => {
 <Navbar />
 
 <!-- Contact Header Section -->
-<div class="relative py-16 bg-gradient-to-r from-blue-900 to-blue-700">
+<div class="relative py-16 bg-gradient-to-r from-[var(--color-primary-dark)] to-[var(--color-primary)]">
   <div class="absolute inset-0 overflow-hidden">
     <div class="absolute top-1/4 left-1/4 w-64 h-64 rounded-full border-8 border-white opacity-5"></div>
     <div class="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full border-8 border-white opacity-5"></div>
-    <div class="absolute top-1/3 right-1/3 w-32 h-32 rounded-full bg-blue-300 opacity-10"></div>
+    <div class="absolute top-1/3 right-1/3 w-32 h-32 rounded-full bg-[var(--color-primary-light)] opacity-10"></div>
   </div>
   
   <div class="container mx-auto px-6 relative z-10 text-center">
-    <h2 class="text-sm font-semibold tracking-wider text-blue-200 uppercase mb-2">Contact Us</h2>
+    <h2 class="text-sm font-semibold tracking-wider text-[var(--color-gray-light)] uppercase mb-2">Contact Us</h2>
     <h1 class="text-4xl md:text-5xl font-bold text-white mb-6">Get In Touch</h1>
-    <p class="max-w-2xl mx-auto text-blue-100 text-lg">
+    <p class="max-w-2xl mx-auto text-[var(--color-text)] text-lg">
       Have questions about industrial properties? Our team is ready to help you find 
       the perfect space for your business.
     </p>
@@ -76,45 +76,45 @@ const handleSubmit = async (e: Event) => {
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       <!-- Email Card -->
       <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col items-center p-8">
-        <div class="bg-blue-700 p-4 rounded-full mb-6">
+        <div class="bg-[var(--color-primary)] p-4 rounded-full mb-6">
           <MailIcon class="h-8 w-8 text-white" />
         </div>
         <h3 class="text-xl font-semibold text-gray-800 mb-2">Email Us</h3>
         <p class="text-gray-600 mb-4 text-center">Our team usually responds within 24 hours</p>
-        <a href="mailto:info@sandeshprakash.com" class="text-blue-700 font-medium hover:text-blue-800 transition-colors">info@sandeshprakash.com</a>
+        <a href="mailto:info@sandeshprakash.com" class="text-[var(--color-primary)] font-medium hover:text-[var(--color-primary-dark)] transition-colors">info@sandeshprakash.com</a>
       </div>
       
       <!-- Call Card -->
       <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col items-center p-8">
-        <div class="bg-blue-700 p-4 rounded-full mb-6">
+        <div class="bg-[var(--color-primary)] p-4 rounded-full mb-6">
           <PhoneIcon class="h-8 w-8 text-white" />
         </div>
         <h3 class="text-xl font-semibold text-gray-800 mb-2">Call Us</h3>
         <p class="text-gray-600 mb-4 text-center">Mon-Fri from 9am to 6pm IST</p>
-        <a href="tel:+919876543210" class="text-blue-700 font-medium hover:text-blue-800 transition-colors">+91 9876543210</a>
+        <a href="tel:+919876543210" class="text-[var(--color-primary)] font-medium hover:text-[var(--color-primary-dark)] transition-colors">+91 9876543210</a>
       </div>
       
       <!-- Visit Card -->
       <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col items-center p-8">
-        <div class="bg-blue-700 p-4 rounded-full mb-6">
+        <div class="bg-[var(--color-primary)] p-4 rounded-full mb-6">
           <MapPinIcon class="h-8 w-8 text-white" />
         </div>
         <h3 class="text-xl font-semibold text-gray-800 mb-2">Visit Us</h3>
         <p class="text-gray-600 mb-4 text-center">Our office is centrally located</p>
-        <a href="https://maps.google.com/?q=123+Tech+Park,+Koramangala,+Bengaluru,+Karnataka+560034" target="_blank" class="text-blue-700 font-medium hover:text-blue-800 transition-colors text-center">123 Tech Park, Koramangala, Bengaluru, Karnataka 560034</a>
+        <a href="https://maps.google.com/?q=123+Tech+Park,+Koramangala,+Bengaluru,+Karnataka+560034" target="_blank" class="text-[var(--color-primary)] font-medium hover:text-[var(--color-primary-dark)] transition-colors text-center">123 Tech Park, Koramangala, Bengaluru, Karnataka 560034</a>
       </div>
     </div>
   </div>
 </div>
 
 <!-- Contact Form Section -->
-<div class="py-16 px-6 bg-gradient-to-br from-blue-900 to-blue-700">
+<div class="py-16 px-6 bg-gradient-to-br from-[var(--color-primary-dark)] to-[var(--color-primary)]">
   <div class="container mx-auto max-w-6xl grid grid-cols-1 lg:grid-cols-5 gap-12">
     <!-- Form Column -->
     <div class="lg:col-span-3">
       <div class="bg-white/10 backdrop-blur-sm p-8 md:p-12 rounded-2xl border border-white/20">
         <h2 class="text-2xl md:text-3xl font-bold text-white mb-6">Send Us a Message</h2>
-        <p class="text-blue-100 mb-8">
+        <p class="text-[var(--color-text)] mb-8">
           Whether you're looking for a warehouse, manufacturing facility, or have general
           questions about industrial real estate in Bengaluru, we're here to help.
         </p>
@@ -136,24 +136,24 @@ const handleSubmit = async (e: Event) => {
         <form class="space-y-6" on:submit={handleSubmit}>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label for="fullName" class="block text-sm font-medium text-blue-100 mb-2">Full Name</label>
+              <label for="fullName" class="block text-sm font-medium text-[var(--color-text)] mb-2">Full Name</label>
               <input 
                 type="text" 
                 id="fullName" 
                 bind:value={formData.name}
                 required
-                class="w-full px-4 py-3 bg-white/5 border border-blue-300/30 rounded-lg text-white placeholder-blue-200/70 focus:outline-none focus:ring-2 focus:ring-blue-300/50"
+                class="w-full px-4 py-3 bg-white/5 border border-[var(--color-primary-light)]/30 rounded-lg text-white placeholder-[var(--color-gray-light)]/70 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary-light)]/50"
                 placeholder="Your full name"
               />
             </div>
             <div>
-              <label for="email" class="block text-sm font-medium text-blue-100 mb-2">Email</label>
+              <label for="email" class="block text-sm font-medium text-[var(--color-text)] mb-2">Email</label>
               <input 
                 type="email" 
                 id="email" 
                 bind:value={formData.email}
                 required
-                class="w-full px-4 py-3 bg-white/5 border border-blue-300/30 rounded-lg text-white placeholder-blue-200/70 focus:outline-none focus:ring-2 focus:ring-blue-300/50"
+                class="w-full px-4 py-3 bg-white/5 border border-[var(--color-primary-light)]/30 rounded-lg text-white placeholder-[var(--color-gray-light)]/70 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary-light)]/50"
                 placeholder="your.email@example.com" 
               />
             </div>
@@ -161,37 +161,37 @@ const handleSubmit = async (e: Event) => {
           
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label for="phone" class="block text-sm font-medium text-blue-100 mb-2">Phone Number</label>
+              <label for="phone" class="block text-sm font-medium text-[var(--color-text)] mb-2">Phone Number</label>
               <input 
                 type="tel" 
                 id="phone" 
                 bind:value={formData.phone}
                 required
-                class="w-full px-4 py-3 bg-white/5 border border-blue-300/30 rounded-lg text-white placeholder-blue-200/70 focus:outline-none focus:ring-2 focus:ring-blue-300/50"
+                class="w-full px-4 py-3 bg-white/5 border border-[var(--color-primary-light)]/30 rounded-lg text-white placeholder-[var(--color-gray-light)]/70 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary-light)]/50"
                 placeholder="Your phone number" 
               />
             </div>
             <div>
-              <label for="subject" class="block text-sm font-medium text-blue-100 mb-2">Subject</label>
+              <label for="subject" class="block text-sm font-medium text-[var(--color-text)] mb-2">Subject</label>
               <input 
                 type="text" 
                 id="subject" 
                 bind:value={formData.subject}
                 required
-                class="w-full px-4 py-3 bg-white/5 border border-blue-300/30 rounded-lg text-white placeholder-blue-200/70 focus:outline-none focus:ring-2 focus:ring-blue-300/50"
+                class="w-full px-4 py-3 bg-white/5 border border-[var(--color-primary-light)]/30 rounded-lg text-white placeholder-[var(--color-gray-light)]/70 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary-light)]/50"
                 placeholder="What is this regarding?" 
               />
             </div>
           </div>
           
           <div>
-            <label for="message" class="block text-sm font-medium text-blue-100 mb-2">Message</label>
+            <label for="message" class="block text-sm font-medium text-[var(--color-text)] mb-2">Message</label>
             <textarea 
               id="message" 
               rows="6" 
               bind:value={formData.message}
               required
-              class="w-full px-4 py-3 bg-white/5 border border-blue-300/30 rounded-lg text-white placeholder-blue-200/70 focus:outline-none focus:ring-2 focus:ring-blue-300/50 resize-none"
+              class="w-full px-4 py-3 bg-white/5 border border-[var(--color-primary-light)]/30 rounded-lg text-white placeholder-[var(--color-gray-light)]/70 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary-light)]/50 resize-none"
               placeholder="Tell us about your requirements..."
             ></textarea>
           </div>
@@ -199,7 +199,7 @@ const handleSubmit = async (e: Event) => {
           <button 
             type="submit"
             disabled={loading}
-            class="px-6 py-3 bg-white text-blue-900 font-semibold rounded-lg hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-white/50 transition-colors duration-300 disabled:bg-gray-300 disabled:cursor-not-allowed"
+            class="px-6 py-3 bg-white text-[var(--color-primary-dark)] font-semibold rounded-lg hover:bg-[var(--color-gray-light)] focus:outline-none focus:ring-2 focus:ring-white/50 transition-colors duration-300 disabled:bg-gray-300 disabled:cursor-not-allowed"
           >
             {loading ? 'Sending...' : 'Send Message'}
           </button>

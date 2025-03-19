@@ -75,7 +75,7 @@ onMount(() => {
 
   <!-- Team Section -->
   <div class="container mx-auto px-4 py-16 md:py-24 text-center">
-    <span class="inline-block px-4 py-1 bg-blue-50 text-[#0080FF] rounded-full text-sm mb-6">Our Team</span>
+    <span class="inline-block px-4 py-1 bg-[var(--color-primary)]/5 text-[var(--color-primary)] rounded-full text-sm mb-6">Our Team</span>
     <h2 class="text-3xl font-bold text-gray-900 mb-16">Meet Our Experts</h2>
     <div class="grid md:grid-cols-3 gap-8">
       {#each Array(3) as _, i}
@@ -120,7 +120,7 @@ onMount(() => {
     </p>
     <a 
       href="/contact" 
-      class="inline-block bg-[#0080FF] text-white px-8 py-3 rounded-lg hover:bg-blue-600 transition-colors"
+      class="inline-block bg-[var(--color-primary)] text-white px-8 py-3 rounded-lg hover:bg-[var(--color-primary-light)] transition-colors"
     >
       Get in Touch
     </a>
