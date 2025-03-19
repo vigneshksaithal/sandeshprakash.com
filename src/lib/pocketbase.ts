@@ -22,15 +22,15 @@ export interface Record {
 	collectionName: string
 }
 
-// export interface Property extends Record {
-// 	type: string
-// 	featured: boolean
-// 	location: string
-// 	name: string
-// 	price: number
-// 	size: number
-// 	address: string
-// 	image: string
-// 	status: string
-// 	description: string
-// }
+export interface Property extends Record {
+	type: string
+	featured: boolean
+	location: string
+	name: string
+	price: number
+	size: number
+	address: string
+	image: string
+	status: string
+	description: string
+}
