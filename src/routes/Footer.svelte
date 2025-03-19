@@ -132,6 +132,12 @@ function handleMouseMove(event: MouseEvent) {
                         </a>
                     </div>
                 </div>
+                <div class="text-center mt-4">
+                    <a href="https://vigneshaithal.com/contact" 
+                       class="text-white/60 hover:text-white text-sm transition-colors duration-300">
+                        Created by Vignesh Aithal
+                    </a>
+                </div>
             </div>
         </div>
     </div>
