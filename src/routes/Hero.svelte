@@ -109,14 +109,6 @@ onMount(() => {
             </div>
         </div>
     </div>
-    
-    <!-- Scroll indicator -->
-    <div class="absolute bottom-12 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce">
-        <span class="text-[var(--color-text)]/60 text-sm mb-2">Scroll to explore</span>
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[var(--color-text)]/60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-        </svg>
-    </div>
 </div>
 
 <style>
