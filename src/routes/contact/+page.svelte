@@ -62,7 +62,8 @@ const handleSubmit = async (e: Event) => {
 			email: formData.email,
 			phone: formData.phone,
 			message: `${formData.subject}\n\n${formData.message}`,
-			property: formData.property || null
+			property: formData.property || null,
+			status: 'new'
 		})
 
 		success = true
