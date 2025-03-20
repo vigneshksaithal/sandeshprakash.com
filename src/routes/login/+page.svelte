@@ -4,11 +4,11 @@ import { pb } from '$lib/pocketbase'
 import { onMount } from 'svelte'
 
 // biome-ignore lint/style/useConst: <explanation>
-let email = ''
+let email = $state('')
 // biome-ignore lint/style/useConst: <explanation>
-let password = ''
-let error = ''
-let isLoading = false
+let password = $state('')
+let error = $state('')
+let isLoading = $state(false)
 
 onMount(() => {
 	if (pb.authStore.isValid) {
@@ -42,7 +42,7 @@ async function handleLogin() {
                 Sign in to your account
             </h2>
         </div>
-        <form class="mt-8 space-y-6" on:submit|preventDefault={handleLogin}>
+        <form class="mt-8 space-y-6" onsubmit={handleLogin}>
             <div class="rounded-md shadow-[var(--shadow-sm)] -space-y-px">
                 <div>
                     <label for="email" class="sr-only">Email address</label>

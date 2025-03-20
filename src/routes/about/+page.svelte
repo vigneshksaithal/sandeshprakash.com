@@ -1,7 +1,7 @@
 <script lang="ts">
+import building from '$lib/assets/building.jpg'
 import EyeIcon from 'lucide-svelte/icons/eye'
 import TargetIcon from 'lucide-svelte/icons/target'
-import building from '$lib/assets/building.jpg'
 import CallToAction from '../CallToAction.svelte'
 import Footer from '../Footer.svelte'
 import Navbar from '../Navbar.svelte'
