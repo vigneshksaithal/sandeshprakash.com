@@ -2,7 +2,6 @@
 import testimonial1 from '$lib/assets/testimonial-1.jpg'
 import testimonial2 from '$lib/assets/testimonial-2.jpg'
 import { onMount } from 'svelte'
-import { fade, fly } from 'svelte/transition'
 
 interface Testimonial {
 	id: string
