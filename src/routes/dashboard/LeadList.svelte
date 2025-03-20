@@ -40,8 +40,13 @@ const { leads, loading, onRefresh } = $props<{
 }>()
 
 const state = $state({
-	expandedLeadId: null as string | null
+	expandedLeadId: null as string | null,
+	selectedStatus: 'new' as 'new' | 'contacted' | 'closed'
 })
+
+const filteredLeads = $derived(
+	leads.filter((lead) => lead.status === state.selectedStatus)
+)
 
 const deleteLead = async (id: string) => {
 	if (!confirm('Are you sure you want to delete this lead?')) return
@@ -71,9 +76,33 @@ const toggleExpand = (id: string) => {
 }
 </script>
 
+<div class="mb-6 flex justify-between items-center">
+	<h2 class="text-xl font-semibold text-gray-900">Leads</h2>
+	<div class="flex gap-2">
+		<button
+			class={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${state.selectedStatus === 'new' ? 'bg-blue-100 text-blue-700' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
+			onclick={() => state.selectedStatus = 'new'}
+		>
+			New Leads
+		</button>
+		<button
+			class={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${state.selectedStatus === 'contacted' ? 'bg-yellow-100 text-yellow-700' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
+			onclick={() => state.selectedStatus = 'contacted'}
+		>
+			Contacted
+		</button>
+		<button
+			class={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${state.selectedStatus === 'closed' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
+			onclick={() => state.selectedStatus = 'closed'}
+		>
+			Closed
+		</button>
+	</div>
+</div>
+
 <!-- Mobile View -->
 <div class="block sm:hidden">
-	{#each leads as lead}
+	{#each filteredLeads as lead}
 		<div class="border-b border-gray-300 last:border-b-0">
 			<div class="p-4 flex items-start justify-between cursor-pointer" onclick={() => toggleExpand(lead.id)}>
 				<div class="flex-1 min-w-0">
@@ -142,7 +171,7 @@ const toggleExpand = (id: string) => {
 			</tr>
 		</thead>
 		<tbody class="bg-white divide-y divide-gray-300">
-			{#each leads as lead}
+			{#each filteredLeads as lead}
 				<tr class="group cursor-pointer hover:bg-gray-50" onclick={() => toggleExpand(lead.id)}>
 					<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
 						{new Date(lead.created).toLocaleDateString()}
