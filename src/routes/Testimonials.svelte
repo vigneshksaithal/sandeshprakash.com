@@ -1,6 +1,8 @@
 <script lang="ts">
 import { onMount } from 'svelte'
 import { fade, fly } from 'svelte/transition'
+import testimonial1 from '$lib/assets/testimonial-1.jpg'
+import testimonial2 from '$lib/assets/testimonial-2.jpg'
 
 interface Testimonial {
 	id: string
@@ -15,20 +17,20 @@ const testimonials: Testimonial[] = [
 	{
 		id: '1',
 		name: 'Rahul Sharma',
-		company: 'ABC Manufacturing',
+		company: 'Suraj Pvt Ltd',
 		position: 'CEO',
 		quote:
 			'Sandesh helped us find the perfect manufacturing space in record time. Their knowledge of the local market is exceptional and their guidance throughout the process was invaluable.',
-		image: '/images/testimonial-1.jpg'
+		image: testimonial1
 	},
 	{
 		id: '2',
-		name: 'Priya Mehta',
-		company: 'XYZ Logistics',
+		name: 'Raj Mehta',
+		company: 'Rajesh Transports',
 		position: 'Operations Director',
 		quote:
 			'The team at Sandesh Prakash Real Estate provided invaluable guidance throughout our warehouse search process. Their attention to detail and understanding of our specific needs made all the difference.',
-		image: '/images/testimonial-2.jpg'
+		image: testimonial2
 	}
 ]
 
