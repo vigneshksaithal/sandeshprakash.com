@@ -87,7 +87,7 @@ const handleSubmit = async (e: Event) => {
 
 <main class="min-h-screen">
   <!-- Hero Section with Blue Background -->
-  <div class="relative bg-[var(--color-primary-dark)] text-[var(--color-text)] py-24 overflow-hidden" on:mousemove={handleMouseMove}>
+  <div class="relative bg-[var(--color-primary-dark)] text-[var(--color-text)] py-24 overflow-hidden" onmousemove={handleMouseMove}>
     <!-- Animated gradient background -->
     <div class="absolute inset-0 bg-gradient-to-br from-[var(--color-primary-dark)] via-[var(--color-primary)] to-[var(--color-secondary)] opacity-90 animate-gradient"></div>
     
@@ -191,7 +191,7 @@ const handleSubmit = async (e: Event) => {
             </div>
           {/if}
 
-          <form on:submit={handleSubmit} class="space-y-6">
+          <form onsubmit={handleSubmit} class="space-y-6">
             <div class="grid md:grid-cols-2 gap-6">
               <div>
                 <label for="name" class="block text-[var(--color-text-dark)] font-medium mb-2">Full Name</label>
