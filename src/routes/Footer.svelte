@@ -9,6 +9,29 @@ import TwitterIcon from 'lucide-svelte/icons/twitter'
 
 const currentYear = new Date().getFullYear()
 
+const socialLinks = [
+	{
+		icon: FacebookIcon,
+		label: 'Facebook',
+		url: 'https://facebook.com/sandeshprakash'
+	},
+	{
+		icon: TwitterIcon,
+		label: 'Twitter',
+		url: 'https://twitter.com/sandeshprakash'
+	},
+	{
+		icon: InstagramIcon,
+		label: 'Instagram',
+		url: 'https://instagram.com/sandeshprakash'
+	},
+	{
+		icon: LinkedinIcon,
+		label: 'LinkedIn',
+		url: 'https://linkedin.com/in/sandeshprakash'
+	}
+]
+
 let mouseX = 0
 let mouseY = 0
 
@@ -58,8 +81,8 @@ function handleMouseMove(event: MouseEvent) {
 
                     <!-- Social media -->
                     <div class="flex gap-4 mt-8">
-                        {#each [{icon: FacebookIcon, label: 'Facebook'}, {icon: TwitterIcon, label: 'Twitter'}, {icon: InstagramIcon, label: 'Instagram'}, {icon: LinkedinIcon, label: 'LinkedIn'}] as {icon: Icon, label}}
-                            <a href="#" 
+                        {#each socialLinks as {icon: Icon, label, url}}
+                            <a href={url}
                                aria-label={label}
                                class="group relative w-12 h-12 rounded-full flex items-center justify-center transition-all duration-500 hover:scale-110 overflow-hidden bg-white/20">
                                 <div class="absolute inset-0 bg-gradient-to-br from-[var(--color-secondary)] to-[var(--color-accent)] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -100,11 +123,11 @@ function handleMouseMove(event: MouseEvent) {
                             { icon: MailIcon, text: 'info@sandeshprakash.com' },
                             { icon: MapPinIcon, text: '123 Tech Park, Koramangala,\nBengaluru, Karnataka 560034' }
                         ] as { icon: Icon, text }}
-                            <li class="flex items-start text-white transition-colors duration-300 group">
-                                <div class="mt-1 mr-4 w-10 h-10 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors duration-300">
+                            <li class="flex text-white transition-colors duration-300 group">
+                                <div class="flex-shrink-0 w-10 h-10 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors duration-300">
                                     <Icon class="h-4 w-4 text-white" />
                                 </div>
-                                <span class="whitespace-pre-line">{text}</span>
+                                <span class="ml-4 whitespace-pre-line flex items-center">{text}</span>
                             </li>
                         {/each}
                     </ul>
