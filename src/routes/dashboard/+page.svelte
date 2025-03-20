@@ -1,6 +1,7 @@
 <script lang="ts">
 import { goto } from '$app/navigation'
 import { pb } from '$lib/pocketbase'
+import EditIcon from 'lucide-svelte/icons/edit'
 import EyeIcon from 'lucide-svelte/icons/eye'
 import EyeOffIcon from 'lucide-svelte/icons/eye-off'
 import LogOutIcon from 'lucide-svelte/icons/log-out'
@@ -43,6 +44,8 @@ let leads: Lead[] = []
 let loading = false
 let error = ''
 let showAddModal = false
+let showEditModal = false
+let editingProperty: Property | null = null
 $: isAuthenticated = pb.authStore.isValid
 $: activeTab = 'properties'
 
@@ -102,6 +105,22 @@ async function loadLeads() {
 	}
 }
 
+function openEditModal(property: Property) {
+	editingProperty = property
+	formData = {
+		title: property.title,
+		type: property.type,
+		featured: property.featured,
+		location: property.location,
+		price: property.price as string,
+		area: property.area,
+		address: property.address,
+		description: property.description,
+		images: [] as File[]
+	}
+	showEditModal = true
+}
+
 async function handleSubmit() {
 	try {
 		loading = true
@@ -138,6 +157,38 @@ async function handleSubmit() {
 		await loadProperties()
 	} catch (err) {
 		error = 'Failed to create property'
+		console.error(err)
+	} finally {
+		loading = false
+	}
+}
+
+async function handleUpdate() {
+	if (!editingProperty) return
+
+	try {
+		loading = true
+		const formDataObj = new FormData()
+
+		// Add all form fields except images
+		for (const [key, value] of Object.entries(formData)) {
+			if (key !== 'images') {
+				formDataObj.append(key, String(value))
+			}
+		}
+
+		// Add new images if any were selected
+		for (const image of formData.images) {
+			formDataObj.append('images+', image)
+		}
+
+		await pb.collection('properties').update(editingProperty.id, formDataObj)
+
+		showEditModal = false
+		editingProperty = null
+		await loadProperties()
+	} catch (err) {
+		error = 'Failed to update property'
 		console.error(err)
 	} finally {
 		loading = false
@@ -334,7 +385,7 @@ function handleLogout() {
 									type="file"
 									accept="image/*"
 									on:change={handleImageChange}
-									required
+									required={!editingProperty}
 									multiple
 									class="w-full text-base file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-[var(--color-primary)]/5 file:text-[var(--color-primary)] hover:file:bg-[var(--color-primary)]/10"
 								/>
@@ -375,6 +426,132 @@ function handleLogout() {
 				</div>
 			{/if}
 
+			<!-- Edit Property Modal -->
+			{#if showEditModal}
+				<div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" transition:fade>
+					<div class="bg-white rounded-lg p-6 w-full max-w-4xl max-h-[90vh] overflow-y-auto" transition:scale={{duration: 300, start: 0.95}}>
+						<div class="flex justify-between items-center mb-6">
+							<h2 class="text-xl font-semibold">Edit Property</h2>
+							<button 
+								on:click={() => showEditModal = false}
+								class="text-gray-500 hover:text-gray-700"
+							>
+								✕
+							</button>
+						</div>
+
+						<form on:submit|preventDefault={handleUpdate} class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+							<div class="space-y-1">
+								<label class="block text-sm font-medium text-gray-700">Title</label>
+								<input
+									type="text"
+									bind:value={formData.title}
+									required
+									class="w-full px-3 py-2 border border-gray-300 rounded-md text-base"
+								/>
+							</div>
+
+							<div class="space-y-1">
+								<label class="block text-sm font-medium text-gray-700">Type</label>
+								<select
+									bind:value={formData.type}
+									required
+									class="w-full px-3 py-2 border border-gray-300 rounded-md text-base"
+								>
+									<option value="Warehouse">Warehouse</option>
+									<option value="Manufacturing Facility">Manufacturing Facility</option>
+									<option value="Industrial Land">Industrial Land</option>
+								</select>
+							</div>
+
+							<div class="space-y-1">
+								<label class="block text-sm font-medium text-gray-700">Price</label>
+								<input
+									type="text"
+									bind:value={formData.price}
+									required
+									placeholder="e.g. ₹20 Cr, Price on Request"
+									class="w-full px-3 py-2 border border-gray-300 rounded-md text-base"
+								/>
+							</div>
+
+							<div class="space-y-1">
+								<label class="block text-sm font-medium text-gray-700">Area (sqft)</label>
+								<input
+									type="number"
+									bind:value={formData.area}
+									required
+									min="0"
+									class="w-full px-3 py-2 border border-gray-300 rounded-md text-base"
+								/>
+							</div>
+
+							<div class="space-y-1">
+								<label class="block text-sm font-medium text-gray-700">Address</label>
+								<input
+									type="text"
+									bind:value={formData.address}
+									required
+									class="w-full px-3 py-2 border border-gray-300 rounded-md text-base"
+								/>
+							</div>
+
+							<div class="sm:col-span-2 space-y-1">
+								<label class="block text-sm font-medium text-gray-700">Description</label>
+								<textarea
+									bind:value={formData.description}
+									required
+									rows="3"
+									class="w-full px-3 py-2 border border-gray-300 rounded-md text-base"
+								></textarea>
+							</div>
+
+							<div class="space-y-1">
+								<label class="block text-sm font-medium text-gray-700">Add New Images</label>
+								<input
+									type="file"
+									accept="image/*"
+									on:change={handleImageChange}
+									multiple
+									class="w-full text-base file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-[var(--color-primary)]/5 file:text-[var(--color-primary)] hover:file:bg-[var(--color-primary)]/10"
+								/>
+								{#if formData.images.length > 0}
+									<p class="text-sm text-gray-500 mt-2">{formData.images.length} new images selected</p>
+								{/if}
+							</div>
+
+							<div class="flex items-center space-x-4">
+								<label class="flex items-center cursor-pointer">
+									<input
+										type="checkbox"
+										bind:checked={formData.featured}
+										class="form-checkbox h-5 w-5 text-[var(--color-primary)] rounded"
+									/>
+									<span class="ml-2 text-sm text-gray-700">Featured Property</span>
+								</label>
+							</div>
+
+							<div class="sm:col-span-2 flex justify-end space-x-4">
+								<button
+									type="button"
+									on:click={() => showEditModal = false}
+									class="px-6 py-3 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-colors duration-200"
+								>
+									Cancel
+								</button>
+								<button
+									type="submit"
+									disabled={loading}
+									class="px-6 py-3 bg-[var(--color-primary)] text-white rounded-md hover:bg-[var(--color-primary-light)] disabled:opacity-50 transition-colors duration-200"
+								>
+									Update Property
+								</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			{/if}
+
 			<!-- Properties List -->
 			<div class="bg-white rounded-lg shadow-sm overflow-hidden">
 				<!-- Mobile View -->
@@ -408,6 +585,13 @@ function handleLogout() {
 										{/if}
 									</div>
 									<div class="mt-4 flex space-x-4">
+										<button
+											on:click={() => openEditModal(property)}
+											class="text-[var(--color-primary)] hover:text-[var(--color-primary-dark)]"
+											title="Edit property"
+										>
+											<EditIcon class="h-6 w-6" />
+										</button>
 										<button
 											on:click={() => toggleFeatured(property.id, property.featured)}
 											class="text-[var(--color-primary)] hover:text-[var(--color-primary-dark)]"
@@ -480,6 +664,13 @@ function handleLogout() {
 										{/if}
 									</td>
 									<td class="px-6 py-4 space-x-2">
+										<button
+											on:click={() => openEditModal(property)}
+											class="text-[var(--color-primary)] hover:text-[var(--color-primary-dark)]"
+											title="Edit property"
+										>
+											<EditIcon class="h-5 w-5" />
+										</button>
 										<button
 											on:click={() => toggleFeatured(property.id, property.featured)}
 											class="text-[var(--color-primary)] hover:text-[var(--color-primary-dark)]"
