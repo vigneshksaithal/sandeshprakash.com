@@ -39,17 +39,21 @@ interface Lead {
 	}
 }
 
-let properties: Property[] = []
-let leads: Lead[] = []
-let loading = false
-let error = ''
-let showAddModal = false
-let showEditModal = false
-let showLeadModal = false
-let selectedLead: Lead | null = null
-let editingProperty: Property | null = null
-$: isAuthenticated = pb.authStore.isValid
-$: activeTab = 'properties'
+let properties: Property[] = $state([])
+let leads: Lead[] = $state([])
+let loading = $state(false)
+let error = $state('')
+let showAddModal = $state(false)
+let showEditModal = $state(false)
+// biome-ignore lint/style/useConst: <explanation>
+let activeTab = $state('properties')
+let isAuthenticated = $state(false)
+// let showLeadModal = $state(false)
+// let selectedLead: Lead | null = $state(null)
+let editingProperty: Property | null = $state(null)
+$effect(() => {
+	isAuthenticated = pb.authStore.isValid
+})
 
 // Form data
 let formData = {
