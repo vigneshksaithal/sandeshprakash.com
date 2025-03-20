@@ -1,5 +1,7 @@
 <script lang="ts">
 import { pb } from '$lib/pocketbase'
+import ChevronDownIcon from 'lucide-svelte/icons/chevron-down'
+import ChevronUpIcon from 'lucide-svelte/icons/chevron-up'
 import TrashIcon from 'lucide-svelte/icons/trash'
 
 interface Property {
@@ -37,7 +39,25 @@ const { leads, loading, onRefresh } = $props<{
 	onRefresh: () => Promise<void>
 }>()
 
-const updateLeadStatus = async (id: string, status: Lead['status']) => {
+const state = $state({
+	expandedLeadId: null as string | null
+})
+
+const deleteLead = async (id: string) => {
+	if (!confirm('Are you sure you want to delete this lead?')) return
+
+	try {
+		await pb.collection('contact_submissions').delete(id)
+		await onRefresh()
+	} catch (err) {
+		console.error('Failed to delete lead:', err)
+	}
+}
+
+const updateLeadStatus = async (
+	id: string,
+	status: 'new' | 'contacted' | 'closed'
+) => {
 	try {
 		await pb.collection('contact_submissions').update(id, { status })
 		await onRefresh()
@@ -46,86 +66,136 @@ const updateLeadStatus = async (id: string, status: Lead['status']) => {
 	}
 }
 
-const deleteLead = async (id: string) => {
-	if (!confirm('Are you sure you want to delete this lead?')) return
-
-	try {
-		await pb.collection('leads').delete(id)
-		await onRefresh()
-	} catch (err) {
-		console.error('Failed to delete lead:', err)
-	}
+const toggleExpand = (id: string) => {
+	state.expandedLeadId = state.expandedLeadId === id ? null : id
 }
 </script>
 
 <!-- Mobile View -->
 <div class="block sm:hidden">
 	{#each leads as lead}
-		<div class="p-4 border-b border-gray-200 last:border-b-0">
-			<div class="flex items-start justify-between">
+		<div class="border-b border-gray-300 last:border-b-0">
+			<div class="p-4 flex items-start justify-between cursor-pointer" onclick={() => toggleExpand(lead.id)}>
 				<div class="flex-1 min-w-0">
 					<h3 class="text-base font-medium text-gray-900 truncate">{lead.name}</h3>
-					<div class="mt-2 space-y-1">
-						<p class="text-sm text-gray-500">{lead.email}</p>
-						<p class="text-sm text-gray-500">{lead.phone}</p>
-						<p class="text-sm text-gray-500 mt-2">{lead.message}</p>
-					</div>
-					<p class="text-xs text-gray-400 mt-2">
+					<p class="text-xs text-gray-600 mt-2">
 						{new Date(lead.created).toLocaleDateString()}
 					</p>
 				</div>
 				<div class="ml-4">
-					<button
-						onclick={() => deleteLead(lead.id)}
-						class="text-red-600 hover:text-red-900"
-						title="Delete lead"
-					>
-						<TrashIcon class="h-6 w-6" />
-					</button>
+					{#if state.expandedLeadId === lead.id}
+						<ChevronUpIcon class="h-5 w-5 text-gray-600" />
+					{:else}
+						<ChevronDownIcon class="h-5 w-5 text-gray-600" />
+					{/if}
 				</div>
 			</div>
+			
+			{#if state.expandedLeadId === lead.id}
+				<div class="px-4 pb-4 space-y-4">
+					<div>
+						<label class="text-sm font-medium text-gray-800">Email</label>
+						<p class="mt-1 text-sm text-gray-700">{lead.email}</p>
+					</div>
+					<div>
+						<label class="text-sm font-medium text-gray-800">Phone</label>
+						<p class="mt-1 text-sm text-gray-700">{lead.phone}</p>
+					</div>
+					<div>
+						<label class="text-sm font-medium text-gray-800">Message</label>
+						<p class="mt-1 text-sm text-gray-700 whitespace-pre-wrap">{lead.message}</p>
+					</div>
+					<div class="flex items-center justify-between pt-2">
+						<select 
+							class="text-sm border border-gray-300 rounded-md px-2 py-1 text-gray-700 bg-white"
+							value={lead.status}
+							onchange={(e) => updateLeadStatus(lead.id, e.currentTarget.value as any)}
+						>
+							<option value="new">New</option>
+							<option value="contacted">Contacted</option>
+							<option value="closed">Closed</option>
+						</select>
+						<button
+							onclick={() => deleteLead(lead.id)}
+							class="text-red-600 hover:text-red-900 p-1"
+							title="Delete lead"
+						>
+							<TrashIcon class="h-5 w-5" />
+						</button>
+					</div>
+				</div>
+			{/if}
 		</div>
 	{/each}
 </div>
 
 <!-- Desktop View -->
 <div class="hidden sm:block overflow-x-auto">
-	<table class="min-w-full divide-y divide-gray-200">
-		<thead class="bg-gray-50">
+	<table class="min-w-full divide-y divide-gray-300">
+		<thead class="bg-gray-100">
 			<tr>
-				<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-				<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contact</th>
-				<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Message</th>
-				<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-				<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+				<th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Date</th>
+				<th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Name</th>
+				<th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Subject</th>
+				<th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Status</th>
+				<th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider"></th>
 			</tr>
 		</thead>
-		<tbody class="bg-white divide-y divide-gray-200">
+		<tbody class="bg-white divide-y divide-gray-300">
 			{#each leads as lead}
-				<tr class="hover:bg-gray-50">
+				<tr class="group cursor-pointer hover:bg-gray-50">
+					<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+						{new Date(lead.created).toLocaleDateString()}
+					</td>
 					<td class="px-6 py-4">
 						<div class="text-sm font-medium text-gray-900">{lead.name}</div>
 					</td>
 					<td class="px-6 py-4">
-						<div class="text-sm text-gray-900">{lead.email}</div>
-						<div class="text-sm text-gray-500">{lead.phone}</div>
+						<button class="text-left w-full" onclick={() => toggleExpand(lead.id)}>
+							<div class="text-sm text-gray-700 max-w-xs truncate">{lead.message}</div>
+						</button>
 					</td>
 					<td class="px-6 py-4">
-						<div class="text-sm text-gray-500 max-w-xs truncate">{lead.message}</div>
-					</td>
-					<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-						{new Date(lead.created).toLocaleDateString()}
+						<select 
+							class="text-sm border border-gray-300 rounded-md px-2 py-1 text-gray-700 bg-white"
+							value={lead.status}
+							onchange={(e) => updateLeadStatus(lead.id, e.currentTarget.value as any)}
+						>
+							<option value="new">New</option>
+							<option value="contacted">Contacted</option>
+							<option value="closed">Closed</option>
+						</select>
 					</td>
 					<td class="px-6 py-4">
 						<button
+							class="opacity-0 group-hover:opacity-100 transition-opacity text-red-600 hover:text-red-900"
 							onclick={() => deleteLead(lead.id)}
-							class="text-red-600 hover:text-red-900"
 							title="Delete lead"
 						>
 							<TrashIcon class="h-5 w-5" />
 						</button>
 					</td>
 				</tr>
+				{#if state.expandedLeadId === lead.id}
+					<tr class="bg-gray-50">
+						<td colspan="5" class="px-6 py-4">
+							<div class="grid grid-cols-2 gap-4">
+								<div>
+									<label class="text-sm font-medium text-gray-800">Email</label>
+									<p class="mt-1 text-sm text-gray-700">{lead.email}</p>
+								</div>
+								<div>
+									<label class="text-sm font-medium text-gray-800">Phone</label>
+									<p class="mt-1 text-sm text-gray-700">{lead.phone}</p>
+								</div>
+								<div class="col-span-2">
+									<label class="text-sm font-medium text-gray-800">Message</label>
+									<p class="mt-1 text-sm text-gray-700 whitespace-pre-wrap">{lead.message}</p>
+								</div>
+							</div>
+						</td>
+					</tr>
+				{/if}
 			{/each}
 		</tbody>
 	</table>
