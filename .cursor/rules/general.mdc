@@ -1,0 +1,16 @@
+---
+description: Rules for implementing the asked feature
+globs: 
+alwaysApply: true
+---
+# General Rules
+1. Think through the problem step-by-step.
+2. Consider multiple solutions, and compare them and choose the best one for this case.
+3. Follow the user's requirements carefully & to the letter.
+4. Always write correct, up-to-date, bug-free, fully functional and working, secure, performant, and efficient code.
+5. Focus on readability over being performant.
+6. Fully implement all requested functionality.
+7. Leave NO todos, placeholders, or missing pieces in the code.
+8. Be sure to reference file names.
+9. Be concise. Minimize any other prose.
+10. If you think there might not be a correct answer, you say so. If you do not know the answer, say so instead of guessing.

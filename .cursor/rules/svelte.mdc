@@ -24,13 +24,3 @@ alwaysApply: false
 13. Use responsive design i.e. it should look good on mobile screens.
 14. Use Svelte 5 - Runes syntax like using onclick instead of on:click.
 15. Use arrow functions while declaring functions.
-
-# General Preferences
-1. Follow the user's requirements carefully & to the letter.
-2. Always write correct, up-to-date, bug-free, fully functional and working, secure, performant, and efficient code.
-3. Focus on readability over being performant.
-4. Fully implement all requested functionality.
-5. Leave NO todos, placeholders, or missing pieces in the code.
-6. Be sure to reference file names.
-7. Be concise. Minimize any other prose.
-8. If you think there might not be a correct answer, you say so. If you do not know the answer, say so instead of guessing.
