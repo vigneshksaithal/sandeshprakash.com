@@ -1,30 +1,19 @@
 <script lang="ts">
 import EyeIcon from 'lucide-svelte/icons/eye'
 import TargetIcon from 'lucide-svelte/icons/target'
-import { onMount } from 'svelte'
+import building from '$lib/assets/building.jpg'
 import CallToAction from '../CallToAction.svelte'
 import Footer from '../Footer.svelte'
 import Navbar from '../Navbar.svelte'
 
-let isVisible = false
-let imgSrc = '/building.jpg'
 let mouseX = 0
 let mouseY = 0
 
-const handleImageError = () => {
-	imgSrc = '/building.jpg'
-}
-
 const handleMouseMove = (event: MouseEvent) => {
-	const target = event.currentTarget as HTMLElement
-	const rect = target.getBoundingClientRect()
+	const rect = (event.currentTarget as HTMLElement).getBoundingClientRect()
 	mouseX = ((event.clientX - rect.left) / rect.width - 0.5) * 20
 	mouseY = ((event.clientY - rect.top) / rect.height - 0.5) * 20
 }
-
-onMount(() => {
-	isVisible = true
-})
 </script>
 
 <Navbar />
@@ -88,10 +77,9 @@ onMount(() => {
       </div>
       <div class="relative h-[400px] rounded-2xl overflow-hidden shadow-[var(--shadow-xl)]">
         <img 
-          src={imgSrc}
+          src={building}
           alt="Industrial Building" 
           class="w-full h-full object-cover"
-          onerror={handleImageError}
         />
       </div>
     </div>
