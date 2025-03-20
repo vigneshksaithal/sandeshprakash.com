@@ -1,7 +1,7 @@
 <script lang="ts">
-import Navbar from '../Navbar.svelte'
-import Footer from '../Footer.svelte'
 import CallToAction from '../CallToAction.svelte'
+import Footer from '../Footer.svelte'
+import Navbar from '../Navbar.svelte'
 import PropertyCard from './PropertyCard.svelte'
 import { properties } from './propertyData'
 </script>
