@@ -143,7 +143,7 @@ const toggleExpand = (id: string) => {
 		</thead>
 		<tbody class="bg-white divide-y divide-gray-300">
 			{#each leads as lead}
-				<tr class="group cursor-pointer hover:bg-gray-50">
+				<tr class="group cursor-pointer hover:bg-gray-50" onclick={() => toggleExpand(lead.id)}>
 					<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
 						{new Date(lead.created).toLocaleDateString()}
 					</td>
@@ -151,9 +151,7 @@ const toggleExpand = (id: string) => {
 						<div class="text-sm font-medium text-gray-900">{lead.name}</div>
 					</td>
 					<td class="px-6 py-4">
-						<button class="text-left w-full" onclick={() => toggleExpand(lead.id)}>
-							<div class="text-sm text-gray-700 max-w-xs truncate">{lead.message}</div>
-						</button>
+						<div class="text-sm text-gray-700 max-w-xs truncate">{lead.message}</div>
 					</td>
 					<td class="px-6 py-4">
 						<select 
