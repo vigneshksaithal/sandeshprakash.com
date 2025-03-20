@@ -116,7 +116,7 @@ const handleAddProperty = () => {
 
 				<div class="flex items-center space-x-6">
 					<button
-						class="relative px-4 py-2 text-[var(--color-text-dark)] hover:text-[var(--color-primary)] transition-colors font-medium group"
+						class="relative px-4 py-2 text-[var(--color-text-dark)] hover:text-[var(--color-primary)] transition-colors font-medium group cursor-pointer"
 						onclick={() => state.activeTab = 'properties'}
 					>
 						<span class="relative z-10">Properties</span>
@@ -125,7 +125,7 @@ const handleAddProperty = () => {
 						{/if}
 					</button>
 					<button
-						class="relative px-4 py-2 text-[var(--color-text-dark)] hover:text-[var(--color-primary)] transition-colors font-medium group"
+						class="relative px-4 py-2 text-[var(--color-text-dark)] hover:text-[var(--color-primary)] transition-colors font-medium group cursor-pointer"
 						onclick={() => state.activeTab = 'leads'}
 					>
 						<span class="relative z-10">Leads</span>
@@ -135,14 +135,14 @@ const handleAddProperty = () => {
 					</button>
 					<button
 						onclick={handleAddProperty}
-						class="inline-flex items-center px-4 py-2 bg-[var(--color-primary)] text-white rounded-md hover:bg-[var(--color-primary-light)] transition-colors duration-200 shadow-sm hover:shadow"
+						class="inline-flex items-center px-4 py-2 bg-[var(--color-primary)] text-white rounded-md hover:bg-[var(--color-primary-light)] transition-colors duration-200 shadow-sm hover:shadow cursor-pointer"
 					>
 						<PlusIcon class="w-4 h-4 mr-2" />
 						Add Property
 					</button>
 					<button
 						onclick={handleLogout}
-						class="px-4 py-2 bg-[var(--color-gray-medium)] text-white rounded-md transition-colors hover:bg-[var(--color-gray-dark)] flex items-center shadow-sm hover:shadow"
+						class="px-4 py-2 bg-[var(--color-gray-medium)] text-white rounded-md transition-colors hover:bg-[var(--color-gray-dark)] flex items-center shadow-sm hover:shadow cursor-pointer"
 					>
 						<LogOutIcon class="w-5 h-5 mr-2" />
 						Logout
