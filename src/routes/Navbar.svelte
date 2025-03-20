@@ -5,7 +5,7 @@ let isScrolled = false
 // biome-ignore lint/style/useConst: <explanation>
 let isMenuOpen = false
 
-function handleScroll() {
+const handleScroll = () => {
 	isScrolled = window.scrollY > 20
 }
 
