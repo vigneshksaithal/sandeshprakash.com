@@ -76,7 +76,7 @@ const deleteLead = async (id: string) => {
 				</div>
 				<div class="ml-4">
 					<button
-						on:click={() => deleteLead(lead.id)}
+						onclick={() => deleteLead(lead.id)}
 						class="text-red-600 hover:text-red-900"
 						title="Delete lead"
 					>
@@ -118,7 +118,7 @@ const deleteLead = async (id: string) => {
 					</td>
 					<td class="px-6 py-4">
 						<button
-							on:click={() => deleteLead(lead.id)}
+							onclick={() => deleteLead(lead.id)}
 							class="text-red-600 hover:text-red-900"
 							title="Delete lead"
 						>

@@ -90,14 +90,14 @@ const deleteProperty = async (id: string) => {
 					</div>
 					<div class="mt-4 flex space-x-4">
 						<button
-							on:click={() => openEditModal(property)}
+							onclick={() => openEditModal(property)}
 							class="text-[var(--color-primary)] hover:text-[var(--color-primary-dark)]"
 							title="Edit property"
 						>
 							<EditIcon class="h-6 w-6" />
 						</button>
 						<button
-							on:click={() => toggleFeatured(property.id, property.featured)}
+							onclick={() => toggleFeatured(property.id, property.featured)}
 							class="text-[var(--color-primary)] hover:text-[var(--color-primary-dark)]"
 							title={property.featured ? 'Remove from featured' : 'Add to featured'}
 						>
@@ -108,7 +108,7 @@ const deleteProperty = async (id: string) => {
 							{/if}
 						</button>
 						<button
-							on:click={() => deleteProperty(property.id)}
+							onclick={() => deleteProperty(property.id)}
 							class="text-red-600 hover:text-red-900"
 							title="Delete property"
 						>
@@ -169,14 +169,14 @@ const deleteProperty = async (id: string) => {
 					</td>
 					<td class="px-6 py-4 space-x-2">
 						<button
-							on:click={() => openEditModal(property)}
+							onclick={() => openEditModal(property)}
 							class="text-[var(--color-primary)] hover:text-[var(--color-primary-dark)]"
 							title="Edit property"
 						>
 							<EditIcon class="h-5 w-5" />
 						</button>
 						<button
-							on:click={() => toggleFeatured(property.id, property.featured)}
+							onclick={() => toggleFeatured(property.id, property.featured)}
 							class="text-[var(--color-primary)] hover:text-[var(--color-primary-dark)]"
 							title={property.featured ? 'Remove from featured' : 'Add to featured'}
 						>
@@ -187,7 +187,7 @@ const deleteProperty = async (id: string) => {
 							{/if}
 						</button>
 						<button
-							on:click={() => deleteProperty(property.id)}
+							onclick={() => deleteProperty(property.id)}
 							class="text-red-600 hover:text-red-900"
 							title="Delete property"
 						>

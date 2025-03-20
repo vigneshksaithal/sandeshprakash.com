@@ -106,7 +106,7 @@ const handleLogout = () => {
 		<div class="flex justify-between items-center mb-8">
 			<h1 class="text-2xl sm:text-3xl font-bold">Property Dashboard</h1>
 			<button
-				on:click={handleLogout}
+				onclick={handleLogout}
 				class="inline-flex items-center px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors duration-200"
 			>
 				<LogOutIcon class="w-5 h-5 mr-2" />
@@ -124,13 +124,13 @@ const handleLogout = () => {
 		<div class="flex space-x-4 mb-8">
 			<button
 				class="px-6 py-2 rounded-lg font-medium transition-colors duration-200 {state.activeTab === 'properties' ? 'bg-[var(--color-primary)] text-white' : 'bg-[var(--color-gray-light)] text-[var(--color-gray-dark)] hover:bg-[var(--color-gray-medium)]'}"
-				on:click={() => state.activeTab = 'properties'}
+				onclick={() => state.activeTab = 'properties'}
 			>
 				Properties
 			</button>
 			<button
 				class="px-6 py-2 rounded-lg font-medium transition-colors duration-200 {state.activeTab === 'leads' ? 'bg-[var(--color-primary)] text-white' : 'bg-[var(--color-gray-light)] text-[var(--color-gray-dark)] hover:bg-[var(--color-gray-medium)]'}"
-				on:click={() => state.activeTab = 'leads'}
+				onclick={() => state.activeTab = 'leads'}
 			>
 				Leads
 			</button>
@@ -140,7 +140,7 @@ const handleLogout = () => {
 			<!-- Add Property Button -->
 			<div class="mb-8">
 				<button
-					on:click={() => state.showAddModal = true}
+					onclick={() => state.showAddModal = true}
 					class="inline-flex items-center px-6 py-3 bg-[var(--color-primary)] text-white rounded-md hover:bg-[var(--color-primary-light)] transition-colors duration-200"
 				>
 					<PlusIcon class="w-5 h-5 mr-2" />
@@ -164,6 +164,7 @@ const handleLogout = () => {
 		{:else}
 			<LeadList
 				leads={state.leads}
+				loading={state.loading}
 				onRefresh={loadLeads}
 			/>
 		{/if}

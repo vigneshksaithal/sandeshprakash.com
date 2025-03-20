@@ -143,7 +143,7 @@ const handleSubmit = async () => {
 						{editingProperty ? 'Edit Property' : 'Add New Property'}
 					</h2>
 					<button
-						on:click={onClose}
+						onclick={onClose}
 						class="text-gray-500 hover:text-gray-700"
 						title="Close modal"
 					>
@@ -151,7 +151,7 @@ const handleSubmit = async () => {
 					</button>
 				</div>
 
-				<form on:submit|preventDefault={handleSubmit} class="space-y-4">
+				<form onsubmit={handleSubmit} class="space-y-4">
 					<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
 						<div>
 							<label for="title" class="block text-sm font-medium text-gray-700">Title *</label>
@@ -256,7 +256,7 @@ const handleSubmit = async () => {
 									/>
 									<button
 										type="button"
-										on:click={() => removeImage(index)}
+										onclick={() => removeImage(index)}
 										class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
 										title="Remove image"
 									>
@@ -269,7 +269,7 @@ const handleSubmit = async () => {
 									type="file"
 									accept="image/*"
 									multiple
-									on:change={handleImageChange}
+									onchange={handleImageChange}
 									class="hidden"
 								/>
 								<ImageIcon class="h-8 w-8 text-gray-400" />
@@ -284,7 +284,7 @@ const handleSubmit = async () => {
 					<div class="flex justify-end space-x-3">
 						<button
 							type="button"
-							on:click={onClose}
+							onclick={onClose}
 							class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--color-primary)]"
 							disabled={loading || state.uploading}
 						>
