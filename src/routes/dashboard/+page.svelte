@@ -115,6 +115,14 @@ const handleAddProperty = () => {
 				</div>
 
 				<div class="flex items-center space-x-6">
+					<a
+						href="https://umami.comparevpn.net/share/7fiHldSDJdN0Azo3/sandeshprakash.com"
+						target="_blank"
+						rel="noopener noreferrer" 
+						class="relative px-4 py-2 text-[var(--color-text-dark)] hover:text-[var(--color-primary)] transition-colors font-medium group cursor-pointer"
+					>
+						Analytics
+					</a>
 					<button
 						class="relative px-4 py-2 text-[var(--color-text-dark)] hover:text-[var(--color-primary)] transition-colors font-medium group cursor-pointer"
 						onclick={() => state.activeTab = 'properties'}
