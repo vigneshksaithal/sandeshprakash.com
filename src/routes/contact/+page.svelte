@@ -156,7 +156,7 @@ const handleSubmit = async (e: Event) => {
         </div>
         <h3 class="text-2xl font-bold text-[var(--color-text-dark)] mb-4">Call Us</h3>
         <p class="text-[var(--color-gray-medium)] mb-4">Mon-Fri from 9am to 6pm IST</p>
-        <a href="tel:+919876543210" class="text-[var(--color-primary)] hover:text-[var(--color-secondary)] transition-colors">+91 9876543210</a>
+        <a href="tel:+919632305082" class="text-[var(--color-primary)] hover:text-[var(--color-secondary)] transition-colors">+91 9632305082</a>
       </div>
 
       <!-- Location Card -->
@@ -166,7 +166,7 @@ const handleSubmit = async (e: Event) => {
         </div>
         <h3 class="text-2xl font-bold text-[var(--color-text-dark)] mb-4">Visit Us</h3>
         <p class="text-[var(--color-gray-medium)] mb-4">Our office is centrally located</p>
-        <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" class="text-[var(--color-primary)] hover:text-[var(--color-secondary)] transition-colors">123 Tech Park, Koramangala, Bengaluru</a>
+        <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" class="text-[var(--color-primary)] hover:text-[var(--color-secondary)] transition-colors">No 948/A, 3rd Cross, Near Papareddypalya, IT I Layout Nagarabhavi 2nd Stage 11th Block, VTC: Bangalore North, Nagarbhavi, 560072</a>
       </div>
     </div>
   </div>
@@ -284,7 +284,7 @@ const handleSubmit = async (e: Event) => {
         <!-- Map -->
         <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.599285073258!2d77.6340175!3d12.9378136!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae14487ef95871%3A0xd97ef43188c50391!2sKoramangala%2C%20Bengaluru%2C%20Karnataka!5e0!3m2!1sen!2sin!4v1648545377665!5m2!1sen!2sin"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.3387247075287!2d77.51736937473535!3d12.957075987334188!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae3e2c22c5d1c9%3A0x7c2e3b9daa099cf0!2sIT%20Layout%2C%20Nagarbhavi%202nd%20Stage%2C%20Bengaluru%2C%20Karnataka%20560072!5e0!3m2!1sen!2sin!4v1709799171099!5m2!1sen!2sin"
             width="100%"
             height="100%"
             style="border:0; min-height: 600px;"
