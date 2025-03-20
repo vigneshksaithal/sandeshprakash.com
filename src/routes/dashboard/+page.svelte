@@ -45,6 +45,8 @@ let loading = false
 let error = ''
 let showAddModal = false
 let showEditModal = false
+let showLeadModal = false
+let selectedLead: Lead | null = null
 let editingProperty: Property | null = null
 $: isAuthenticated = pb.authStore.isValid
 $: activeTab = 'properties'
@@ -119,6 +121,11 @@ function openEditModal(property: Property) {
 		images: [] as File[]
 	}
 	showEditModal = true
+}
+
+function openLeadModal(lead: Lead) {
+	selectedLead = lead
+	showLeadModal = true
 }
 
 async function handleSubmit() {
@@ -703,8 +710,8 @@ function handleLogout() {
 					<table class="min-w-full divide-y divide-gray-200">
 						<thead class="bg-gray-50">
 							<tr>
-								<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contact</th>
-								<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Message</th>
+								<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+								<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
 								<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
 								<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
 								<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
@@ -712,19 +719,12 @@ function handleLogout() {
 						</thead>
 						<tbody class="bg-white divide-y divide-gray-200">
 							{#each leads as lead}
-								<tr class="hover:bg-gray-50">
+								<tr class="hover:bg-gray-50 cursor-pointer" on:click={() => openLeadModal(lead)}>
 									<td class="px-6 py-4">
 										<div class="text-sm font-medium text-gray-900">{lead.name}</div>
-										<div class="text-sm text-gray-500">{lead.email}</div>
-										<div class="text-sm text-gray-500">{lead.phone}</div>
 									</td>
 									<td class="px-6 py-4">
-										<div class="text-sm text-gray-900 max-w-md whitespace-pre-wrap">{lead.message}</div>
-										{#if lead.expand?.property}
-											<div class="mt-2 inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-[var(--color-primary)]/5 text-[var(--color-primary)]">
-												Property: {lead.expand.property.title}
-											</div>
-										{/if}
+										<div class="text-sm text-gray-500">{lead.email}</div>
 									</td>
 									<td class="px-6 py-4">
 										<select
@@ -745,7 +745,10 @@ function handleLogout() {
 									</td>
 									<td class="px-6 py-4">
 										<button
-											on:click={() => deleteLead(lead.id)}
+											on:click={(e) => {
+												e.stopPropagation()
+												deleteLead(lead.id)
+											}}
 											class="text-red-600 hover:text-red-900"
 											title="Delete lead"
 										>
