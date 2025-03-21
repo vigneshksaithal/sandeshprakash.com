@@ -23,11 +23,6 @@ interface Property {
 let properties: Property[] = []
 let isLoaded = false
 
-function handleImageError(event: Event) {
-	const img = event.target as HTMLImageElement
-	img.src = '/images/placeholder.jpg'
-}
-
 async function loadProperties() {
 	try {
 		const records = await pb.collection('properties').getList<Property>(1, 50, {
@@ -85,7 +80,6 @@ onMount(loadProperties)
 									alt={property.title} 
 									class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
 									loading="lazy"
-									on:error={handleImageError}
 								/>
 								<div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-80"></div>
 							{:else}
