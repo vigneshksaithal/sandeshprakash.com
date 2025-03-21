@@ -12,7 +12,7 @@ interface Property {
 	status: 'active' | 'archive'
 	location: string
 	title: string
-	price: number
+	price: string
 	area: string
 	description: string
 	images: string[]
@@ -27,7 +27,7 @@ interface FormData {
 	status: Property['status']
 	location: string
 	title: string
-	price: number
+	price: string
 	area: string
 	description: string
 	images: (string | File)[]
@@ -49,7 +49,7 @@ const state = $state({
 		status: 'active' as Property['status'],
 		location: '',
 		title: '',
-		price: 0,
+		price: '',
 		area: '',
 		description: '',
 		images: [] as (string | File)[],
@@ -83,7 +83,7 @@ $effect(() => {
 			status: 'active',
 			location: '',
 			title: '',
-			price: 0,
+			price: '',
 			area: '',
 			description: '',
 			images: [],
@@ -146,14 +146,26 @@ const handleSubmit = async () => {
 		for (const [key, value] of Object.entries(state.formData)) {
 			if (key === 'images') {
 				if (Array.isArray(value)) {
-					for (const image of value) {
-						if (image instanceof Blob) {
-							formData.append('images', image)
+					// Handle existing images
+					if (editingProperty) {
+						const existingImages = value.filter(
+							(img) => typeof img === 'string'
+						)
+						formData.append('images-', JSON.stringify(existingImages))
+					}
+					// Handle new images
+					const newImages = value.filter((img) => img instanceof File)
+					for (const image of newImages) {
+						if (image instanceof File) {
+							formData.append('images+', image)
 						}
 					}
 				}
 			} else {
-				formData.append(key, value.toString())
+				// Safely handle null/undefined values
+				const stringValue =
+					value === null || value === undefined ? '' : value.toString()
+				formData.append(key, stringValue)
 			}
 		}
 
@@ -174,12 +186,12 @@ const handleSubmit = async () => {
 
 {#if showModal}
 	<div
-		class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-start md:items-center justify-center p-2 md:p-4 z-50 overflow-y-auto"
+		class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-start justify-center p-2 md:p-4 z-50 overflow-y-auto"
 		transition:fade={{ duration: 200 }}
 	>
-		<div class="bg-[var(--color-card-bg)] rounded-2xl w-full max-w-2xl shadow-[var(--shadow-lg)] border border-[var(--color-primary-light)]/20 my-4">
-			<div class="p-4 md:p-6">
-				<div class="flex justify-between items-center mb-4 md:mb-6">
+		<div class="bg-[var(--color-card-bg)] rounded-2xl w-full max-w-2xl shadow-[var(--shadow-lg)] border border-[var(--color-primary-light)]/20 my-4 max-h-[90vh] flex flex-col">
+			<div class="p-4 md:p-6 overflow-y-auto">
+				<div class="flex justify-between items-center mb-4 md:mb-6 sticky top-0 bg-[var(--color-card-bg)] z-10 py-2">
 					<h2 class="text-lg md:text-xl font-semibold text-[var(--color-text-dark)]">
 						{editingProperty ? 'Edit Property' : 'Add New Property'}
 					</h2>
@@ -235,7 +247,7 @@ const handleSubmit = async () => {
 						<div>
 							<label for="price" class="block text-sm font-medium text-[var(--color-text-dark)] mb-1">Price</label>
 							<input
-								type="number"
+								type="text"
 								id="price"
 								bind:value={state.formData.price}
 								class="w-full px-3 py-2 rounded-md border border-[var(--color-gray-light)] shadow-sm focus:border-[var(--color-primary)] focus:ring-1 focus:ring-[var(--color-primary)] text-sm"
@@ -287,7 +299,7 @@ const handleSubmit = async () => {
 
 					<div>
 						<label class="block text-sm font-medium text-[var(--color-text-dark)] mb-2">Images</label>
-						<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+						<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 auto-rows-min">
 							{#each state.imagePreviews as preview, index}
 								<div class="relative group aspect-square">
 									<img
@@ -324,7 +336,7 @@ const handleSubmit = async () => {
 						<div class="text-red-500 text-sm">{state.error}</div>
 					{/if}
 
-					<div class="flex justify-end gap-3 pt-4">
+					<div class="flex justify-end gap-3 pt-4 sticky bottom-0 bg-[var(--color-card-bg)] z-10 py-4">
 						<button
 							type="button"
 							onclick={onClose}
