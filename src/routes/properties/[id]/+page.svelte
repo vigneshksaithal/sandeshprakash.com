@@ -1,9 +1,9 @@
 <script lang="ts">
-import Navbar from '../../Navbar.svelte'
-import Footer from '../../Footer.svelte'
-import type { Property } from '$lib/pocketbase'
-import type { PageData } from './$types'
 import { PUBLIC_POCKETBASE_URL } from '$env/static/public'
+import type { Property } from '$lib/pocketbase'
+import Footer from '../../Footer.svelte'
+import Navbar from '../../Navbar.svelte'
+import type { PageData } from './$types'
 
 export let data: PageData
 const property: Property | null = data.property

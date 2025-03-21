@@ -1,12 +1,10 @@
 import { pb } from '$lib/pocketbase'
 import type { Property } from '$lib/pocketbase'
+import type { PageLoad } from './$types'
 
-export interface PageData {
-	property: Property | null
-	error?: string | null
-}
+export const ssr = false
 
-export const load = (async ({ params }: { params: { id: string } }) => {
+export const load = (async ({ params }) => {
 	try {
 		const property = await pb.collection('properties').getOne(params.id)
 		return { property: property as unknown as Property }
@@ -14,4 +12,4 @@ export const load = (async ({ params }: { params: { id: string } }) => {
 		console.error('Error loading property:', error)
 		return { property: null, error: 'Property not found' }
 	}
-}) as unknown as import('./$types').PageLoad
+}) satisfies PageLoad
