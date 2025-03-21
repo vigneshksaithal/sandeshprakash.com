@@ -1,11 +1,11 @@
 <script lang="ts">
+import { pb } from '$lib/pocketbase'
+import type { Property } from '$lib/pocketbase'
+import { onMount } from 'svelte'
 import CallToAction from '../CallToAction.svelte'
 import Footer from '../Footer.svelte'
 import Navbar from '../Navbar.svelte'
 import PropertyCard from './PropertyCard.svelte'
-import { pb } from '$lib/pocketbase'
-import { onMount } from 'svelte'
-import type { Property } from '$lib/pocketbase'
 
 let properties: Property[] = []
 let loading = true
@@ -20,7 +20,7 @@ const handleMouseMove = (event: MouseEvent) => {
 	mouseY = ((event.clientY - rect.top) / rect.height - 0.5) * 20
 }
 
-onMount(async () => {
+const fetchProperties = async () => {
 	try {
 		const records = await pb.collection('properties').getList(1, 50, {
 			sort: '-created',
@@ -33,6 +33,10 @@ onMount(async () => {
 	} finally {
 		loading = false
 	}
+}
+
+onMount(() => {
+	fetchProperties()
 })
 </script>
 

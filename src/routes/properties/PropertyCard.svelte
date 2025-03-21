@@ -1,6 +1,6 @@
 <script lang="ts">
-import type { Property } from '$lib/pocketbase'
 import { PUBLIC_POCKETBASE_URL } from '$env/static/public'
+import type { Property } from '$lib/pocketbase'
 
 export let property: Property
 
