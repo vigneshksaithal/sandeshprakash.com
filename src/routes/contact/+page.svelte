@@ -287,7 +287,7 @@ const handleSubmit = async (e: Event) => {
         <!-- Map -->
         <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.3387247075287!2d77.51736937473535!3d12.957075987334188!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae3e2c22c5d1c9%3A0x7c2e3b9daa099cf0!2sIT%20Layout%2C%20Nagarbhavi%202nd%20Stage%2C%20Bengaluru%2C%20Karnataka%20560072!5e0!3m2!1sen!2sin!4v1709799171099!5m2!1sen!2sin"
+            src="https://www.google.com/maps/embed?pb=!1m17!1m11!1m3!1d570.6648837091245!2d77.50854747163966!3d12.96897276103988!2m2!1f0!2f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae3c2ecc5d86eb%3A0xa3175b959446999c!2s948%2C%20Papreddy%20Palya%2C%202nd%20Stage%2C%20Naagarabhaavi%2C%20Bengaluru%2C%20Karnataka%20560072!5e1!3m2!1sen!2sin!4v1742535221283!5m2!1sen!2sin"
             width="100%"
             height="100%"
             style="border:0; min-height: 600px;"
