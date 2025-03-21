@@ -1,7 +1,7 @@
 {
 	"name": "sandeshprakash.com",
 	"private": true,
-	"version": "0.4.0",
+	"version": "0.5.0",
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
@@ -25,9 +25,7 @@
 		"vite": "^6.2.2"
 	},
 	"pnpm": {
-		"onlyBuiltDependencies": [
-			"esbuild"
-		]
+		"onlyBuiltDependencies": ["esbuild"]
 	},
 	"dependencies": {
 		"lucide-svelte": "^0.482.0",
