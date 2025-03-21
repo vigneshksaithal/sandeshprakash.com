@@ -9,7 +9,8 @@ interface Property {
 	image: string
 }
 
-export let property: Property
+// biome-ignore lint/style/useConst: <explanation>
+let { property } = $props<{ property: Property }>()
 </script>
 
 <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-[1.02] group">
