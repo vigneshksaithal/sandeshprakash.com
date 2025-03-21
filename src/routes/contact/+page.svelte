@@ -25,15 +25,6 @@ let formData = {
 let loading = false
 let success = false
 let error = ''
-let mouseX = 0
-let mouseY = 0
-
-function handleMouseMove(event: MouseEvent) {
-	const target = event.currentTarget as HTMLElement
-	const rect = target.getBoundingClientRect()
-	mouseX = ((event.clientX - rect.left) / rect.width - 0.5) * 20
-	mouseY = ((event.clientY - rect.top) / rect.height - 0.5) * 20
-}
 
 onMount(async () => {
 	try {
@@ -88,38 +79,30 @@ const handleSubmit = async (e: Event) => {
 
 <main class="min-h-screen">
   <!-- Hero Section with Blue Background -->
-  <div class="relative bg-[var(--color-primary-dark)] text-[var(--color-text)] py-20 overflow-hidden" onmousemove={handleMouseMove}>
+  <div class="relative bg-[var(--color-primary-dark)] text-[var(--color-text)] py-20 overflow-hidden">
     <!-- Animated gradient background -->
     <div class="absolute inset-0 bg-gradient-to-br from-[var(--color-primary-dark)] via-[var(--color-primary)] to-[var(--color-secondary)] opacity-90 animate-gradient"></div>
     
     <!-- Animated shapes -->
     <div class="absolute inset-0">
       <!-- Large circle -->
-      <div 
-        class="absolute -top-1/4 -right-1/4 w-[40rem] h-[40rem] rounded-full border border-white/10"
-        style="transform: translate3d({mouseX * 0.8}px, {mouseY * 0.8}px, 0) rotate(15deg)"
-      ></div>
+      <div class="absolute -top-1/4 -right-1/4 w-[40rem] h-[40rem] rounded-full border border-white/10"></div>
       
       <!-- Medium circle -->
-      <div 
-        class="absolute -bottom-1/4 -left-1/4 w-[30rem] h-[30rem] rounded-full border border-white/10"
-        style="transform: translate3d({mouseX * 0.6}px, {mouseY * 0.6}px, 0) rotate(-15deg)"
-      ></div>
+      <div class="absolute -bottom-1/4 -left-1/4 w-[30rem] h-[30rem] rounded-full border border-white/10"></div>
 
       <!-- Diagonal lines -->
       <div 
         class="absolute top-0 left-0 w-full h-full"
         style="background-image: linear-gradient(45deg, var(--color-text) 1px, transparent 1px);
                background-size: 5rem 5rem;
-               opacity: 0.05;
-               transform: translate3d({mouseX * 0.2}px, {mouseY * 0.2}px, 0)"
+               opacity: 0.05;"
       ></div>
 
       <!-- Floating dots -->
       <div class="absolute inset-0 opacity-10"
            style="background-image: radial-gradient(circle at 1rem 1rem, var(--color-text) 0.15rem, transparent 0.15rem);
-                  background-size: 4rem 4rem;
-                  transform: translate3d({mouseX * 0.3}px, {mouseY * 0.3}px, 0)">
+                  background-size: 4rem 4rem;">
       </div>
     </div>
 
