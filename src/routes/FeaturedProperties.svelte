@@ -5,30 +5,19 @@ import MapPinIcon from 'lucide-svelte/icons/map-pin'
 import { onMount } from 'svelte'
 import { fly } from 'svelte/transition'
 
-// Define features type
-interface PropertyFeatures {
-	amenities?: string[]
-	specifications?: string[]
-	[key: string]: unknown
-}
-
 interface Property {
 	id: string
-	collectionId: string
-	collectionName: string
-	created: string
-	updated: string
-	type: string
-	featured: boolean
-	location: string
 	title: string
-	price: string | number
-	area: number
+	location: string
+	type: 'Warehouse' | 'Manufacturing' | 'Industrial Land' | 'Commercial'
 	description: string
 	images: string[]
-	status: string
-	slug: string
-	features: PropertyFeatures | null
+	featured: boolean
+	status: 'active' | 'archive'
+	area: string
+	price: string
+	created: string
+	updated: string
 }
 
 let properties: Property[] = []
@@ -50,12 +39,9 @@ async function loadProperties() {
 			console.log('Processing item:', item)
 			return {
 				...item,
-				// Transform images to proper dimensions
 				images: item.images.map((img) => {
-					// If the image is already a full URL, use it as is
 					if (img.startsWith('http')) return img
-					// Otherwise, generate a thumbnail URL
-					return pb.files.getUrl(item, img, { thumb: '600x400' })
+					return pb.files.getURL(item, img, { thumb: '600x400' })
 				})
 			}
 		})
@@ -142,7 +128,7 @@ onMount(loadProperties)
 								<div>
 									<span class="text-[var(--color-text-dark)]/60 text-sm">Area</span>
 									<p class="font-bold text-xl text-[var(--color-text-dark)]">
-										{property.area?.toLocaleString() ?? 0} 
+										{property.area}
 										<span class="text-sm font-normal">sqft</span>
 									</p>
 								</div>
