@@ -31,34 +31,22 @@ const socialLinks = [
 		url: 'https://www.linkedin.com/in/sandesh-prakash-34516819a/'
 	}
 ]
-
-let mouseX = 0
-let mouseY = 0
-
-function handleMouseMove(event: MouseEvent) {
-	const target = event.currentTarget as HTMLElement
-	const rect = target.getBoundingClientRect()
-	mouseX = ((event.clientX - rect.left) / rect.width - 0.5) * 20
-	mouseY = ((event.clientY - rect.top) / rect.height - 0.5) * 20
-}
 </script>
 
-<footer class="relative bg-[var(--color-primary-dark)]" on:mousemove={handleMouseMove}>
+<footer class="relative bg-[var(--color-primary-dark)]">
     <!-- Animated gradient background -->
     <div class="absolute inset-0 bg-gradient-to-br from-[var(--color-primary-dark)] via-[var(--color-primary)] to-[var(--color-secondary)] opacity-50 animate-gradient"></div>
     
-    <!-- Decorative elements with parallax -->
+    <!-- Decorative elements -->
     <div class="absolute inset-0 overflow-hidden">
         <!-- Large circle -->
         <div 
             class="absolute -top-1/4 -right-1/4 w-[40rem] h-[40rem] rounded-full border border-white/20"
-            style="transform: translate3d({mouseX * 0.8}px, {mouseY * 0.8}px, 0) rotate(15deg)"
         ></div>
         
         <!-- Medium circle -->
         <div 
             class="absolute -bottom-1/4 -left-1/4 w-[30rem] h-[30rem] rounded-full border border-white/20"
-            style="transform: translate3d({mouseX * 0.6}px, {mouseY * 0.6}px, 0) rotate(-15deg)"
         ></div>
     </div>
     
