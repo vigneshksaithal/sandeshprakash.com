@@ -23,14 +23,36 @@ export interface Record {
 }
 
 export interface Property extends Record {
-	type: string
-	featured: boolean
+	title: string
 	location: string
-	name: string
-	price: number
-	size: number
-	address: string
-	image: string
-	status: string
+	type: string
 	description: string
+	images: string[]
+	featured: boolean
+	area: string
+	price: string
+	isActive: boolean
+}
+
+export const getProperties = async () => {
+	try {
+		const records = await pb.collection('properties').getList(1, 50, {
+			sort: '-created',
+			filter: 'isActive = true'
+		})
+		return records.items
+	} catch (error) {
+		console.error('Error fetching properties:', error)
+		return []
+	}
+}
+
+export const getProperty = async (id: string) => {
+	try {
+		const record = await pb.collection('properties').getOne(id)
+		return record
+	} catch (error) {
+		console.error('Error fetching property:', error)
+		return null
+	}
 }

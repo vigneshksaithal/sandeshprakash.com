@@ -3,7 +3,13 @@ import CallToAction from '../CallToAction.svelte'
 import Footer from '../Footer.svelte'
 import Navbar from '../Navbar.svelte'
 import PropertyCard from './PropertyCard.svelte'
-import { properties } from './propertyData'
+import { pb } from '$lib/pocketbase'
+import { onMount } from 'svelte'
+import type { Property } from '$lib/pocketbase'
+
+let properties: Property[] = []
+let loading = true
+let error: string | null = null
 
 let mouseX = 0
 let mouseY = 0
@@ -13,6 +19,21 @@ const handleMouseMove = (event: MouseEvent) => {
 	mouseX = ((event.clientX - rect.left) / rect.width - 0.5) * 20
 	mouseY = ((event.clientY - rect.top) / rect.height - 0.5) * 20
 }
+
+onMount(async () => {
+	try {
+		const records = await pb.collection('properties').getList(1, 50, {
+			sort: '-created',
+			filter: 'isActive = true'
+		})
+		properties = records.items as unknown as Property[]
+	} catch (err) {
+		error = 'Failed to load properties'
+		console.error('Error fetching properties:', err)
+	} finally {
+		loading = false
+	}
+})
 </script>
 
 <Navbar />
@@ -67,11 +88,21 @@ const handleMouseMove = (event: MouseEvent) => {
 
     <!-- Properties Grid -->
     <div class="container mx-auto px-6 md:px-16 py-24">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
-            {#each properties as property (property.id)}
-                <PropertyCard {property} />
-            {/each}
-        </div>
+        {#if loading}
+            <div class="flex items-center justify-center py-12">
+                <div class="w-12 h-12 border-4 border-[var(--color-primary)] border-t-transparent rounded-full animate-spin"></div>
+            </div>
+        {:else if error}
+            <div class="text-center py-12">
+                <p class="text-red-500">{error}</p>
+            </div>
+        {:else}
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
+                {#each properties as property (property.id)}
+                    <PropertyCard {property} />
+                {/each}
+            </div>
+        {/if}
     </div>
 
     <CallToAction />
