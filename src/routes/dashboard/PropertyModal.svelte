@@ -129,11 +129,11 @@ const handleSubmit = async () => {
 		for (const [key, value] of Object.entries(state.formData)) {
 			if (key === 'images') {
 				if (Array.isArray(value)) {
-					value.forEach((image) => {
+					for (const image of value) {
 						if (image instanceof File) {
 							formData.append('images', image)
 						}
-					})
+					}
 				}
 			} else {
 				formData.append(key, value.toString())
