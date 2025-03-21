@@ -88,7 +88,7 @@ const handleSubmit = async (e: Event) => {
 
 <main class="min-h-screen">
   <!-- Hero Section with Blue Background -->
-  <div class="relative bg-[var(--color-primary-dark)] text-[var(--color-text)] py-24 overflow-hidden" onmousemove={handleMouseMove}>
+  <div class="relative bg-[var(--color-primary-dark)] text-[var(--color-text)] py-20 overflow-hidden" onmousemove={handleMouseMove}>
     <!-- Animated gradient background -->
     <div class="absolute inset-0 bg-gradient-to-br from-[var(--color-primary-dark)] via-[var(--color-primary)] to-[var(--color-secondary)] opacity-90 animate-gradient"></div>
     
@@ -123,58 +123,60 @@ const handleSubmit = async (e: Event) => {
       </div>
     </div>
 
-    <div class="container mx-auto px-6 md:px-16 text-center relative">
-      <span class="inline-block px-4 py-2 rounded-full bg-white/10 text-[var(--color-text)] text-sm font-medium mb-8 backdrop-blur-sm border border-white/20">GET IN TOUCH</span>
-      <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 leading-tight">
-        Let's Start a<br/>
+    <div class="container mx-auto px-6 md:px-16 text-center relative max-w-7xl">
+      <span class="inline-block px-4 py-2 rounded-full bg-white/10 text-[var(--color-text)] text-sm font-medium mb-6 backdrop-blur-sm border border-white/20">GET IN TOUCH</span>
+      <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
+        Let's Start a
         <span class="bg-gradient-to-r from-[var(--color-accent)] to-[var(--color-secondary)] text-transparent bg-clip-text">
           Conversation
         </span>
       </h1>
-      <p class="text-xl text-white/80 mb-12 font-light max-w-2xl mx-auto leading-relaxed">
-        Have questions about our properties or services? Our team is here to help you find the perfect space for your business.
+      <p class="text-xl text-white/80 mb-8 font-light max-w-4xl mx-auto">
+        Our team is ready to help you find the perfect space for your business needs.
       </p>
     </div>
   </div>
 
   <!-- Contact Info Cards -->
-  <div class="container mx-auto px-6 md:px-16 -mt-16 relative z-10">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <!-- Email Card -->
-      <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-        <div class="bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] p-4 rounded-full w-16 h-16 flex items-center justify-center mb-6">
-          <MailIcon class="h-8 w-8 text-white" />
+  <div class="bg-[var(--color-card-bg)] py-20">
+    <div class="container mx-auto px-6 md:px-16 max-w-7xl">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Email Card -->
+        <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+          <div class="bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] p-4 rounded-full w-16 h-16 flex items-center justify-center mb-6">
+            <MailIcon class="h-8 w-8 text-white" />
+          </div>
+          <h3 class="text-2xl font-bold text-[var(--color-text-dark)] mb-4">Email Us</h3>
+          <p class="text-[var(--color-gray-medium)] mb-4">Quick response within 24 hours</p>
+          <a href="mailto:info@sandeshprakash.com" class="text-[var(--color-primary)] hover:text-[var(--color-secondary)] transition-colors">info@sandeshprakash.com</a>
         </div>
-        <h3 class="text-2xl font-bold text-[var(--color-text-dark)] mb-4">Email Us</h3>
-        <p class="text-[var(--color-gray-medium)] mb-4">Our team usually responds within 24 hours</p>
-        <a href="mailto:info@sandeshprakash.com" class="text-[var(--color-primary)] hover:text-[var(--color-secondary)] transition-colors">info@sandeshprakash.com</a>
-      </div>
 
-      <!-- Phone Card -->
-      <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-        <div class="bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] p-4 rounded-full w-16 h-16 flex items-center justify-center mb-6">
-          <PhoneIcon class="h-8 w-8 text-white" />
+        <!-- Phone Card -->
+        <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+          <div class="bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] p-4 rounded-full w-16 h-16 flex items-center justify-center mb-6">
+            <PhoneIcon class="h-8 w-8 text-white" />
+          </div>
+          <h3 class="text-2xl font-bold text-[var(--color-text-dark)] mb-4">Call Us</h3>
+          <p class="text-[var(--color-gray-medium)] mb-4">9am to 6pm IST (Mon-Fri)</p>
+          <a href="tel:+919632305082" class="text-[var(--color-primary)] hover:text-[var(--color-secondary)] transition-colors">+91 9632305082</a>
         </div>
-        <h3 class="text-2xl font-bold text-[var(--color-text-dark)] mb-4">Call Us</h3>
-        <p class="text-[var(--color-gray-medium)] mb-4">Mon-Fri from 9am to 6pm IST</p>
-        <a href="tel:+919632305082" class="text-[var(--color-primary)] hover:text-[var(--color-secondary)] transition-colors">+91 9632305082</a>
-      </div>
 
-      <!-- Location Card -->
-      <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-        <div class="bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] p-4 rounded-full w-16 h-16 flex items-center justify-center mb-6">
-          <MapPinIcon class="h-8 w-8 text-white" />
+        <!-- Location Card -->
+        <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+          <div class="bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] p-4 rounded-full w-16 h-16 flex items-center justify-center mb-6">
+            <MapPinIcon class="h-8 w-8 text-white" />
+          </div>
+          <h3 class="text-2xl font-bold text-[var(--color-text-dark)] mb-4">Visit Us</h3>
+          <p class="text-[var(--color-gray-medium)] mb-4">Central Bangalore Location</p>
+          <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" class="text-[var(--color-primary)] hover:text-[var(--color-secondary)] transition-colors">No 948/A, 3rd Cross, IT I Layout Nagarabhavi 2nd Stage, Bangalore North, 560072</a>
         </div>
-        <h3 class="text-2xl font-bold text-[var(--color-text-dark)] mb-4">Visit Us</h3>
-        <p class="text-[var(--color-gray-medium)] mb-4">Our office is centrally located</p>
-        <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" class="text-[var(--color-primary)] hover:text-[var(--color-secondary)] transition-colors">No 948/A, 3rd Cross, Near Papareddypalya, IT I Layout Nagarabhavi 2nd Stage 11th Block, VTC: Bangalore North, Nagarbhavi, 560072</a>
       </div>
     </div>
   </div>
 
   <!-- Contact Form Section -->
-  <div class="bg-[var(--color-gray-light)] py-24">
-    <div class="container mx-auto px-6 md:px-16">
+  <div class="bg-[var(--color-gray-light)] py-20">
+    <div class="container mx-auto px-6 md:px-16 max-w-7xl">
       <div class="grid md:grid-cols-2 gap-12">
         <!-- Form -->
         <div class="bg-white p-8 rounded-2xl shadow-lg">
