@@ -1,4 +1,4 @@
-# Sandesh Prakash Real Estate
+# Sandesh Prakash
 
 A modern real estate platform built with SvelteKit, focusing on industrial and commercial properties in Bengaluru.
 
