@@ -28,7 +28,7 @@ const socialLinks = [
 	{
 		icon: LinkedinIcon,
 		label: 'LinkedIn',
-		url: 'https://linkedin.com/in/sandeshprakash'
+		url: 'https://www.linkedin.com/in/sandesh-prakash-34516819a/'
 	}
 ]
 
