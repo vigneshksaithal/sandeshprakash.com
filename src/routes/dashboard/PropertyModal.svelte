@@ -18,6 +18,7 @@ interface Property {
 	images: string[]
 	created: string
 	updated: string
+	isActive: boolean
 }
 
 const { showModal, editingProperty, loading, onClose, onSuccess } = $props<{
@@ -38,7 +39,8 @@ const state = $state({
 		price: 0,
 		area: '',
 		description: '',
-		images: [] as string[]
+		images: [] as string[],
+		isActive: true
 	},
 	error: '',
 	uploading: false,
@@ -57,7 +59,8 @@ $effect(() => {
 			price: editingProperty.price,
 			area: editingProperty.area,
 			description: editingProperty.description,
-			images: editingProperty.images
+			images: editingProperty.images,
+			isActive: editingProperty.isActive
 		}
 		state.imagePreviews = editingProperty.images
 	} else {
@@ -70,7 +73,8 @@ $effect(() => {
 			price: 0,
 			area: '',
 			description: '',
-			images: []
+			images: [],
+			isActive: true
 		}
 		state.imagePreviews = []
 	}
@@ -235,7 +239,7 @@ const handleSubmit = async () => {
 							/>
 						</div>
 
-						<div class="flex items-center h-full pt-6">
+						<div class="flex items-center h-full pt-6 gap-4">
 							<label class="relative inline-flex items-center cursor-pointer">
 								<input
 									type="checkbox"
@@ -244,6 +248,16 @@ const handleSubmit = async () => {
 								/>
 								<div class="w-11 h-6 bg-[var(--color-gray-light)] rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[var(--color-primary)]"></div>
 								<span class="ms-3 text-sm font-medium text-[var(--color-text-dark)]">Featured Property</span>
+							</label>
+
+							<label class="relative inline-flex items-center cursor-pointer">
+								<input
+									type="checkbox"
+									bind:checked={state.formData.isActive}
+									class="sr-only peer"
+								/>
+								<div class="w-11 h-6 bg-[var(--color-gray-light)] rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[var(--color-primary)]"></div>
+								<span class="ms-3 text-sm font-medium text-[var(--color-text-dark)]">Active</span>
 							</label>
 						</div>
 					</div>
