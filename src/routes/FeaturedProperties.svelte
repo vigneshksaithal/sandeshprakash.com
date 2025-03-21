@@ -26,7 +26,7 @@ let isLoaded = false
 async function loadProperties() {
 	try {
 		const records = await pb.collection('properties').getList<Property>(1, 50, {
-			filter: 'status = "active" && featured = true',
+			filter: 'isActive = true && featured = true',
 			sort: '-created'
 		})
 		console.log('Records:', records)
