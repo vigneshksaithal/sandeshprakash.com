@@ -13,7 +13,7 @@ interface Property {
 	location: string
 	title: string
 	price: number
-	area: number
+	area: string
 	description: string
 	images: string[]
 	created: string
@@ -36,7 +36,7 @@ const state = $state({
 		location: '',
 		title: '',
 		price: 0,
-		area: 0,
+		area: '',
 		description: '',
 		images: [] as string[]
 	},
@@ -59,6 +59,7 @@ $effect(() => {
 			description: editingProperty.description,
 			images: editingProperty.images
 		}
+		state.imagePreviews = editingProperty.images
 	} else {
 		state.formData = {
 			type: '' as Property['type'],
@@ -67,7 +68,7 @@ $effect(() => {
 			location: '',
 			title: '',
 			price: 0,
-			area: 0,
+			area: '',
 			description: '',
 			images: []
 		}
@@ -98,29 +99,10 @@ const handleImageChange = async (e: Event) => {
 		)
 
 		state.imagePreviews = [...state.imagePreviews, ...newPreviews]
-
-		// Upload images
-		for (const file of files) {
-			const formData = new FormData()
-			formData.append('type', state.formData.type || 'Warehouse')
-			formData.append('title', state.formData.title || 'temp')
-			formData.append('location', state.formData.location || 'temp')
-			formData.append('featured', state.formData.featured.toString())
-			formData.append('status', state.formData.status)
-			formData.append('price', state.formData.price.toString())
-			formData.append('area', state.formData.area.toString())
-			formData.append('description', state.formData.description)
-			formData.append('images', file)
-
-			const record = await pb.collection('properties').create(formData)
-
-			if (record.images?.length) {
-				state.formData.images = [...state.formData.images, record.images[0]]
-			}
-		}
+		state.formData.images = [...state.formData.images, ...files]
 	} catch (err) {
-		console.error('Failed to upload images:', err)
-		state.error = 'Failed to upload images. Please try again.'
+		console.error('Failed to handle images:', err)
+		state.error = 'Failed to handle images. Please try again.'
 	} finally {
 		state.uploading = false
 	}
@@ -144,15 +126,19 @@ const handleSubmit = async () => {
 
 	try {
 		const formData = new FormData()
-		Object.entries(state.formData).forEach(([key, value]) => {
+		for (const [key, value] of Object.entries(state.formData)) {
 			if (key === 'images') {
-				value.forEach((image: string) => {
-					formData.append('images', image)
-				})
+				if (Array.isArray(value)) {
+					value.forEach((image) => {
+						if (image instanceof File) {
+							formData.append('images', image)
+						}
+					})
+				}
 			} else {
 				formData.append(key, value.toString())
 			}
-		})
+		}
 
 		if (editingProperty) {
 			await pb.collection('properties').update(editingProperty.id, formData)
@@ -240,9 +226,9 @@ const handleSubmit = async () => {
 						</div>
 
 						<div>
-							<label for="area" class="block text-sm font-medium text-[var(--color-text-dark)] mb-1">Area (sqft)</label>
+							<label for="area" class="block text-sm font-medium text-[var(--color-text-dark)] mb-1">Area</label>
 							<input
-								type="number"
+								type="text"
 								id="area"
 								bind:value={state.formData.area}
 								class="w-full px-3 py-2 rounded-md border border-[var(--color-gray-light)] shadow-sm focus:border-[var(--color-primary)] focus:ring-1 focus:ring-[var(--color-primary)] text-sm"
