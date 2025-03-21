@@ -3,6 +3,8 @@ import { goto } from '$app/navigation'
 import { pb } from '$lib/pocketbase'
 import LogOutIcon from 'lucide-svelte/icons/log-out'
 import PlusIcon from 'lucide-svelte/icons/plus'
+import MenuIcon from 'lucide-svelte/icons/menu'
+import XIcon from 'lucide-svelte/icons/x'
 import { onMount } from 'svelte'
 import { fade } from 'svelte/transition'
 import LeadList from './LeadList.svelte'
@@ -45,7 +47,8 @@ const state = $state({
 	error: '',
 	showAddModal: false,
 	activeTab: 'properties',
-	isAuthenticated: false
+	isAuthenticated: false,
+	isMobileMenuOpen: false
 })
 
 $effect(() => {
@@ -114,7 +117,22 @@ const handleAddProperty = () => {
 					<span class="text-2xl font-bold text-[var(--color-primary)]">Dashboard</span>
 				</div>
 
-				<div class="flex items-center space-x-6">
+				<!-- Mobile menu button -->
+				<div class="md:hidden">
+					<button
+						onclick={() => state.isMobileMenuOpen = !state.isMobileMenuOpen}
+						class="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-[var(--color-primary)] hover:bg-gray-100"
+					>
+						{#if state.isMobileMenuOpen}
+							<XIcon class="h-6 w-6" />
+						{:else}
+							<MenuIcon class="h-6 w-6" />
+						{/if}
+					</button>
+				</div>
+
+				<!-- Desktop navigation -->
+				<div class="hidden md:flex items-center space-x-6">
 					<a
 						href="https://umami.comparevpn.net/share/7fiHldSDJdN0Azo3/sandeshprakash.com"
 						target="_blank"
@@ -157,6 +175,67 @@ const handleAddProperty = () => {
 					</button>
 				</div>
 			</div>
+
+			<!-- Mobile menu -->
+			{#if state.isMobileMenuOpen}
+				<div class="md:hidden" transition:fade>
+					<div class="px-2 pt-2 pb-3 space-y-1">
+						<a
+							href="https://umami.comparevpn.net/share/7fiHldSDJdN0Azo3/sandeshprakash.com"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="block px-3 py-2 rounded-md text-base font-medium text-[var(--color-text-dark)] hover:text-[var(--color-primary)] hover:bg-gray-100"
+						>
+							Analytics
+						</a>
+						<button
+							class="w-full text-left px-3 py-2 rounded-md text-base font-medium text-[var(--color-text-dark)] hover:text-[var(--color-primary)] hover:bg-gray-100"
+							onclick={() => {
+								state.activeTab = 'properties'
+								state.isMobileMenuOpen = false
+							}}
+						>
+							Properties
+							{#if state.activeTab === 'properties'}
+								<div class="absolute right-0 inset-y-0 w-1 bg-[var(--color-primary)]"></div>
+							{/if}
+						</button>
+						<button
+							class="w-full text-left px-3 py-2 rounded-md text-base font-medium text-[var(--color-text-dark)] hover:text-[var(--color-primary)] hover:bg-gray-100"
+							onclick={() => {
+								state.activeTab = 'leads'
+								state.isMobileMenuOpen = false
+							}}
+						>
+							Leads
+							{#if state.activeTab === 'leads'}
+								<div class="absolute right-0 inset-y-0 w-1 bg-[var(--color-primary)]"></div>
+							{/if}
+						</button>
+						<button
+							onclick={() => {
+								handleAddProperty()
+								state.isMobileMenuOpen = false
+							}}
+							class="w-full text-left px-3 py-2 rounded-md text-base font-medium bg-[var(--color-primary)] text-white hover:bg-[var(--color-primary-light)]"
+						>
+							<div class="flex items-center">
+								<PlusIcon class="w-4 h-4 mr-2" />
+								Add Property
+							</div>
+						</button>
+						<button
+							onclick={handleLogout}
+							class="w-full text-left px-3 py-2 rounded-md text-base font-medium bg-[var(--color-gray-medium)] text-white hover:bg-[var(--color-gray-dark)]"
+						>
+							<div class="flex items-center">
+								<LogOutIcon class="w-5 h-5 mr-2" />
+								Logout
+							</div>
+						</button>
+					</div>
+				</div>
+			{/if}
 		</nav>
 	</header>
 

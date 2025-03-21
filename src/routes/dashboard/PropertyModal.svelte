@@ -21,6 +21,19 @@ interface Property {
 	isActive: boolean
 }
 
+interface FormData {
+	type: Property['type']
+	featured: boolean
+	status: Property['status']
+	location: string
+	title: string
+	price: number
+	area: string
+	description: string
+	images: (string | File)[]
+	isActive: boolean
+}
+
 const { showModal, editingProperty, loading, onClose, onSuccess } = $props<{
 	showModal: boolean
 	editingProperty: Property | null
@@ -39,9 +52,9 @@ const state = $state({
 		price: 0,
 		area: '',
 		description: '',
-		images: [] as string[],
+		images: [] as (string | File)[],
 		isActive: true
-	},
+	} as FormData,
 	error: '',
 	uploading: false,
 	imageFiles: [] as File[],
@@ -134,7 +147,7 @@ const handleSubmit = async () => {
 			if (key === 'images') {
 				if (Array.isArray(value)) {
 					for (const image of value) {
-						if (image instanceof File) {
+						if (image instanceof Blob) {
 							formData.append('images', image)
 						}
 					}
@@ -161,18 +174,18 @@ const handleSubmit = async () => {
 
 {#if showModal}
 	<div
-		class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50"
+		class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-start md:items-center justify-center p-2 md:p-4 z-50 overflow-y-auto"
 		transition:fade={{ duration: 200 }}
 	>
-		<div class="bg-[var(--color-card-bg)] rounded-2xl w-full max-w-2xl shadow-[var(--shadow-lg)] border border-[var(--color-primary-light)]/20">
-			<div class="p-6">
-				<div class="flex justify-between items-center mb-6">
-					<h2 class="text-xl font-semibold text-[var(--color-text-dark)]">
+		<div class="bg-[var(--color-card-bg)] rounded-2xl w-full max-w-2xl shadow-[var(--shadow-lg)] border border-[var(--color-primary-light)]/20 my-4">
+			<div class="p-4 md:p-6">
+				<div class="flex justify-between items-center mb-4 md:mb-6">
+					<h2 class="text-lg md:text-xl font-semibold text-[var(--color-text-dark)]">
 						{editingProperty ? 'Edit Property' : 'Add New Property'}
 					</h2>
 					<button
 						onclick={onClose}
-						class="text-[var(--color-gray-medium)] hover:text-[var(--color-text-dark)] transition-colors"
+						class="text-[var(--color-gray-medium)] hover:text-[var(--color-text-dark)] transition-colors p-2"
 						title="Close modal"
 					>
 						<XIcon class="h-5 w-5" />
@@ -180,7 +193,7 @@ const handleSubmit = async () => {
 				</div>
 
 				<form onsubmit={handleSubmit} class="space-y-4">
-					<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+					<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 						<div>
 							<label for="title" class="block text-sm font-medium text-[var(--color-text-dark)] mb-1">Title *</label>
 							<input
@@ -267,32 +280,31 @@ const handleSubmit = async () => {
 						<textarea
 							id="description"
 							bind:value={state.formData.description}
-							rows="3"
+							rows="4"
 							class="w-full px-3 py-2 rounded-md border border-[var(--color-gray-light)] shadow-sm focus:border-[var(--color-primary)] focus:ring-1 focus:ring-[var(--color-primary)] text-sm"
 						></textarea>
 					</div>
 
 					<div>
 						<label class="block text-sm font-medium text-[var(--color-text-dark)] mb-2">Images</label>
-						<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+						<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
 							{#each state.imagePreviews as preview, index}
 								<div class="relative group aspect-square">
 									<img
 										src={preview}
 										alt="Property preview"
-										class="h-full w-full object-cover rounded-lg border border-[var(--color-gray-light)]"
+										class="w-full h-full object-cover rounded-lg"
 									/>
 									<button
 										type="button"
 										onclick={() => removeImage(index)}
-										class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1.5 opacity-0 group-hover:opacity-100 transition-opacity shadow-md"
-										title="Remove image"
+										class="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
 									>
-										<TrashIcon class="h-4 w-4" />
+										<TrashIcon class="w-4 h-4" />
 									</button>
 								</div>
 							{/each}
-							<label class="aspect-square flex items-center justify-center border-2 border-dashed border-[var(--color-gray-light)] rounded-lg cursor-pointer hover:border-[var(--color-primary)] transition-colors relative">
+							<label class="relative cursor-pointer aspect-square flex items-center justify-center border-2 border-dashed border-[var(--color-gray-light)] rounded-lg hover:border-[var(--color-primary)] transition-colors">
 								<input
 									type="file"
 									accept="image/*"
@@ -300,38 +312,32 @@ const handleSubmit = async () => {
 									onchange={handleImageChange}
 									class="hidden"
 								/>
-								<div class="flex flex-col items-center gap-2">
-									<ImageIcon class="h-8 w-8 text-[var(--color-gray-medium)]" />
-									<span class="text-xs text-[var(--color-gray-medium)]">Add Images</span>
+								<div class="text-center">
+									<ImageIcon class="w-8 h-8 mx-auto text-[var(--color-gray-medium)]" />
+									<span class="mt-2 block text-sm text-[var(--color-gray-medium)]">Add Images</span>
 								</div>
-								{#if state.uploading}
-									<div class="absolute inset-0 bg-black/50 rounded-lg flex items-center justify-center">
-										<div class="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
-									</div>
-								{/if}
 							</label>
 						</div>
 					</div>
 
 					{#if state.error}
-						<p class="text-red-500 text-sm">{state.error}</p>
+						<div class="text-red-500 text-sm">{state.error}</div>
 					{/if}
 
-					<div class="flex justify-end gap-3 pt-2">
+					<div class="flex justify-end gap-3 pt-4">
 						<button
 							type="button"
 							onclick={onClose}
-							class="px-4 py-2 text-sm font-medium text-[var(--color-text-dark)] bg-white border border-[var(--color-gray-light)] rounded-md shadow-sm hover:bg-gray-50 transition-colors"
-							disabled={loading || state.uploading}
+							class="px-4 py-2 text-[var(--color-text-dark)] hover:bg-gray-100 rounded-md transition-colors text-sm font-medium"
 						>
 							Cancel
 						</button>
 						<button
 							type="submit"
-							class="px-4 py-2 text-sm font-medium text-white bg-[var(--color-primary)] border border-transparent rounded-md shadow-sm hover:bg-[var(--color-primary-dark)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+							class="px-4 py-2 bg-[var(--color-primary)] text-white rounded-md hover:bg-[var(--color-primary-light)] transition-colors text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
 							disabled={loading || state.uploading}
 						>
-							{loading || state.uploading ? 'Loading...' : editingProperty ? 'Save Changes' : 'Add Property'}
+							{loading || state.uploading ? 'Saving...' : 'Save Property'}
 						</button>
 					</div>
 				</form>
