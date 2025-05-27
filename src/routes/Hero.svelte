@@ -1,19 +1,10 @@
 <script lang="ts">
-import { onMount } from 'svelte'
-
-let isLoaded = false
-
-onMount(() => {
-	setTimeout(() => {
-		isLoaded = true
-	}, 100)
-})
 </script>
 
 <div class="relative min-h-[90vh] w-full overflow-hidden bg-[var(--color-primary-dark)]">
-    <!-- Animated gradient background -->
+    <!-- Static gradient background -->
     <div 
-        class="absolute inset-0 bg-gradient-to-br from-[var(--color-primary-dark)] via-[var(--color-primary)] to-[var(--color-secondary)] animate-gradient"
+        class="absolute inset-0 bg-gradient-to-br from-[var(--color-primary-dark)] via-[var(--color-primary)] to-[var(--color-secondary)]"
     ></div>
     
     <!-- Geometric shapes -->
@@ -58,9 +49,7 @@ onMount(() => {
     <!-- Content container -->
     <div class="relative h-full flex items-center">
         <div class="container mx-auto px-6 md:px-16 py-24">
-            <div class="max-w-4xl transition-all duration-1000 animate-slide-up"
-                 class:opacity-0={!isLoaded} 
-                 class:translate-y-10={!isLoaded}>
+            <div class="max-w-4xl">
                 <span class="inline-block px-4 py-2 rounded-full bg-white/20 text-[var(--color-text)] text-sm font-medium mb-8 backdrop-blur-sm border border-white/30">
                     Industrial & Commercial Real Estate Specialists
                 </span>
@@ -94,10 +83,3 @@ onMount(() => {
         </div>
     </div>
 </div>
-
-<style>
-    .animate-gradient {
-        background-size: 400% 400%;
-        animation: gradient 15s ease infinite;
-    }
-</style>
